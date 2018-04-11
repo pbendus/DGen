@@ -72,7 +72,6 @@ CREATE TABLE protocol (
 CREATE TABLE duration_of_training (
   id               INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   value            VARCHAR(255) NOT NULL,
-  date             VARCHAR(255) NOT NULL,
   mode_of_study_id INTEGER      NOT NULL
 );
 
@@ -85,17 +84,6 @@ CREATE TABLE type_of_diploma (
   name_en VARCHAR(255) NOT NULL UNIQUE
 );
 */
-
----------------------------------------------------------------------------------
--- ADDITIONAL INFORMATION
-CREATE TABLE additional_information (
-  id                      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  duration_of_training_id INTEGER NOT NULL,
-  --type_of_diploma_id      INTEGER NOT NULL,
-
-  FOREIGN KEY (duration_of_training_id) REFERENCES duration_of_training (id)
-  --FOREIGN KEY (type_of_diploma_id) REFERENCES type_of_diploma (id)
-);
 
 ---------------------------------------------------------------------------------
 -- Student
@@ -129,8 +117,8 @@ CREATE TABLE diploma (
   access_requirements_id            INTEGER      NOT NULL,
   mode_of_study_id                  INTEGER      NOT NULL,
   professional_status_id            INTEGER      NOT NULL,
-  additional_information_id         INTEGER      NOT NULL,
   classification_system_id          INTEGER      NOT NULL,
+  duration_of_training_id           INTEGER      NOT NULL,
 
   FOREIGN KEY (student_id) REFERENCES student (id),
   FOREIGN KEY (main_field_id) REFERENCES main_field (id),
@@ -139,7 +127,7 @@ CREATE TABLE diploma (
   FOREIGN KEY (access_requirements_id) REFERENCES access_requirements (id),
   FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
   FOREIGN KEY (professional_status_id) REFERENCES professional_status (id),
-  FOREIGN KEY (additional_information_id) REFERENCES additional_information (id),
+  FOREIGN KEY (duration_of_training_id) REFERENCES duration_of_training (id),
   FOREIGN KEY (classification_system_id) REFERENCES classification_system (id)
 );
 -- A, B, C, D, E, FX, F
