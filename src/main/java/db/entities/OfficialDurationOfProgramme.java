@@ -10,14 +10,14 @@ public class OfficialDurationOfProgramme {
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
-  private String value;
+  private String name;
 
   public OfficialDurationOfProgramme() {
   }
 
-  public OfficialDurationOfProgramme(int id, String value) {
+  public OfficialDurationOfProgramme(int id, String name) {
     this.id = id;
-    this.value = value;
+    this.name = name;
   }
 
   public int getId() {
@@ -28,11 +28,11 @@ public class OfficialDurationOfProgramme {
     this.id = id;
   }
 
-  public String getValue() {
-    return value;
+  public String getName() {
+    return name;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setName(String name) {
+    this.name = name;
   }
 }

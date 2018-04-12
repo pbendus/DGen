@@ -10,7 +10,7 @@ public class ClassificationSystem {
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
-  private String value;
+  private String name;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
   private String criteria;
@@ -18,9 +18,9 @@ public class ClassificationSystem {
   public ClassificationSystem() {
   }
 
-  public ClassificationSystem(int id, String value, String criteria) {
+  public ClassificationSystem(int id, String name, String criteria) {
     this.id = id;
-    this.value = value;
+    this.name = name;
     this.criteria = criteria;
   }
 
@@ -32,12 +32,12 @@ public class ClassificationSystem {
     this.id = id;
   }
 
-  public String getValue() {
-    return value;
+  public String getName() {
+    return name;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getCriteria() {

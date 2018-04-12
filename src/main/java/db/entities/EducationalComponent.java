@@ -9,13 +9,13 @@ public class EducationalComponent {
   @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
+  @DatabaseField(canBeNull = false, useGetSet = true)
   private int credit;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, unique = true, columnName = "course_title")
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "course_title")
   private String courseTitle;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, unique = true, columnName = "national_score")
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "national_score")
   private int nationalScore;
 
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "educational_component_type_id",

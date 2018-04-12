@@ -10,14 +10,14 @@ public class PreviousDocument {
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true)
-  private String value;
+  private String name;
 
   public PreviousDocument() {
   }
 
-  public PreviousDocument(int id, String value) {
+  public PreviousDocument(int id, String name) {
     this.id = id;
-    this.value = value;
+    this.name = name;
   }
 
   public int getId() {
@@ -28,11 +28,11 @@ public class PreviousDocument {
     this.id = id;
   }
 
-  public String getValue() {
-    return value;
+  public String getName() {
+    return name;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setName(String name) {
+    this.name = name;
   }
 }
