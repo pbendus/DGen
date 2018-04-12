@@ -6,18 +6,26 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "national_grade")
 public class NationalGrade {
 
-  @DatabaseField(id = true, generatedId = true, useGetSet = true)
+  @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
-  private String value;
+  private String name;
+
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "min_national_score")
+  private int minNationalScore;
+
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "max_national_score")
+  private int maxNationalScore;
 
   public NationalGrade() {
   }
 
-  public NationalGrade(int id, String value) {
+  public NationalGrade(int id, String name, int minNationalScore, int maxNationalScore) {
     this.id = id;
-    this.value = value;
+    this.name = name;
+    this.minNationalScore = minNationalScore;
+    this.maxNationalScore = maxNationalScore;
   }
 
   public int getId() {
@@ -28,11 +36,27 @@ public class NationalGrade {
     this.id = id;
   }
 
-  public String getValue() {
-    return value;
+  public String getName() {
+    return name;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getMinNationalScore() {
+    return minNationalScore;
+  }
+
+  public void setMinNationalScore(int minNationalScore) {
+    this.minNationalScore = minNationalScore;
+  }
+
+  public int getMaxNationalScore() {
+    return maxNationalScore;
+  }
+
+  public void setMaxNationalScore(int maxNationalScore) {
+    this.maxNationalScore = maxNationalScore;
   }
 }

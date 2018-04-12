@@ -6,18 +6,18 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "professional_status")
 public class ProfessionalStatus {
 
-  @DatabaseField(id = true, generatedId = true, useGetSet = true)
+  @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
-  private String value;
+  private String name;
 
   public ProfessionalStatus() {
   }
 
-  public ProfessionalStatus(int id, String value) {
+  public ProfessionalStatus(int id, String name) {
     this.id = id;
-    this.value = value;
+    this.name = name;
   }
 
   public int getId() {
@@ -28,11 +28,11 @@ public class ProfessionalStatus {
     this.id = id;
   }
 
-  public String getValue() {
-    return value;
+  public String getName() {
+    return name;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setName(String name) {
+    this.name = name;
   }
 }

@@ -1,14 +1,16 @@
 package db.entities;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable(tableName = "diploma")
 public class Diploma {
 
-  @DatabaseField(id = true, generatedId = true, useGetSet = true)
+  @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
@@ -56,6 +58,9 @@ public class Diploma {
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_training_id", foreign = true,
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private DurationOfTraining durationOfTraining;
+
+  @ForeignCollectionField()
+  private ForeignCollection<EducationalComponent> educationalComponents;
 
   public Diploma() {
   }
@@ -184,5 +189,9 @@ public class Diploma {
 
   public void setDurationOfTraining(DurationOfTraining durationOfTraining) {
     this.durationOfTraining = durationOfTraining;
+  }
+
+  public ForeignCollection<EducationalComponent> getEducationalComponents() {
+    return educationalComponents;
   }
 }

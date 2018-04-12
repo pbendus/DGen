@@ -44,18 +44,18 @@ VALUES ('Баклицький', 'Юрій Володимирович', 'Baklytsk
 INSERT INTO diploma (number, registration_number, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
 VALUES ('M17 № 086783', '555м/17', '2017-12-31', 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-INSERT INTO rating_point (name) VALUES ('A');
-INSERT INTO rating_point (name) VALUES ('B');
-INSERT INTO rating_point (name) VALUES ('C');
-INSERT INTO rating_point (name) VALUES ('D');
-INSERT INTO rating_point (name) VALUES ('E');
-INSERT INTO rating_point (name) VALUES ('FX');
-INSERT INTO rating_point (name) VALUES ('F');
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('A', 90, 100);
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('B', 82, 89);
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('C', 75, 81);
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('D', 67, 74);
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('E', 60, 66);
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('FX', 35, 59);
+INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('F', 0, 34);
 
-INSERT INTO national_grade (name) VALUES ('Відмінно / Excellent');
-INSERT INTO national_grade (name) VALUES ('Добре / Good');
-INSERT INTO national_grade (name) VALUES ('Задовільно / Satisfactory');
-INSERT INTO national_grade (name) VALUES ('Незадовільно / Fail');
+INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Відмінно / Excellent', 90, 100);
+INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Добре / Good', 75, 89);
+INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Задовільно / Satisfactory', 60, 74);
+INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Незадовільно / Fail', 0, 59);
 
 INSERT INTO educational_component_type (name) VALUES ('Дисципліни / Courses');
 INSERT INTO educational_component_type (name) VALUES ('Курсові роботи / Research projects');

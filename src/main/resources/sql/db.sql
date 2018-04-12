@@ -133,13 +133,17 @@ CREATE TABLE diploma (
 -- A, B, C, D, E, FX, F
 CREATE TABLE rating_point (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name CHAR(2) NOT NULL UNIQUE
+  name CHAR(2) NOT NULL UNIQUE,
+  min_national_score INTEGER NOT NULL,
+  max_national_score INTEGER NOT NULL
 );
 
 --
 CREATE TABLE national_grade (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  name VARCHAR(255) NOT NULL UNIQUE,
+  min_national_score INTEGER NOT NULL,
+  max_national_score INTEGER NOT NULL
 );
 
 -- Courses, Research Projects, Internship, State attestation
