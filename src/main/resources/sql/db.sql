@@ -17,14 +17,14 @@ CREATE TABLE main_field (
 --  1 year 4 months of full-time study (90 ECTS credits)
 CREATE TABLE official_duration_of_programme (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value VARCHAR(255) NOT NULL UNIQUE
+  name VARCHAR(255) NOT NULL UNIQUE
 );
 
 ---------------------------------------------------------------------------------
 -- Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations
 CREATE TABLE access_requirements (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value VARCHAR(255) NOT NULL UNIQUE
+  name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE diploma_subject (
@@ -35,20 +35,20 @@ CREATE TABLE diploma_subject (
 
 CREATE TABLE previous_document (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value TEXT    NOT NULL
+  name TEXT    NOT NULL
 );
 
 ---------------------------------------------------------------------------------
 -- Full time
 CREATE TABLE mode_of_study (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value VARCHAR(255) NOT NULL UNIQUE
+  name VARCHAR(255) NOT NULL UNIQUE
 );
 ---------------------------------------------------------------------------------
 -- Overall classification of the qualification
 CREATE TABLE classification_system (
   id       INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value    VARCHAR(255) NOT NULL UNIQUE,
+  name    VARCHAR(255) NOT NULL UNIQUE,
   criteria VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE classification_system (
 --  INFORMATION ABOUT ACADEMIC AND PROFESSIONAL RIGHTS
 CREATE TABLE professional_status (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value TEXT    NOT NULL UNIQUE
+  name TEXT    NOT NULL UNIQUE
 );
 
 ---------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ CREATE TABLE protocol (
 -- DURATION OF TRAINING
 CREATE TABLE duration_of_training (
   id               INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value            VARCHAR(255) NOT NULL,
+  name            VARCHAR(255) NOT NULL,
   mode_of_study_id INTEGER      NOT NULL
 );
 
@@ -96,11 +96,11 @@ CREATE TABLE student (
   date_of_birth        DATE         NOT NULL,
   protocol_id          INTEGER      NOT NULL,
   diploma_subject_id   INTEGER      NOT NULL,
-  previpus_document_id INTEGER      NOT NULL,
+  previous_document_id INTEGER      NOT NULL,
 
   FOREIGN KEY (protocol_id) REFERENCES protocol (id),
   FOREIGN KEY (diploma_subject_id) REFERENCES diploma_subject (id),
-  FOREIGN KEY (previpus_document_id) REFERENCES previous_document (id)
+  FOREIGN KEY (previous_document_id) REFERENCES previous_document (id)
 );
 
 ---------------------------------------------------------------------------------
@@ -133,13 +133,13 @@ CREATE TABLE diploma (
 -- A, B, C, D, E, FX, F
 CREATE TABLE rating_point (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value CHAR(2) NOT NULL UNIQUE
+  name CHAR(2) NOT NULL UNIQUE
 );
 
 --
 CREATE TABLE national_grade (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  value VARCHAR(255) NOT NULL UNIQUE
+  name VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Courses, Research Projects, Internship, State attestation
