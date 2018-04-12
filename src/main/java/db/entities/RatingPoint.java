@@ -12,12 +12,20 @@ public class RatingPoint {
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
   private String name;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "min_national_score")
+  private int minNationalScore;
+
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "max_national_score")
+  private int maxNationalScore;
+
   public RatingPoint() {
   }
 
-  public RatingPoint(int id, String name) {
+  public RatingPoint(int id, String name, int minNationalScore, int maxNationalScore) {
     this.id = id;
     this.name = name;
+    this.minNationalScore = minNationalScore;
+    this.maxNationalScore = maxNationalScore;
   }
 
   public int getId() {
@@ -34,5 +42,21 @@ public class RatingPoint {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getMinNationalScore() {
+    return minNationalScore;
+  }
+
+  public void setMinNationalScore(int minNationalScore) {
+    this.minNationalScore = minNationalScore;
+  }
+
+  public int getMaxNationalScore() {
+    return maxNationalScore;
+  }
+
+  public void setMaxNationalScore(int maxNationalScore) {
+    this.maxNationalScore = maxNationalScore;
   }
 }
