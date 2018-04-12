@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "protocol")
 public class Protocol {
 
-  @DatabaseField(id = true, generatedId = true, useGetSet = true)
+  @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "name_uk")

@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "national_grade")
 public class NationalGrade {
 
-  @DatabaseField(id = true, generatedId = true, useGetSet = true)
+  @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
