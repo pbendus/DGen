@@ -1,9 +1,10 @@
 package db.services;
 
 import com.j256.ormlite.dao.Dao;
-import db.entities.ProfessionalStatus;
 import db.entities.Protocol;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProtocolService
     extends BaseServiceImpl<Protocol> {
   public ProtocolService(

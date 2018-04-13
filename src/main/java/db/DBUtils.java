@@ -23,7 +23,7 @@ import java.sql.SQLException;
 
 public class DBUtils {
   /**
-   * Create a tables if they do not already exist
+   * Create all tables if they do not already exist
    */
   public static void createAllTablesIfNotExists(ConnectionSource connectionSource)
       throws SQLException {
@@ -44,5 +44,29 @@ public class DBUtils {
     TableUtils.createTableIfNotExists(connectionSource, NationalGrade.class);
     TableUtils.createTableIfNotExists(connectionSource, EducationalComponentType.class);
     TableUtils.createTableIfNotExists(connectionSource, EducationalComponent.class);
+  }
+
+  /**
+   * Clear all tables
+   */
+  public static void clearAllTables(ConnectionSource connectionSource)
+      throws SQLException {
+    TableUtils.clearTable(connectionSource, FieldOfStudy.class);
+    TableUtils.clearTable(connectionSource, MainField.class);
+    TableUtils.clearTable(connectionSource, OfficialDurationOfProgramme.class);
+    TableUtils.clearTable(connectionSource, AccessRequirements.class);
+    TableUtils.clearTable(connectionSource, DiplomaSubject.class);
+    TableUtils.clearTable(connectionSource, PreviousDocument.class);
+    TableUtils.clearTable(connectionSource, ModeOfStudy.class);
+    TableUtils.clearTable(connectionSource, ClassificationSystem.class);
+    TableUtils.clearTable(connectionSource, ProfessionalStatus.class);
+    TableUtils.clearTable(connectionSource, Protocol.class);
+    TableUtils.clearTable(connectionSource, DurationOfTraining.class);
+    TableUtils.clearTable(connectionSource, Student.class);
+    TableUtils.clearTable(connectionSource, Diploma.class);
+    TableUtils.clearTable(connectionSource, RatingPoint.class);
+    TableUtils.clearTable(connectionSource, NationalGrade.class);
+    TableUtils.clearTable(connectionSource, EducationalComponentType.class);
+    TableUtils.clearTable(connectionSource, EducationalComponent.class);
   }
 }

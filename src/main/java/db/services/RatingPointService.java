@@ -4,7 +4,9 @@ import com.j256.ormlite.dao.Dao;
 import db.entities.RatingPoint;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RatingPointService
     extends BaseServiceImpl<RatingPoint> {
   public RatingPointService(

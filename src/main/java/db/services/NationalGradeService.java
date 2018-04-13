@@ -1,12 +1,12 @@
 package db.services;
 
 import com.j256.ormlite.dao.Dao;
-import db.entities.ModeOfStudy;
 import db.entities.NationalGrade;
-import db.entities.RatingPoint;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class NationalGradeService extends BaseServiceImpl<NationalGrade> {
   public NationalGradeService(
       Dao<NationalGrade, Integer> dao) {
