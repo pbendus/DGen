@@ -1,25 +1,26 @@
 package db;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
-import com.j256.ormlite.table.TableUtils;
-import db.DBUtils;
-import db.entities.AccessRequirements;
-import db.entities.Diploma;
+import db.configuration.DataSourceConfig;
 import db.services.AccessRequirementsService;
-import java.io.IOException;
+import db.services.ClassificationSystemService;
 import java.sql.SQLException;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 public class Main {
-  private static final String DB_NAME = "bachelor_diploma.db";
 
   public static void main(String[] args) {
+    AbstractApplicationContext context =
+        new AnnotationConfigApplicationContext(DataSourceConfig.class);
+
+    AccessRequirementsService accessRequirementsService =
+        (AccessRequirementsService) context.getBean("accessRequirementsService");
+
+    ClassificationSystemService classificationSystemService =
+        (ClassificationSystemService) context.getBean("classificationSystemService");
+
     try {
-      JdbcConnectionSource connectionSource =
-          new JdbcPooledConnectionSource("jdbc:sqlite:" + DB_NAME);
-      DBUtils.createAllTablesIfNotExists(connectionSource);
+      System.out.println(accessRequirementsService.getAll());
     } catch (SQLException e) {
       e.printStackTrace();
     }
