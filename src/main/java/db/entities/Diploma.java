@@ -194,4 +194,13 @@ public class Diploma {
   public ForeignCollection<EducationalComponent> getEducationalComponents() {
     return educationalComponents;
   }
+
+  public int getCreditsGained() {
+    int value = 0;
+    for (EducationalComponent component :
+        getEducationalComponents()) {
+      value += component.getCredit();
+    }
+    return value;
+  }
 }
