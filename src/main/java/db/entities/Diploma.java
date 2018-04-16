@@ -203,4 +203,10 @@ public class Diploma {
     }
     return value;
   }
+
+  public String getInformationOnCertification() {
+    return String.format("Магістерська робота - %s (%s) / Master’s Thesis - %s (%s)",
+        student.getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
+        student.getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
+  }
 }
