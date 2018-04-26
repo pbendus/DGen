@@ -65,6 +65,35 @@ INSERT INTO educational_component_type (name) VALUES ('Державна атес
 INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
 VALUES (1, 3, 90, 1, 1, 1, 'Охорона праці в галузі / Labour Safety in Field');
 INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 5, 80, 3, 2, 1, 'Архітектура програмного забезпечення / Software Architecture');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 6, 84, 2, 2, 1, 'Моделювання ІТ інновацій / IT Innovations Modeling');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 4, 84, 2, 2, 1, 'Інноваційні підходи створення ІТ проектів / Innovative Approaches to IT Project Development ');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 5, 80, 3, 2, 1, 'Проектування сховищ даних / Data Warehouse Design');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 5, 80, 3, 2, 1, 'Інженерія вимог / Requirements Engineering');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 4, 85, 2, 2, 1, 'Розроблення web-додатків в розподілених системах / Development of Web-Based Applications in Distributed Systems');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 4, 80, 3, 2, 1, 'Системологія інженерії програмного забезпечення / Software Engineering Systemology');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 4, 75, 3, 2, 1, 'Спецкурс керівника / Manager’s Special Course');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 3, 80, 3, 2, 1, 'Формальні методи програмної інженерії / Formal Methods of Software Engineering');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 3, 94, 1, 1, 1, 'Психологія та педагогіка вищої школи / Higher Education Psychology and Pedagogics');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 3, 90, 1, 1, 1, 'Філософські проблеми наукового пізнання / Philosophical Problems of Scientific Cognition');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 3, 82, 2, 2, 1, 'Логічний аналіз / Logic Analysis');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 4, 75, 3, 2, 1, 'Формальні та програмні засоби побудови новітніх інтелектуальних додатків та застосувань / Formal and Software Tools of Innovative Intelligent Applications Arrangement');
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
+VALUES (1, 3, 75, 3, 2, 1, 'Моделювання процесів розробки програмного забезпечення / Modeling of Software Development Processes');
+
+INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
 VALUES (2, 1, 90, 1, 1, 1, 'Моделювання ІТ інновацій / IT Innovations Modeling');
 INSERT INTO educational_component (educational_component_type_id, credit, national_score, rating_point_id, national_grade_id, diploma_id, course_title)
 VALUES (3, 9, 90, 1, 1, 1, 'Науково-дослідна практика / Research Practical Training');
