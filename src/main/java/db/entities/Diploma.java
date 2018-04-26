@@ -5,7 +5,9 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @DatabaseTable(tableName = "diploma")
 public class Diploma {
@@ -208,5 +210,61 @@ public class Diploma {
     return String.format("Магістерська робота - %s (%s) / Master’s Thesis - %s (%s)",
         student.getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
         student.getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
+  }
+
+  public List<EducationalComponent> getAllCourses() {
+    List<EducationalComponent> educationalComponents = new ArrayList<>();
+    for (EducationalComponent component :
+        this.educationalComponents) {
+      if (component.getEducationalComponentType()
+          .getName()
+          .equals(EducationalComponentTypeConst.COURSE)) {
+        educationalComponents.add(component);
+      }
+    }
+
+    return educationalComponents;
+  }
+
+  public List<EducationalComponent> getAllResearchProjects() {
+    List<EducationalComponent> educationalComponents = new ArrayList<>();
+    for (EducationalComponent component :
+        this.educationalComponents) {
+      if (component.getEducationalComponentType()
+          .getName()
+          .equals(EducationalComponentTypeConst.RESEARCH_PROJECT)) {
+        educationalComponents.add(component);
+      }
+    }
+
+    return educationalComponents;
+  }
+
+  public List<EducationalComponent> getAllInternships() {
+    List<EducationalComponent> educationalComponents = new ArrayList<>();
+    for (EducationalComponent component :
+        this.educationalComponents) {
+      if (component.getEducationalComponentType()
+          .getName()
+          .equals(EducationalComponentTypeConst.INTERNSHIP)) {
+        educationalComponents.add(component);
+      }
+    }
+
+    return educationalComponents;
+  }
+
+  public List<EducationalComponent> getAllStateAttestations() {
+    List<EducationalComponent> educationalComponents = new ArrayList<>();
+    for (EducationalComponent component :
+        this.educationalComponents) {
+      if (component.getEducationalComponentType()
+          .getName()
+          .equals(EducationalComponentTypeConst.STATE_ATTESTATION)) {
+        educationalComponents.add(component);
+      }
+    }
+
+    return educationalComponents;
   }
 }
