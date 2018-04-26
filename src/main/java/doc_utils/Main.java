@@ -4,6 +4,7 @@ import db.configuration.DataSourceConfig;
 import db.services.DiplomaService;
 import java.io.IOException;
 import java.sql.SQLException;
+import org.apache.xmlbeans.XmlException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
@@ -22,7 +23,7 @@ public class Main {
         (DiplomaService) contextDB.getBean("diplomaService");
     try {
       docWorker.generateDocument(diplomaService.getById(1));
-    } catch (IOException | SQLException e) {
+    } catch (IOException | SQLException | XmlException e) {
       e.printStackTrace();
     }
   }

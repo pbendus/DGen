@@ -34,16 +34,19 @@ public enum DocVariableConst {
   RESEARCH_CREDITS("research_credits"),
   RESEARCH_SCORE("research_score"),
   RESEARCH_RATING_POINT("research_rating_point"),
+  RESEARCH_NATIONAL_GRADE("research_national_grade"),
   INTERNSHIP_N("internship_n"),
   INTERNSHIP_TITLE("internship_title"),
   INTERNSHIP_CREDITS("internship_credits"),
   INTERNSHIP_SCORE("internship_score"),
   INTERNSHIP_RATING_POINT("internship_rating_point"),
+  INTERNSHIP_NATIONAL_GRADE("internship_national_grade"),
   ATTESTATION_N("attestation_n"),
   ATTESTATION_TITLE("attestation_title"),
   ATTESTATION_CREDITS("attestation_credits"),
   ATTESTATION_SCORE("attestation_score"),
-  ATTESTATION_RATING_POINT("attestation_rating_point");
+  ATTESTATION_RATING_POINT("attestation_rating_point"),
+  ATTESTATION_NATIONAL_GRADE("attestation_national_grade");
 
   private final String value;
 
