@@ -3,7 +3,9 @@ package db.services;
 import com.j256.ormlite.dao.Dao;
 import db.entities.EducationalComponent;
 import java.sql.SQLException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EducationalComponentService extends BaseServiceImpl<EducationalComponent> {
   private RatingPointService ratingPointService;
   private NationalGradeService nationalGradeService;
