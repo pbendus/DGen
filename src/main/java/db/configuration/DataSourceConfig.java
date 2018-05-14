@@ -6,6 +6,7 @@ import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import db.entities.AccessRequirements;
 import db.entities.ClassificationSystem;
+import db.entities.Diploma;
 import db.entities.DiplomaSubject;
 import db.entities.DurationOfTraining;
 import db.entities.EducationalComponent;
@@ -155,5 +156,12 @@ public class DataSourceConfig {
       ConnectionSource connectionSource)
       throws SQLException {
     return DaoManager.createDao(connectionSource, Student.class);
+  }
+
+  @Bean
+  public Dao<Diploma, Integer> getDiplomaDao(
+      ConnectionSource connectionSource)
+      throws SQLException {
+    return DaoManager.createDao(connectionSource, Diploma.class);
   }
 }
