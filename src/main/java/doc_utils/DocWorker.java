@@ -209,10 +209,12 @@ public class DocWorker {
         changeParagraph(docVariable.getParagraph(), String.valueOf(n), false);
         break;
       case COMPONENT_TITLE:
-        changeParagraph(docVariable.getParagraph(), component.getCourseTitle(), true);
+        changeParagraph(docVariable.getParagraph(),
+            component.getEducationalComponentTemplate().getCourseTitle(), true);
         break;
       case COMPONENT_CREDITS:
-        changeParagraph(docVariable.getParagraph(), String.valueOf(component.getCredit()), false);
+        changeParagraph(docVariable.getParagraph(),
+            String.valueOf(component.getEducationalComponentTemplate().getCredit()), false);
         break;
       case COMPONENT_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -235,10 +237,12 @@ public class DocWorker {
         changeParagraph(docVariable.getParagraph(), String.valueOf(n), false);
         break;
       case RESEARCH_TITLE:
-        changeParagraph(docVariable.getParagraph(), component.getCourseTitle(), false);
+        changeParagraph(docVariable.getParagraph(),
+            component.getEducationalComponentTemplate().getCourseTitle(), false);
         break;
       case RESEARCH_CREDITS:
-        changeParagraph(docVariable.getParagraph(), String.valueOf(component.getCredit()), false);
+        changeParagraph(docVariable.getParagraph(),
+            String.valueOf(component.getEducationalComponentTemplate().getCredit()), false);
         break;
       case RESEARCH_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -261,10 +265,12 @@ public class DocWorker {
         changeParagraph(docVariable.getParagraph(), String.valueOf(n), false);
         break;
       case INTERNSHIP_TITLE:
-        changeParagraph(docVariable.getParagraph(), component.getCourseTitle(), false);
+        changeParagraph(docVariable.getParagraph(),
+            component.getEducationalComponentTemplate().getCourseTitle(), false);
         break;
       case INTERNSHIP_CREDITS:
-        changeParagraph(docVariable.getParagraph(), String.valueOf(component.getCredit()), false);
+        changeParagraph(docVariable.getParagraph(),
+            String.valueOf(component.getEducationalComponentTemplate().getCredit()), false);
         break;
       case INTERNSHIP_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -287,10 +293,12 @@ public class DocWorker {
         changeParagraph(docVariable.getParagraph(), String.valueOf(n), false);
         break;
       case ATTESTATION_TITLE:
-        changeParagraph(docVariable.getParagraph(), component.getCourseTitle(), false);
+        changeParagraph(docVariable.getParagraph(),
+            component.getEducationalComponentTemplate().getCourseTitle(), false);
         break;
       case ATTESTATION_CREDITS:
-        changeParagraph(docVariable.getParagraph(), String.valueOf(component.getCredit()), false);
+        changeParagraph(docVariable.getParagraph(),
+            String.valueOf(component.getEducationalComponentTemplate().getCredit()), false);
         break;
       case ATTESTATION_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
