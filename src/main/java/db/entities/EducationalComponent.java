@@ -9,18 +9,12 @@ public class EducationalComponent {
   @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
-  @DatabaseField(canBeNull = false, useGetSet = true)
-  private int credit;
-
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "course_title")
-  private String courseTitle;
-
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "national_score")
   private int nationalScore;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "educational_component_type_id",
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "educational_component_template_id",
       foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
-  private EducationalComponentType educationalComponentType;
+  private EducationalComponentTemplate educationalComponentTemplate;
 
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "rating_point_id",
       foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
@@ -37,14 +31,12 @@ public class EducationalComponent {
   public EducationalComponent() {
   }
 
-  public EducationalComponent(int id, int credit, String courseTitle, int nationalScore,
-      EducationalComponentType educationalComponentType, RatingPoint ratingPoint,
+  public EducationalComponent(int id, int nationalScore,
+      EducationalComponentTemplate educationalComponentTemplate, RatingPoint ratingPoint,
       NationalGrade nationalGrade, Diploma diploma) {
     this.id = id;
-    this.credit = credit;
-    this.courseTitle = courseTitle;
     this.nationalScore = nationalScore;
-    this.educationalComponentType = educationalComponentType;
+    this.educationalComponentTemplate = educationalComponentTemplate;
     this.ratingPoint = ratingPoint;
     this.nationalGrade = nationalGrade;
     this.diploma = diploma;
@@ -58,22 +50,6 @@ public class EducationalComponent {
     this.id = id;
   }
 
-  public int getCredit() {
-    return credit;
-  }
-
-  public void setCredit(int credit) {
-    this.credit = credit;
-  }
-
-  public String getCourseTitle() {
-    return courseTitle;
-  }
-
-  public void setCourseTitle(String courseTitle) {
-    this.courseTitle = courseTitle;
-  }
-
   public int getNationalScore() {
     return nationalScore;
   }
@@ -82,12 +58,13 @@ public class EducationalComponent {
     this.nationalScore = nationalScore;
   }
 
-  public EducationalComponentType getEducationalComponentType() {
-    return educationalComponentType;
+  public EducationalComponentTemplate getEducationalComponentTemplate() {
+    return educationalComponentTemplate;
   }
 
-  public void setEducationalComponentType(EducationalComponentType educationalComponentType) {
-    this.educationalComponentType = educationalComponentType;
+  public void setEducationalComponentTemplate(
+      EducationalComponentTemplate educationalComponentTemplate) {
+    this.educationalComponentTemplate = educationalComponentTemplate;
   }
 
   public RatingPoint getRatingPoint() {

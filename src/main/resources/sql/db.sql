@@ -151,22 +151,32 @@ CREATE TABLE educational_component_type (
   id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255) NOT NULL UNIQUE
 );
+
+---------------------------------------------------------------------------------
+-- Template
+CREATE TABLE educational_component_template (
+  id                            INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  educational_component_type_id INTEGER      NOT NULL,
+  credit                        INTEGER      NOT NULL,
+  main_field_id                    INTEGER      NOT NULL,
+  course_title                  VARCHAR(255) NOT NULL,
+
+  FOREIGN KEY (educational_component_type_id) REFERENCES educational_component_type (id),
+  FOREIGN KEY (main_field_id) REFERENCES main_field (id)
+);
+
 ---------------------------------------------------------------------------------
 -- All grades
 CREATE TABLE educational_component (
   id                            INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  educational_component_type_id INTEGER      NOT NULL,
-  credit                        INTEGER      NOT NULL,
+  educational_component_template_id INTEGER      NOT NULL,
   national_score                INTEGER      NOT NULL,
   rating_point_id               INTEGER      NOT NULL,
   national_grade_id             INTEGER      NOT NULL,
   diploma_id                    INTEGER      NOT NULL,
-  course_title                  VARCHAR(255) NOT NULL,
 
-  FOREIGN KEY (educational_component_type_id) REFERENCES educational_component_type (id),
+  FOREIGN KEY (educational_component_template_id) REFERENCES educational_component_template (id),
   FOREIGN KEY (rating_point_id) REFERENCES rating_point (id),
   FOREIGN KEY (national_grade_id) REFERENCES national_grade (id),
   FOREIGN KEY (diploma_id) REFERENCES diploma (id)
 );
-
-

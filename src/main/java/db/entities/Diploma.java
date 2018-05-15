@@ -201,7 +201,7 @@ public class Diploma {
     int value = 0;
     for (EducationalComponent component :
         getEducationalComponents()) {
-      value += component.getCredit();
+      value += component.getEducationalComponentTemplate().getCredit();
     }
     return value;
   }
@@ -216,7 +216,8 @@ public class Diploma {
     List<EducationalComponent> educationalComponents = new ArrayList<>();
     for (EducationalComponent component :
         this.educationalComponents) {
-      if (component.getEducationalComponentType()
+      if (component.getEducationalComponentTemplate()
+          .getEducationalComponentType()
           .getName()
           .equals(EducationalComponentTypeConst.COURSE)) {
         educationalComponents.add(component);
@@ -230,7 +231,8 @@ public class Diploma {
     List<EducationalComponent> educationalComponents = new ArrayList<>();
     for (EducationalComponent component :
         this.educationalComponents) {
-      if (component.getEducationalComponentType()
+      if (component.getEducationalComponentTemplate()
+          .getEducationalComponentType()
           .getName()
           .equals(EducationalComponentTypeConst.RESEARCH_PROJECT)) {
         educationalComponents.add(component);
@@ -244,7 +246,8 @@ public class Diploma {
     List<EducationalComponent> educationalComponents = new ArrayList<>();
     for (EducationalComponent component :
         this.educationalComponents) {
-      if (component.getEducationalComponentType()
+      if (component.getEducationalComponentTemplate()
+          .getEducationalComponentType()
           .getName()
           .equals(EducationalComponentTypeConst.INTERNSHIP)) {
         educationalComponents.add(component);
@@ -258,7 +261,8 @@ public class Diploma {
     List<EducationalComponent> educationalComponents = new ArrayList<>();
     for (EducationalComponent component :
         this.educationalComponents) {
-      if (component.getEducationalComponentType()
+      if (component.getEducationalComponentTemplate()
+          .getEducationalComponentType()
           .getName()
           .equals(EducationalComponentTypeConst.STATE_ATTESTATION)) {
         educationalComponents.add(component);

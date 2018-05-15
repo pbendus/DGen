@@ -10,6 +10,7 @@ import db.entities.Diploma;
 import db.entities.DiplomaSubject;
 import db.entities.DurationOfTraining;
 import db.entities.EducationalComponent;
+import db.entities.EducationalComponentTemplate;
 import db.entities.EducationalComponentType;
 import db.entities.FieldOfStudy;
 import db.entities.MainField;
@@ -72,6 +73,13 @@ public class DataSourceConfig {
       ConnectionSource connectionSource)
       throws SQLException {
     return DaoManager.createDao(connectionSource, DurationOfTraining.class);
+  }
+
+  @Bean
+  public Dao<EducationalComponentTemplate, Integer> getEducationalComponentTemplateDao(
+      ConnectionSource connectionSource)
+      throws SQLException {
+    return DaoManager.createDao(connectionSource, EducationalComponentTemplate.class);
   }
 
   @Bean
