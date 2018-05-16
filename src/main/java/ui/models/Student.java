@@ -1,6 +1,7 @@
 package ui.models;
 
 import javafx.beans.property.*;
+import javafx.scene.control.CheckBox;
 
 import java.util.Date;
 
@@ -15,6 +16,9 @@ public class Student {
     private ObjectProperty<Protocol> protocol;
     private ObjectProperty<DiplomaSubject> diplomaSubject;
     private ObjectProperty<PreviousDocument> previousDocument;
+
+    private StringProperty fullName;
+    private CheckBox select;
 
     public Student() {
     }
@@ -31,6 +35,9 @@ public class Student {
         this.protocol = new SimpleObjectProperty<>(protocol);
         this.diplomaSubject = new SimpleObjectProperty<>(diplomaSubject);
         this.previousDocument = new SimpleObjectProperty<>(previousDocument);
+
+        this.fullName = new SimpleStringProperty(this.familyName.get() + " " + this.givenName.get());
+        this.select = new CheckBox();
     }
 
     public int getId() {
@@ -139,5 +146,17 @@ public class Student {
 
     public void setPreviousDocument(PreviousDocument previousDocument) {
         this.previousDocument.set(previousDocument);
+    }
+
+    public StringProperty fullNameProperty() {
+        return fullName;
+    }
+
+    public void setSelect(CheckBox select) {
+        this.select = select;
+    }
+
+    public CheckBox getSelect() {
+        return select;
     }
 }
