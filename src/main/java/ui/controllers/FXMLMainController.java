@@ -1,5 +1,7 @@
 package ui.controllers;
 
+import db.mapper.StudentMapper;
+import db.services.StudentService;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,20 +12,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import ui.models.DiplomaSubject;
-import ui.models.PreviousDocument;
-import ui.models.Protocol;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import ui.models.Student;
 
 import java.net.URL;
-import java.util.Date;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+@Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
-
-    @FXML
-    private AnchorPane anchorPane;
 
     @FXML
     private TableView tblView;
@@ -40,15 +38,26 @@ public class FXMLMainController implements Initializable {
     @FXML
     private CheckBox chkboxSelectAll;
 
-    ObservableList<Student> students = FXCollections.observableArrayList();
+    private ObservableList<Student> students = FXCollections.observableArrayList();
+
+    private StudentMapper studentMapper;
+    private StudentService studentService;
+
+/*    @Autowired
+    public FXMLMainController(StudentMapper studentMapper, StudentService studentService) {
+        this.studentMapper = studentMapper;
+        this.studentService = studentService;
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        for (int i = 0; i < 100; i++) {
-            students.add(new Student(i + 1, "Бендус", "Павло Мирославович", "Bendus", "Pavlo Myroslavovyck",
-                    new Date(1997, 03, 26), new Protocol(), new DiplomaSubject(),
-                    new PreviousDocument()));
+        try {
+            students.addAll(studentMapper.map(studentService.getAll()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            students.add(null);
         }
 
         tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -101,7 +110,6 @@ public class FXMLMainController implements Initializable {
     }
 
     public Scene getScene() throws Exception {
-
         Parent root = FXMLLoader.load(getClass().getResource("../../fxml/main.fxml"));
 
         return new Scene(root);
