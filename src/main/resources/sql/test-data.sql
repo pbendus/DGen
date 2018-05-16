@@ -18,9 +18,14 @@ VALUES ('Очна / Full time');
 INSERT INTO diploma_subject (subject_uk, subject_en)
 VALUES ('“Алгоритмічні моделі та методи поширення веб-базованих даних”',
         '“Algorithmic models and methods of web-based data distribution”');
+INSERT INTO diploma_subject (subject_uk, subject_en)
+VALUES ('“Додаток для створення додатів до диплому”',
+        '“Software for creating diploma additions”');
 
 INSERT INTO previous_document (name)
 VALUES ('Диплом бакалавра / Bachelor’s Diploma B16 № 197185');
+INSERT INTO previous_document (name)
+VALUES ('Диплом бакалавра / Bachelor’s Diploma B17 № 197185');
 
 INSERT INTO classification_system (name, criteria)
 VALUES ('Диплом / Diploma',
@@ -40,9 +45,13 @@ VALUES (
 
 INSERT INTO student (family_name, given_name, family_name_tr, given_name_tr, date_of_birth, protocol_id, diploma_subject_id, previous_document_id)
 VALUES ('Баклицький', 'Юрій Володимирович', 'Baklytskyi', 'Yurii', '1995-02-25', 1, 1, 1);
+INSERT INTO student (family_name, given_name, family_name_tr, given_name_tr, date_of_birth, protocol_id, diploma_subject_id, previous_document_id)
+VALUES ('Депутат', 'Андрый Богданович', 'Deputat', 'Andrii', '1997-04-06', 1, 2, 2);
 
 INSERT INTO diploma (number, registration_number, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
 VALUES ('M17 № 086783', '555м/17', '2017-12-31', 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO diploma (number, registration_number, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
+VALUES ('M18 № 086784', '555м/17', '2017-12-31', 2, 1, 1, 1, 1, 1, 1, 1, 1);
 
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('A', 90, 100);
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('B', 82, 89);
@@ -99,3 +108,22 @@ INSERT INTO educational_component (educational_component_template_id, national_s
 INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (16, 90, 1, 1, 1);
 INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (17, 90, 1, 1, 1);
 INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (18, 95, 1, 1, 1);
+
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (1, 90, 1, 1, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (2, 80, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (3, 84, 2, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (4, 84, 2, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (5, 80, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (6, 80, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (7, 85, 2, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (8, 80, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (9, 75, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (10, 80, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (11, 94, 1, 1, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (12, 90, 1, 1, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (13, 82, 2, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (14, 75, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (15, 75, 3, 2, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (16, 90, 1, 1, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (17, 90, 1, 1, 2);
+INSERT INTO educational_component (educational_component_template_id, national_score, rating_point_id, national_grade_id, diploma_id) VALUES (18, 95, 1, 1, 2);
