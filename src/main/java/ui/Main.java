@@ -1,16 +1,11 @@
 package ui;
 
 import db.configuration.DataSourceConfig;
-import db.mapper.StudentMapper;
-import db.services.StudentService;
-import doc_utils.DocConfig;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import ui.controllers.FXMLMainController;
-import ui.models.Student;
-import ui.utils.UIConfig;
 
 public class Main extends Application {
 
@@ -24,12 +19,9 @@ public class Main extends Application {
 
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(DataSourceConfig.class);
 
-        StudentService studentMapper = (StudentService) context.getBean("studentMapper");
-        System.out.println(studentMapper.toString());
+        FXMLMainController fxmlMainController = (FXMLMainController) context.getBean("fxmlMainController");
 
-        //FXMLMainController fxmlMainController = (FXMLMainController) context.getBean("fxmlMainController");
-
-        //primaryStage.setScene(fxmlMainController.getScene());
+        primaryStage.setScene(fxmlMainController.getScene());
         primaryStage.show();
     }
 

@@ -1,10 +1,12 @@
 package db.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ui.models.EducationalComponent;
 
 @Service
+@Lazy
 public class EducationalComponentMapper
     extends Mapper<db.entities.EducationalComponent, ui.models.EducationalComponent> {
 
