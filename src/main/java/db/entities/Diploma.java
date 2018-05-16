@@ -197,6 +197,10 @@ public class Diploma {
     return educationalComponents;
   }
 
+  public List<EducationalComponent> getEducationalComponentsList() {
+    return new ArrayList<>(this.educationalComponents);
+  }
+
   public int getCreditsGained() {
     int value = 0;
     for (EducationalComponent component :
@@ -270,5 +274,15 @@ public class Diploma {
     }
 
     return educationalComponents;
+  }
+
+  public void setEducationalComponents(
+      ForeignCollection<EducationalComponent> educationalComponents) {
+    this.educationalComponents.addAll(educationalComponents);
+  }
+
+  public void setEducationalComponentsAsList(
+      List<EducationalComponent> educationalComponents) {
+    this.educationalComponents.addAll(educationalComponents);
   }
 }
