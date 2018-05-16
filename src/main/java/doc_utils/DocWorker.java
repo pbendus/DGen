@@ -78,7 +78,7 @@ public class DocWorker {
     document.write(new FileOutputStream(path));
   }
 
-  public void generateDocument(Diploma diploma) throws IOException, XmlException {
+  public void generateDocument(Diploma diploma, String documentName) throws IOException, XmlException {
     document = getInputDocument();
 
     final Map<DocVariableConst, DocVariable> variables = findAllVariables();
@@ -93,7 +93,7 @@ public class DocWorker {
     addResearchProjects(diploma.getAllResearchProjects(), variables);
     addStateAttestations(diploma.getAllStateAttestations(), variables);
 
-    saveDocument("output.docx");
+    saveDocument(documentName);
   }
 
   private void addCourses(List<EducationalComponent> components,
