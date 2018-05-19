@@ -12,6 +12,9 @@ public class Protocol {
     private StringProperty nameEN;
 
     public Protocol() {
+        this.id = new SimpleIntegerProperty();
+        this.nameUK = new SimpleStringProperty();
+        this.nameEN = new SimpleStringProperty();
     }
 
     public Protocol(int id, String nameUK, String nameEN) {
