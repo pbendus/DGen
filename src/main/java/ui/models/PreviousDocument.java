@@ -11,6 +11,8 @@ public class PreviousDocument {
     private StringProperty name;
 
     public PreviousDocument() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public PreviousDocument(int id, String name) {

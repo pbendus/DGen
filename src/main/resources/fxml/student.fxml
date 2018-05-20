@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Accordion fx:id="accordion" prefHeight="335.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <panes>
+          <TitledPane text="Загальна інформація">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="tfFamilyName" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="family_name" />
+                        <TextField fx:id="tfFamilyNameTr" layoutX="235.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" promptText="family_name_tr" />
+                        <TextField fx:id="tfGivenName" layoutX="14.0" layoutY="54.0" prefHeight="25.0" prefWidth="200.0" promptText="given_name" />
+                        <TextField fx:id="tfGivenNameTr" layoutX="235.0" layoutY="54.0" prefHeight="25.0" prefWidth="200.0" promptText="given_name_tr" />
+                        <DatePicker fx:id="dpDateOfBirth" layoutX="14.0" layoutY="100.0" prefHeight="25.0" prefWidth="200.0" promptText="date_of_birth" />
+                        <ComboBox fx:id="cbPreviousDocument" layoutX="235.0" layoutY="100.0" prefWidth="160.0" />
+                        <Button layoutX="410.0" layoutY="100.0" mnemonicParsing="false" text="+" />
+                     </children>
+                  </AnchorPane>
+            </content>
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+          </TitledPane>
+          <TitledPane text="Інформація про диплом">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="598.0">
+                     <children>
+                        <TextField fx:id="tfDiplomaSubjectUk" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="570.0" promptText="diploma_subject_uk" />
+                        <TextField fx:id="tfDiplomaSubjectEn" layoutX="14.0" layoutY="51.0" prefHeight="25.0" prefWidth="570.0" promptText="diploma_subject_en" />
+                        <TextField fx:id="tfNumber" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="150.0" promptText="number" />
+                        <TextField fx:id="tfRegistrationNumber" layoutX="224.0" layoutY="88.0" prefHeight="25.0" prefWidth="150.0" promptText="registration_number" />
+                        <DatePicker fx:id="dpDate" layoutX="434.0" layoutY="88.0" prefHeight="25.0" prefWidth="150.0" promptText="date" />
+                        <ComboBox fx:id="cbMainField" layoutX="14.0" layoutY="120.0" prefWidth="150.0" promptText="main_field" />
+                        <ComboBox fx:id="cbFieldOfStudy" layoutX="224.0" layoutY="120.0" prefWidth="150.0" promptText="field_of_study" />
+                        <ComboBox fx:id="cbOfficialDuration" layoutX="434.0" layoutY="120.0" prefWidth="150.0" promptText="official_duration" />
+                        <ComboBox fx:id="cbAccessRequirements" layoutX="14.0" layoutY="158.0" prefWidth="150.0" promptText="access_requirements" />
+                        <ComboBox fx:id="cbModeOfStudy" layoutX="224.0" layoutY="158.0" prefWidth="150.0" promptText="mode_of_study" />
+                        <ComboBox fx:id="cbProtocol" layoutX="434.0" layoutY="158.0" prefWidth="120.0" promptText="protocol" />
+                        <Button layoutX="559.0" layoutY="158.0" mnemonicParsing="false" text="+" />
+                        <ComboBox fx:id="cbDurationOfTraining" layoutX="14.0" layoutY="190.0" prefHeight="25.0" prefWidth="570.0" promptText="duration_of_training" />
+                        <TextArea layoutX="14.0" layoutY="224.0" prefHeight="35.0" prefWidth="570.0" promptText="Information on certification" />
+                     </children>
+                  </AnchorPane>
+            </content>
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+          </TitledPane>
+          <TitledPane text="Результати навчання">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                          <columns>
+                            <TableColumn maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="№" />
+                            <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Тип" />
+                              <TableColumn maxWidth="285.0" minWidth="285.0" prefWidth="285.0" text="Назва дисципліни" />
+                              <TableColumn maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Кредити" />
+                              <TableColumn maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Бали" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+          </TitledPane>
+        </panes>
+      </Accordion>
+      <Button fx:id="btnGenerate" defaultButton="true" layoutX="454.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Зберегти" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="15.0" />
+      <Button fx:id="btnGenerate1" cancelButton="true" layoutX="364.0" layoutY="355.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Скасувати" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="130.0" />
+   </children>
+</AnchorPane>
