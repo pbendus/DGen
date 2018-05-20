@@ -12,6 +12,9 @@ public class DiplomaSubject {
     private StringProperty subjectEN;
 
     public DiplomaSubject() {
+        this.id = new SimpleIntegerProperty();
+        this.subjectUK = new SimpleStringProperty();
+        this.subjectEN = new SimpleStringProperty();
     }
 
     public DiplomaSubject(int id, String subjectUK, String subjectEN) {

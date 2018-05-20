@@ -21,6 +21,16 @@ public class Student {
     private CheckBox select;
 
     public Student() {
+        this.id = new SimpleIntegerProperty();
+        this.familyName = new SimpleStringProperty();
+        this.givenName = new SimpleStringProperty();
+        this.familyNameTr = new SimpleStringProperty();
+        this.givenNameTr = new SimpleStringProperty();
+        this.dateOfBirth = new SimpleObjectProperty<>();
+        this.protocol = new SimpleObjectProperty<>();
+        this.diplomaSubject = new SimpleObjectProperty<>();
+        this.previousDocument = new SimpleObjectProperty<>();
+        this.select = new CheckBox();
     }
 
     public Student(int id, String familyName, String givenName, String familyNameTr,
@@ -36,7 +46,7 @@ public class Student {
         this.diplomaSubject = new SimpleObjectProperty<>(diplomaSubject);
         this.previousDocument = new SimpleObjectProperty<>(previousDocument);
 
-        this.fullName = new SimpleStringProperty(this.familyName.get() + " " + this.givenName.get());
+        updateFullName();
         this.select = new CheckBox();
     }
 
@@ -62,6 +72,7 @@ public class Student {
 
     public void setFamilyName(String familyName) {
         this.familyName.set(familyName);
+        updateFullName();
     }
 
     public String getGivenName() {
@@ -74,6 +85,7 @@ public class Student {
 
     public void setGivenName(String givenName) {
         this.givenName.set(givenName);
+        updateFullName();
     }
 
     public String getFamilyNameTr() {
@@ -150,6 +162,14 @@ public class Student {
 
     public StringProperty fullNameProperty() {
         return fullName;
+    }
+
+    public void updateFullName() {
+        if (fullName == null) {
+            fullName = new SimpleStringProperty(this.familyName + " " + this.givenName);
+        } else {
+            fullName.set(this.familyName.getValue() + " " + this.givenName.getValue());
+        }
     }
 
     public void setSelect(CheckBox select) {
