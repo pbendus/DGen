@@ -22,7 +22,7 @@ public class Main {
     DiplomaService diplomaService =
         (DiplomaService) contextDB.getBean("diplomaService");
     try {
-      docWorker.generateDocument(diplomaService.getById(1), "output.docx");
+      docWorker.generateDocument(diplomaService.getById(2), "output.docx");
     } catch (IOException | SQLException | XmlException e) {
       e.printStackTrace();
     }
