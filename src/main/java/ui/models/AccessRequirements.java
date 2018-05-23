@@ -11,6 +11,8 @@ public class AccessRequirements {
     private StringProperty name;
 
     public AccessRequirements() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public AccessRequirements(int id, String name) {
@@ -40,5 +42,10 @@ public class AccessRequirements {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }

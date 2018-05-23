@@ -11,6 +11,8 @@ public class MainField {
     private StringProperty name;
 
     public MainField() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public MainField(int id, String name) {
@@ -40,5 +42,10 @@ public class MainField {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }
