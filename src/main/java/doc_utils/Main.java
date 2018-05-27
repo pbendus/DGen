@@ -1,7 +1,6 @@
 package doc_utils;
 
 import db.configuration.DataSourceConfig;
-import db.mapper.EducationalComponentMapper;
 import db.services.DiplomaService;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,19 +12,14 @@ public class Main {
   public static void main(String[] args) {
 
     AbstractApplicationContext context =
-        new AnnotationConfigApplicationContext(DocConfig.class);
+        new AnnotationConfigApplicationContext(DocConfig.class, DataSourceConfig.class);
 
     DocWorker docWorker = (DocWorker) context.getBean("docWorker");
 
-    AbstractApplicationContext contextDB =
-        new AnnotationConfigApplicationContext(DataSourceConfig.class);
-
-    EducationalComponentMapper educationalComponentMapper = (EducationalComponentMapper) contextDB.getBean("educationalComponentMapper");
-
     DiplomaService diplomaService =
-        (DiplomaService) contextDB.getBean("diplomaService");
+        (DiplomaService) context.getBean("diplomaService");
     try {
-      docWorker.generateDocument(diplomaService.getById(2), "output.docx");
+      docWorker.generateDocument(2, "output.docx");
     } catch (IOException | SQLException | XmlException e) {
       e.printStackTrace();
     }

@@ -27,8 +27,7 @@ public class DiplomaMapper
       ModeOfStudyMapper modeOfStudyMapper,
       ProfessionalStatusMapper professionalStatusMapper,
       ClassificationSystemMapper classificationSystemMapper,
-      DurationOfTrainingMapper durationOfTrainingMapper,
-      EducationalComponentMapper educationalComponentMapper) {
+      DurationOfTrainingMapper durationOfTrainingMapper) {
     this.studentMapper = studentMapper;
     this.mainFieldMapper = mainFieldMapper;
     this.fieldOfStudyMapper = fieldOfStudyMapper;

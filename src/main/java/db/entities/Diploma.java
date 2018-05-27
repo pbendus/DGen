@@ -1,13 +1,9 @@
 package db.entities;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @DatabaseTable(tableName = "diploma")
 public class Diploma {
@@ -60,9 +56,6 @@ public class Diploma {
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_training_id", foreign = true,
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private DurationOfTraining durationOfTraining;
-
-  @ForeignCollectionField()
-  private ForeignCollection<EducationalComponent> educationalComponents;
 
   public Diploma() {
   }
@@ -193,96 +186,9 @@ public class Diploma {
     this.durationOfTraining = durationOfTraining;
   }
 
-  public ForeignCollection<EducationalComponent> getEducationalComponents() {
-    return educationalComponents;
-  }
-
-  public List<EducationalComponent> getEducationalComponentsList() {
-    return new ArrayList<>(this.educationalComponents);
-  }
-
-  public int getCreditsGained() {
-    int value = 0;
-    for (EducationalComponent component :
-        getEducationalComponents()) {
-      value += component.getEducationalComponentTemplate().getCredit();
-    }
-    return value;
-  }
-
   public String getInformationOnCertification() {
     return String.format("Магістерська робота - %s (%s) / Master’s Thesis - %s (%s)",
         student.getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
         student.getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
-  }
-
-  public List<EducationalComponent> getAllCourses() {
-    List<EducationalComponent> educationalComponents = new ArrayList<>();
-    for (EducationalComponent component :
-        this.educationalComponents) {
-      if (component.getEducationalComponentTemplate()
-          .getEducationalComponentType()
-          .getName()
-          .equals(EducationalComponentTypeConst.COURSE)) {
-        educationalComponents.add(component);
-      }
-    }
-
-    return educationalComponents;
-  }
-
-  public List<EducationalComponent> getAllResearchProjects() {
-    List<EducationalComponent> educationalComponents = new ArrayList<>();
-    for (EducationalComponent component :
-        this.educationalComponents) {
-      if (component.getEducationalComponentTemplate()
-          .getEducationalComponentType()
-          .getName()
-          .equals(EducationalComponentTypeConst.RESEARCH_PROJECT)) {
-        educationalComponents.add(component);
-      }
-    }
-
-    return educationalComponents;
-  }
-
-  public List<EducationalComponent> getAllInternships() {
-    List<EducationalComponent> educationalComponents = new ArrayList<>();
-    for (EducationalComponent component :
-        this.educationalComponents) {
-      if (component.getEducationalComponentTemplate()
-          .getEducationalComponentType()
-          .getName()
-          .equals(EducationalComponentTypeConst.INTERNSHIP)) {
-        educationalComponents.add(component);
-      }
-    }
-
-    return educationalComponents;
-  }
-
-  public List<EducationalComponent> getAllStateAttestations() {
-    List<EducationalComponent> educationalComponents = new ArrayList<>();
-    for (EducationalComponent component :
-        this.educationalComponents) {
-      if (component.getEducationalComponentTemplate()
-          .getEducationalComponentType()
-          .getName()
-          .equals(EducationalComponentTypeConst.STATE_ATTESTATION)) {
-        educationalComponents.add(component);
-      }
-    }
-
-    return educationalComponents;
-  }
-
-  public void setEducationalComponents(
-      ForeignCollection<EducationalComponent> educationalComponents) {
-    this.educationalComponents.addAll(educationalComponents);
-  }
-
-  public void setEducationalComponentsAsList(
-      List<EducationalComponent> educationalComponents) {
-    this.educationalComponents.addAll(educationalComponents);
   }
 }
