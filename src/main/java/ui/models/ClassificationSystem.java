@@ -12,6 +12,9 @@ public class ClassificationSystem {
     private StringProperty criteria;
 
     public ClassificationSystem() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
+        this.criteria = new SimpleStringProperty();
     }
 
     public ClassificationSystem(int id, String name, String criteria) {

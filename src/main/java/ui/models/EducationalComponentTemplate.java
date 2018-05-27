@@ -9,14 +9,14 @@ import javafx.beans.property.StringProperty;
 
 public class EducationalComponentTemplate {
     private IntegerProperty id;
-    private IntegerProperty credit;
+    private IntegerProperty credits;
     private StringProperty courseTitle;
     private ObjectProperty<EducationalComponentType> educationalComponentType;
     private ObjectProperty<MainField> mainField;
 
     public EducationalComponentTemplate() {
         this.id = new SimpleIntegerProperty();
-        this.credit = new SimpleIntegerProperty();
+        this.credits = new SimpleIntegerProperty();
         this.courseTitle = new SimpleStringProperty();
         this.educationalComponentType = new SimpleObjectProperty<>();
         this.mainField = new SimpleObjectProperty<>();
@@ -25,7 +25,7 @@ public class EducationalComponentTemplate {
     public EducationalComponentTemplate(int id, int credit, String courseTitle,
                                         EducationalComponentType educationalComponentType, MainField mainField) {
         this.id = new SimpleIntegerProperty(id);
-        this.credit = new SimpleIntegerProperty(credit);
+        this.credits = new SimpleIntegerProperty(credit);
         this.courseTitle = new SimpleStringProperty(courseTitle);
         this.educationalComponentType = new SimpleObjectProperty<>(educationalComponentType);
         this.mainField = new SimpleObjectProperty<>(mainField);
@@ -43,16 +43,16 @@ public class EducationalComponentTemplate {
         this.id.set(id);
     }
 
-    public int getCredit() {
-        return credit.get();
+    public int getCredits() {
+        return credits.get();
     }
 
-    public IntegerProperty creditProperty() {
-        return credit;
+    public IntegerProperty creditsProperty() {
+        return credits;
     }
 
-    public void setCredit(int credit) {
-        this.credit.set(credit);
+    public void setCredits(int credits) {
+        this.credits.set(credits);
     }
 
     public String getCourseTitle() {

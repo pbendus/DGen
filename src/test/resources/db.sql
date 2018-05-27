@@ -152,7 +152,7 @@ CREATE TABLE educational_component_type (
 CREATE TABLE educational_component (
   id                            INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   educational_component_type_id INTEGER      NOT NULL,
-  credit                        INTEGER      NOT NULL,
+  credits                        INTEGER      NOT NULL,
   national_score                INTEGER      NOT NULL,
   rating_point_id               INTEGER      NOT NULL,
   national_grade_id             INTEGER      NOT NULL,

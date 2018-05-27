@@ -11,6 +11,8 @@ public class ProfessionalStatus {
     private StringProperty name;
 
     public ProfessionalStatus() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public ProfessionalStatus(int id, String name) {

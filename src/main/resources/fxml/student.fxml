@@ -25,8 +25,7 @@
                         <TextField fx:id="tfGivenName" layoutX="24.0" layoutY="64.0" prefHeight="25.0" prefWidth="250.0" promptText="given_name" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="54.0" />
                         <TextField fx:id="tfGivenNameTr" layoutX="323.0" layoutY="64.0" prefHeight="25.0" prefWidth="250.0" promptText="given_name_tr" AnchorPane.leftAnchor="313.0" AnchorPane.topAnchor="54.0" />
                         <DatePicker fx:id="dpDateOfBirth" layoutX="25.0" layoutY="104.0" prefHeight="25.0" prefWidth="250.0" promptText="date_of_birth" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="94.0" />
-                        <ComboBox fx:id="cbPreviousDocument" layoutX="323.0" layoutY="104.0" prefWidth="210.0" promptText="previous_document" AnchorPane.leftAnchor="313.0" AnchorPane.topAnchor="94.0" />
-                        <Button fx:id="btnAddPreviousDocument" layoutX="548.0" layoutY="104.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="538.0" AnchorPane.topAnchor="94.0" />
+                        <ComboBox fx:id="cbPreviousDocument" layoutX="323.0" layoutY="104.0" prefWidth="250.0" promptText="previous_document" AnchorPane.leftAnchor="313.0" AnchorPane.topAnchor="94.0" />
                         <TextArea fx:id="taProfessionalStatus" layoutX="24.0" layoutY="144.0" prefHeight="100.0" prefWidth="550.0" promptText="Professional status" />
                      </children>
                   </AnchorPane>
@@ -49,8 +48,7 @@
                         <ComboBox fx:id="cbOfficialDuration" layoutX="415.0" layoutY="120.0" prefWidth="170.0" promptText="official_duration" AnchorPane.leftAnchor="405.0" AnchorPane.topAnchor="110.0" />
                         <ComboBox fx:id="cbAccessRequirements" layoutX="14.0" layoutY="158.0" prefWidth="170.0" promptText="access_requirements" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="145.0" />
                         <ComboBox fx:id="cbModeOfStudy" layoutX="224.0" layoutY="158.0" prefWidth="170.0" promptText="mode_of_study" AnchorPane.leftAnchor="205.0" AnchorPane.topAnchor="145.0" />
-                        <ComboBox fx:id="cbProtocol" layoutX="434.0" layoutY="158.0" prefWidth="140.0" promptText="protocol" AnchorPane.leftAnchor="405.0" AnchorPane.topAnchor="145.0" />
-                        <Button fx:id="btnAddProtocol" layoutX="559.0" layoutY="158.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="145.0" />
+                        <ComboBox fx:id="cbProtocol" layoutX="434.0" layoutY="158.0" prefWidth="170.0" promptText="protocol" AnchorPane.leftAnchor="405.0" AnchorPane.topAnchor="145.0" />
                         <ComboBox fx:id="cbDurationOfTraining" layoutX="14.0" layoutY="190.0" prefHeight="25.0" prefWidth="270.0" promptText="duration_of_training" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="180.0" />
                         <TextArea fx:id="taInformationOnCertification" layoutX="14.0" layoutY="224.0" prefHeight="70.0" prefWidth="570.0" promptText="Information on certification" />
                         <ComboBox fx:id="cbClassificationSystem" layoutX="314.0" layoutY="190.0" prefHeight="25.0" prefWidth="270.0" promptText="classification_system" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="180.0" />
@@ -65,7 +63,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tvGrades" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <TableView fx:id="tvGrades" layoutX="14.0" layoutY="14.0" prefHeight="300.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                           <columns>
                             <TableColumn fx:id="tcNumber" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="№" />
                             <TableColumn fx:id="tcType" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Тип" />
@@ -74,12 +72,6 @@
                               <TableColumn fx:id="tcGrade" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Бали" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="tfCourseTitle" layoutX="265.0" layoutY="225.0" prefHeight="25.0" prefWidth="320.0" promptText="course_title" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="215.0" />
-                        <TextField fx:id="tfCredit" layoutX="215.0" layoutY="260.0" prefHeight="25.0" prefWidth="80.0" promptText="credit" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="250.0" />
-                        <ComboBox fx:id="cbEducationalComponentType" layoutX="15.0" layoutY="264.0" prefWidth="220.0" promptText="educational_component_type" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="250.0" />
-                        <TextField fx:id="tfNationalScore" layoutX="315.0" layoutY="260.0" prefHeight="25.0" prefWidth="80.0" promptText="nat_score" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="250.0" />
-                        <Button fx:id="btnAddGrade" layoutX="483.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Додати" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="250.0" />
-                        <ComboBox fx:id="cbCourseTitle" layoutX="15.0" layoutY="225.0" prefWidth="220.0" promptText="course_title" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="215.0" />
                      </children>
                   </AnchorPane>
             </content>

@@ -157,7 +157,7 @@ CREATE TABLE educational_component_type (
 CREATE TABLE educational_component_template (
   id                            INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   educational_component_type_id INTEGER      NOT NULL,
-  credit                        INTEGER      NOT NULL,
+  credits                        INTEGER      NOT NULL,
   main_field_id                    INTEGER      NOT NULL,
   course_title                  VARCHAR(255) NOT NULL,
 

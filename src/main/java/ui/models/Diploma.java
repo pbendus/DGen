@@ -20,9 +20,21 @@ public class Diploma {
     private ObjectProperty<ProfessionalStatus> professionalStatus;
     private ObjectProperty<ClassificationSystem> classificationSystem;
     private ObjectProperty<DurationOfTraining> durationOfTraining;
-    private ObservableList<EducationalComponent> educationalComponents;
 
     public Diploma() {
+        this.id = new SimpleIntegerProperty();
+        this.number = new SimpleStringProperty();
+        this.registrationNumber = new SimpleStringProperty();
+        this.dateOfIssue = new SimpleObjectProperty<>();
+        this.student = new SimpleObjectProperty<>();
+        this.mainField = new SimpleObjectProperty<>();
+        this.fieldOfStudy = new SimpleObjectProperty<>();
+        this.officialDurationOfProgramme = new SimpleObjectProperty<>();
+        this.accessRequirements = new SimpleObjectProperty<>();
+        this.modeOfStudy = new SimpleObjectProperty<>();
+        this.professionalStatus = new SimpleObjectProperty<>();
+        this.classificationSystem = new SimpleObjectProperty<>();
+        this.durationOfTraining = new SimpleObjectProperty<>();
     }
 
     public Diploma(int id, String number, String registrationNumber, Date dateOfIssue,
@@ -200,13 +212,5 @@ public class Diploma {
 
     public void setDurationOfTraining(DurationOfTraining durationOfTraining) {
         this.durationOfTraining.set(durationOfTraining);
-    }
-
-    public ObservableList<EducationalComponent> getEducationalComponents() {
-        return educationalComponents;
-    }
-
-    public void setEducationalComponents(ObservableList<EducationalComponent> educationalComponents) {
-        this.educationalComponents = educationalComponents;
     }
 }
