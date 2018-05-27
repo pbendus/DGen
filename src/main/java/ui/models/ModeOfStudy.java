@@ -11,6 +11,8 @@ public class ModeOfStudy {
     private StringProperty name;
 
     public ModeOfStudy() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public ModeOfStudy(int id, String name) {
@@ -40,5 +42,10 @@ public class ModeOfStudy {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }

@@ -11,8 +11,6 @@ public class Main extends Application {
 
     private static AnnotationConfigApplicationContext applicationContext;
 
-    private FXMLMainController fxmlMainController;
-
     @Override
     public void init() throws Exception {
         super.init();
@@ -20,16 +18,14 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        fxmlMainController = (FXMLMainController) applicationContext.getBean("fxmlMainController");
-
-        //setting up min width & height parameters for window
-        primaryStage.setMinWidth(600);
-        primaryStage.setMinHeight(400);
-
-        primaryStage.setScene(fxmlMainController.getScene());
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            FXMLMainController fxmlMainController = (FXMLMainController) getContext()
+                    .getBean("fxmlMainController");
+            fxmlMainController.display(primaryStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

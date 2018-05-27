@@ -15,13 +15,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
@@ -32,7 +28,7 @@ import ui.utils.SpringFXMLLoader;
 public class FXMLMainController implements Initializable {
 
     @FXML
-    private TableView tblView;
+    private TableView<Student> tblView;
 
     @FXML
     private TableColumn<Student, CheckBox> tblColCheckbox;
@@ -46,15 +42,22 @@ public class FXMLMainController implements Initializable {
     @FXML
     private CheckBox chkboxSelectAll;
 
+    @FXML
+    private Button btnAddStudent;
+
     private ObservableList<Student> students = FXCollections.observableArrayList();
 
     private StudentMapper studentMapper;
     private StudentService studentService;
 
+    private FXMLStudentController fxmlStudentController;
+
     @Autowired
-    public FXMLMainController(StudentMapper studentMapper, StudentService studentService) {
+    public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
+                              FXMLStudentController fxmlStudentController) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
+        this.fxmlStudentController = fxmlStudentController;
     }
 
     @Override
@@ -102,6 +105,16 @@ public class FXMLMainController implements Initializable {
                             .otherwise((ContextMenu) null));
             return row;
         });
+
+        btnAddStudent.setOnAction(e -> openStudentModalWindow());
+    }
+
+    private void openStudentModalWindow() {
+        try {
+            fxmlStudentController.display();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setChkboxSelectAll() {
@@ -118,12 +131,24 @@ public class FXMLMainController implements Initializable {
         }
     }
 
-    public Scene getScene() throws Exception {
+    public void display(Stage primaryStage) throws Exception {
         Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
-                .location(getClass().getResource("../../fxml/main.fxml"))
+                .location(FXMLMainController.class
+                        .getResource("../../fxml/main.fxml"))
                 .load();
 
-        return new Scene(root);
+        Scene scene = new Scene(root);
+
+        primaryStage.setScene(scene);
+
+        primaryStage.setTitle("Генерація додатків до дипломів");
+
+        //setting up min width & height parameters for window
+        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(400);
+
+        primaryStage.setMaximized(true);
+        primaryStage.show();
     }
 }

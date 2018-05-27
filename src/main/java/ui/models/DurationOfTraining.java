@@ -9,6 +9,9 @@ public class DurationOfTraining {
     private ObjectProperty<ModeOfStudy> modeOfStudy;
 
     public DurationOfTraining() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
+        this.modeOfStudy = new SimpleObjectProperty<>();
     }
 
     public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy) {
@@ -51,5 +54,10 @@ public class DurationOfTraining {
 
     public void setModeOfStudy(ModeOfStudy modeOfStudy) {
         this.modeOfStudy.set(modeOfStudy);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }

@@ -58,4 +58,9 @@ public class Protocol {
     public void setNameEN(String nameEN) {
         this.nameEN.set(nameEN);
     }
+
+    @Override
+    public String toString() {
+        return nameUK.get();
+    }
 }

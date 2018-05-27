@@ -11,6 +11,8 @@ public class FieldOfStudy {
     private StringProperty name;
 
     public FieldOfStudy() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public FieldOfStudy(int id, String name) {
@@ -40,5 +42,10 @@ public class FieldOfStudy {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }

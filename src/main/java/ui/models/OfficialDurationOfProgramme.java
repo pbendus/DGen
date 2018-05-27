@@ -11,6 +11,8 @@ public class OfficialDurationOfProgramme {
     private StringProperty name;
 
     public OfficialDurationOfProgramme() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public OfficialDurationOfProgramme(int id, String name) {
@@ -40,5 +42,10 @@ public class OfficialDurationOfProgramme {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }
