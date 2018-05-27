@@ -2,10 +2,13 @@ package doc_utils;
 
 import db.entities.Diploma;
 import db.entities.EducationalComponent;
+import db.services.DiplomaService;
+import db.services.EducationalComponentService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +23,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.apache.xmlbeans.XmlException;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRow;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +35,16 @@ public class DocWorker {
   private String inputFilePath;
 
   private XWPFDocument document;
+
+  private EducationalComponentService educationalComponentService;
+  private DiplomaService diplomaService;
+
+  @Autowired
+  public DocWorker(EducationalComponentService educationalComponentService,
+      DiplomaService diplomaService) {
+    this.educationalComponentService = educationalComponentService;
+    this.diplomaService = diplomaService;
+  }
 
   public boolean isVariable(String string) {
     if (string == null || string.length() < 4) {
@@ -78,20 +92,25 @@ public class DocWorker {
     document.write(new FileOutputStream(path));
   }
 
-  public void generateDocument(Diploma diploma, String documentName) throws IOException, XmlException {
+  public void generateDocument(int studentId, String documentName)
+      throws IOException, XmlException, SQLException {
     document = getInputDocument();
 
     final Map<DocVariableConst, DocVariable> variables = findAllVariables();
+    final Diploma diploma = diplomaService.getByStudentId(studentId);
 
     for (DocVariable docVariable :
         variables.values()) {
       changeParagraph(docVariable, diploma);
     }
 
-    addCourses(diploma.getAllCourses(), variables);
-    addInternships(diploma.getAllInternships(), variables);
-    addResearchProjects(diploma.getAllResearchProjects(), variables);
-    addStateAttestations(diploma.getAllStateAttestations(), variables);
+    addCourses(educationalComponentService.getAllCoursesByDiplomaId(diploma.getId()), variables);
+    addInternships(educationalComponentService.getAllInternshipsByDiplomaId(diploma.getId()),
+        variables);
+    addResearchProjects(
+        educationalComponentService.getAllResearchProjectsByDiplomaId(diploma.getId()), variables);
+    addStateAttestations(
+        educationalComponentService.getAllStateAttestationsByDiplomaId(diploma.getId()), variables);
 
     saveDocument(documentName);
   }
@@ -343,7 +362,7 @@ public class DocWorker {
     return new XWPFDocument(fis);
   }
 
-  private void changeParagraph(DocVariable docVariable, Diploma diploma) {
+  private void changeParagraph(DocVariable docVariable, Diploma diploma) throws SQLException {
     switch (docVariable.getDocVariableConst()) {
       case DIPLOMA:
         changeParagraph(docVariable.getParagraph(), diploma.getNumber(), false);
@@ -390,7 +409,8 @@ public class DocWorker {
         changeParagraph(docVariable.getParagraph(), diploma.getModeOfStudy().getName(), true);
         break;
       case CREDITS_GAINED:
-        changeParagraph(docVariable.getParagraph(), String.valueOf(diploma.getCreditsGained()),
+        changeParagraph(docVariable.getParagraph(),
+            String.valueOf(educationalComponentService.getCreditsGained(diploma.getId())),
             false);
         break;
       case CLASSIFICATION_SYSTEM:
