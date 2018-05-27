@@ -325,6 +325,39 @@ public class FXMLStudentController implements Initializable {
         tvGrades.setItems(educationalComponentObservableList);
     }
 
+    private void addCredits() {
+/*        List<db.entities.EducationalComponent> educationalComponentList = new ArrayList<>();
+        List<db.entities.EducationalComponentTemplate> educationalComponentTemplateList = new ArrayList<>();
+
+        try {
+            educationalComponentList = educationalComponentService.getAll();
+            educationalComponentTemplateList = educationalComponentTemplateService.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        final int educationalComponentTemplateId = educationalComponentTemplateList.size() + 1;
+        final String courseTitle;
+
+        if (cbCourseTitle.getSelectionModel().getSelectedItem() != null || (cbCourseTitle.getSelectionModel()
+                .getSelectedItem() != null && tfCourseTitle.getText().trim().length() != 0)) {
+            courseTitle = cbCourseTitle.getSelectionModel().getSelectedItem().getCourseTitle();
+        } else {
+            courseTitle = tfCourseTitle.getText().trim();
+        }
+
+        final int id = educationalComponentList.size() + 1;
+        final int nationalScore = Integer.parseInt(tfNationalScore.getText().trim());
+        final db.entities.EducationalComponentTemplate educationalComponentTemplate =
+                new db.entities.EducationalComponentTemplate(educationalComponentTemplateId,
+                        Integer.parseInt(tfCredit.getText().trim()), courseTitle, educationalComponentTypeMapper
+                        .reverseMap(cbEducationalComponentType.getSelectionModel().getSelectedItem()),
+                        mainFieldMapper.reverseMap(cbMainField.getSelectionModel().getSelectedItem()));
+        */
+            
+
+    }
+
     private void addStudent() {
 
         List<db.entities.Student> studentList = new ArrayList<>();
