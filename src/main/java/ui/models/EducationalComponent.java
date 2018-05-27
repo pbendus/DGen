@@ -148,4 +148,19 @@ public class EducationalComponent {
     public void setDiploma(Diploma diploma) {
         this.diploma.set(diploma);
     }
+
+    @Override
+    public String toString() {
+        return "EducationalComponent{" +
+                "id=" + id +
+                ", nationalScore=" + nationalScore +
+                ", credits=" + credits +
+                ", courseTitle=" + courseTitle +
+                ", educationalComponentType=" + educationalComponentType +
+                ", educationalComponentTemplate=" + educationalComponentTemplate +
+                ", ratingPoint=" + ratingPoint +
+                ", nationalGrade=" + nationalGrade +
+                ", diploma=" + diploma +
+                '}';
+    }
 }

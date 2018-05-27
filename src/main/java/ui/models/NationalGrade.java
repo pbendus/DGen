@@ -13,6 +13,10 @@ public class NationalGrade {
     private IntegerProperty maxNationalScore;
 
     public NationalGrade() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
+        this.minNationalScore = new SimpleIntegerProperty();
+        this.maxNationalScore = new SimpleIntegerProperty();
     }
 
     public NationalGrade(int id, String name, int minNationalScore, int maxNationalScore) {

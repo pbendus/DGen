@@ -10,9 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
@@ -53,10 +55,10 @@ public class FXMLStudentController implements Initializable {
     private TableColumn<EducationalComponent, String> tcName;
 
     @FXML
-    private TableColumn<EducationalComponent, String> tcCredit;
+    private TableColumn<EducationalComponent, Integer> tcCredit;
 
     @FXML
-    private TableColumn<EducationalComponent, String> tcGrade;
+    private TableColumn<EducationalComponent, Integer> tcGrade;
 
     @FXML
     private TextField tfFamilyName;
@@ -80,16 +82,7 @@ public class FXMLStudentController implements Initializable {
     private TextField tfNumber;
 
     @FXML
-    private TextField tfCourseTitle;
-
-    @FXML
     private TextField tfRegistrationNumber;
-
-    @FXML
-    private TextField tfCredit;
-
-    @FXML
-    private TextField tfNationalScore;
 
     @FXML
     private TextArea taInformationOnCertification;
@@ -128,22 +121,7 @@ public class FXMLStudentController implements Initializable {
     private ComboBox<DurationOfTraining> cbDurationOfTraining;
 
     @FXML
-    private ComboBox<EducationalComponentType> cbEducationalComponentType;
-
-    @FXML
     private ComboBox<ClassificationSystem> cbClassificationSystem;
-
-    @FXML
-    private ComboBox<EducationalComponentTemplate> cbCourseTitle;
-
-    @FXML
-    private Button btnAddPreviousDocument;
-
-    @FXML
-    private Button btnAddProtocol;
-
-    @FXML
-    private Button btnAddGrade;
 
     @FXML
     private Button btnSave;
@@ -266,14 +244,15 @@ public class FXMLStudentController implements Initializable {
 
     private void setListenersOnButtons() {
         btnCancel.setOnMouseClicked(e -> closeWindow());
-        btnAddGrade.setOnAction(e -> {
-
-        });
         btnSave.setOnMouseClicked(e -> {
-            if (validateInputs()) {
-                addStudent();
-                closeWindow();
+            for(EducationalComponent educationalComponent:
+                    educationalComponentObservableList) {
+                System.out.println(educationalComponent);
             }
+//            if (validateInputs()) {
+//                addStudent();
+//                closeWindow();
+//            }
         });
     }
 
@@ -299,13 +278,11 @@ public class FXMLStudentController implements Initializable {
         cbProtocol.getItems().addAll(protocolObservableListList);
         cbPreviousDocument.getItems().addAll(previousDocumentObservableList);
         cbMainField.getItems().addAll(mainFieldObservableList);
-        cbEducationalComponentType.getItems().addAll(educationalComponentTypeObservableList);
         cbFieldOfStudy.getItems().addAll(fieldOfStudyObservableList);
         cbOfficialDuration.getItems().addAll(officialDurationOfProgrammeObservableList);
         cbAccessRequirements.getItems().addAll(accessRequirementsObservableList);
         cbModeOfStudy.getItems().addAll(modeOfStudyObservableList);
         cbDurationOfTraining.getItems().addAll(durationOfTrainingObservableList);
-        cbCourseTitle.getItems().addAll(educationalComponentTemplateObservableList);
     }
 
     private void initializeTableView() {
@@ -323,39 +300,10 @@ public class FXMLStudentController implements Initializable {
         tcGrade.setCellValueFactory(new PropertyValueFactory<>("nationalScore"));
 
         tvGrades.setItems(educationalComponentObservableList);
-    }
 
-    private void addCredits() {
-/*        List<db.entities.EducationalComponent> educationalComponentList = new ArrayList<>();
-        List<db.entities.EducationalComponentTemplate> educationalComponentTemplateList = new ArrayList<>();
-
-        try {
-            educationalComponentList = educationalComponentService.getAll();
-            educationalComponentTemplateList = educationalComponentTemplateService.getAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        final int educationalComponentTemplateId = educationalComponentTemplateList.size() + 1;
-        final String courseTitle;
-
-        if (cbCourseTitle.getSelectionModel().getSelectedItem() != null || (cbCourseTitle.getSelectionModel()
-                .getSelectedItem() != null && tfCourseTitle.getText().trim().length() != 0)) {
-            courseTitle = cbCourseTitle.getSelectionModel().getSelectedItem().getCourseTitle();
-        } else {
-            courseTitle = tfCourseTitle.getText().trim();
-        }
-
-        final int id = educationalComponentList.size() + 1;
-        final int nationalScore = Integer.parseInt(tfNationalScore.getText().trim());
-        final db.entities.EducationalComponentTemplate educationalComponentTemplate =
-                new db.entities.EducationalComponentTemplate(educationalComponentTemplateId,
-                        Integer.parseInt(tfCredit.getText().trim()), courseTitle, educationalComponentTypeMapper
-                        .reverseMap(cbEducationalComponentType.getSelectionModel().getSelectedItem()),
-                        mainFieldMapper.reverseMap(cbMainField.getSelectionModel().getSelectedItem()));
-        */
-            
-
+        tvGrades.setEditable(true);
+        tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
 
     private void addStudent() {
