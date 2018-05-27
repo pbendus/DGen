@@ -20,8 +20,6 @@ public class Main {
     AbstractApplicationContext contextDB =
         new AnnotationConfigApplicationContext(DataSourceConfig.class);
 
-    EducationalComponentMapper educationalComponentMapper = (EducationalComponentMapper) contextDB.getBean("educationalComponentMapper");
-
     DiplomaService diplomaService =
         (DiplomaService) contextDB.getBean("diplomaService");
     try {

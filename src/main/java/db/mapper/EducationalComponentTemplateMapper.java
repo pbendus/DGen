@@ -1,7 +1,6 @@
 package db.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ui.models.EducationalComponentTemplate;
 
@@ -27,7 +26,7 @@ public class EducationalComponentTemplateMapper
         new EducationalComponentTemplate();
     educationalComponentTemplate.setId(value.getId());
     educationalComponentTemplate.setCourseTitle(value.getCourseTitle());
-    educationalComponentTemplate.setCredit(value.getCredit());
+    educationalComponentTemplate.setCredits(value.getCredit());
     educationalComponentTemplate.setEducationalComponentType(
         educationalComponentTypeMapper.map(value.getEducationalComponentType()));
     educationalComponentTemplate.setMainField(mainFieldMapper.map(value.getMainField()));
@@ -40,7 +39,7 @@ public class EducationalComponentTemplateMapper
         new db.entities.EducationalComponentTemplate();
     educationalComponentTemplate.setId(value.getId());
     educationalComponentTemplate.setCourseTitle(value.getCourseTitle());
-    educationalComponentTemplate.setCredit(value.getCredit());
+    educationalComponentTemplate.setCredit(value.getCredits());
     educationalComponentTemplate.setEducationalComponentType(
         educationalComponentTypeMapper.reverseMap(value.getEducationalComponentType()));
     educationalComponentTemplate.setMainField(mainFieldMapper.reverseMap(value.getMainField()));

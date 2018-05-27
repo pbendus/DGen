@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -258,6 +259,7 @@ public class FXMLStudentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeComboBoxes();
+        initializeTableView();
         setListenersOnButtons();
         setListenersOnInformationOnCertification();
     }
@@ -306,14 +308,22 @@ public class FXMLStudentController implements Initializable {
         cbCourseTitle.getItems().addAll(educationalComponentTemplateObservableList);
     }
 
-/*    private void initializeTableView() {
+    private void initializeTableView() {
         try {
             educationalComponentObservableList.addAll(educationalComponentMapper
                     .map(educationalComponentService.getAll()));
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
-    }*/
+
+        tcNumber.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tcType.setCellValueFactory(new PropertyValueFactory<>("educationalComponentType"));
+        tcName.setCellValueFactory(new PropertyValueFactory<>("courseTitle"));
+        tcCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
+        tcGrade.setCellValueFactory(new PropertyValueFactory<>("nationalScore"));
+
+        tvGrades.setItems(educationalComponentObservableList);
+    }
 
     private void addStudent() {
 
