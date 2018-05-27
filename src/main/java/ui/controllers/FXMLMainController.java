@@ -68,8 +68,6 @@ public class FXMLMainController implements Initializable {
             students.addAll(studentMapper.map(list));
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            students.add(null);
         }
 
         tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));

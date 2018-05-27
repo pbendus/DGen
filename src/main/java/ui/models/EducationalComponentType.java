@@ -11,6 +11,8 @@ public class EducationalComponentType {
     private StringProperty name;
 
     public EducationalComponentType() {
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
     }
 
     public EducationalComponentType(int id, String name) {
@@ -40,6 +42,11 @@ public class EducationalComponentType {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }
 

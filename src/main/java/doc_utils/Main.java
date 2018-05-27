@@ -1,6 +1,7 @@
 package doc_utils;
 
 import db.configuration.DataSourceConfig;
+import db.mapper.EducationalComponentMapper;
 import db.services.DiplomaService;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ public class Main {
 
     AbstractApplicationContext contextDB =
         new AnnotationConfigApplicationContext(DataSourceConfig.class);
+
+    EducationalComponentMapper educationalComponentMapper = (EducationalComponentMapper) contextDB.getBean("educationalComponentMapper");
 
     DiplomaService diplomaService =
         (DiplomaService) contextDB.getBean("diplomaService");

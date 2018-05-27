@@ -74,11 +74,12 @@
                               <TableColumn fx:id="tcGrade" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Бали" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="tfCourseTitle" layoutX="14.0" layoutY="226.0" prefHeight="25.0" prefWidth="570.0" promptText="course_title" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="215.0" />
-                        <TextField fx:id="tfCredit" layoutX="215.0" layoutY="260.0" prefHeight="25.0" prefWidth="90.0" promptText="credit" AnchorPane.leftAnchor="235.0" AnchorPane.topAnchor="250.0" />
-                        <ComboBox fx:id="cbMainField2" layoutX="15.0" layoutY="264.0" prefWidth="200.0" promptText="main_field" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="250.0" />
-                        <TextField fx:id="tfNationalScore" layoutX="315.0" layoutY="260.0" prefHeight="25.0" prefWidth="90.0" promptText="nat_score" AnchorPane.leftAnchor="355.0" AnchorPane.topAnchor="250.0" />
+                        <TextField fx:id="tfCourseTitle" layoutX="265.0" layoutY="225.0" prefHeight="25.0" prefWidth="320.0" promptText="course_title" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="215.0" />
+                        <TextField fx:id="tfCredit" layoutX="215.0" layoutY="260.0" prefHeight="25.0" prefWidth="80.0" promptText="credit" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="250.0" />
+                        <ComboBox fx:id="cbEducationalComponentType" layoutX="15.0" layoutY="264.0" prefWidth="220.0" promptText="educational_component_type" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="250.0" />
+                        <TextField fx:id="tfNationalScore" layoutX="315.0" layoutY="260.0" prefHeight="25.0" prefWidth="80.0" promptText="nat_score" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="250.0" />
                         <Button fx:id="btnAddGrade" layoutX="483.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Додати" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="250.0" />
+                        <ComboBox fx:id="cbCourseTitle" layoutX="15.0" layoutY="225.0" prefWidth="220.0" promptText="course_title" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="215.0" />
                      </children>
                   </AnchorPane>
             </content>
