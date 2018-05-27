@@ -1,6 +1,5 @@
 package db.mapper;
 
-import javafx.collections.FXCollections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class DiplomaMapper
   private ProfessionalStatusMapper professionalStatusMapper;
   private ClassificationSystemMapper classificationSystemMapper;
   private DurationOfTrainingMapper durationOfTrainingMapper;
-  private EducationalComponentMapper educationalComponentMapper;
 
   @Autowired
   public DiplomaMapper(StudentMapper studentMapper, MainFieldMapper mainFieldMapper,
@@ -40,7 +38,6 @@ public class DiplomaMapper
     this.professionalStatusMapper = professionalStatusMapper;
     this.classificationSystemMapper = classificationSystemMapper;
     this.durationOfTrainingMapper = durationOfTrainingMapper;
-    this.educationalComponentMapper = educationalComponentMapper;
   }
 
   @Override public ui.models.Diploma map(db.entities.Diploma value) {
@@ -60,8 +57,6 @@ public class DiplomaMapper
     diploma.setClassificationSystem(
         classificationSystemMapper.map(value.getClassificationSystem()));
     diploma.setDurationOfTraining(durationOfTrainingMapper.map(value.getDurationOfTraining()));
-    diploma.setEducationalComponents(FXCollections.observableArrayList(
-        educationalComponentMapper.map(value.getEducationalComponentsList())));
 
     return diploma;
   }
@@ -87,8 +82,6 @@ public class DiplomaMapper
         classificationSystemMapper.reverseMap(value.getClassificationSystem()));
     diploma.setDurationOfTraining(
         durationOfTrainingMapper.reverseMap(value.getDurationOfTraining()));
-    diploma.setEducationalComponentsAsList(
-        educationalComponentMapper.reverseMap(value.getEducationalComponents()));
 
     return diploma;
   }
