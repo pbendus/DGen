@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -29,6 +31,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DocWorker {
+
+  private static final Logger LOGGER = LogManager.getLogger();
+
   @Value("${doc.pattern}")
   private String key;
   @Value("${doc.inputFilePath}")
@@ -72,7 +77,7 @@ public class DocWorker {
             if (docVariableConst.getValue().equals(variable)) {
               docVariables.put(docVariableConst,
                   new DocVariable(text, paragraph, docVariableConst));
-              System.out.println(text);
+              LOGGER.info(String.format("Variable {%s} has been found", text));
             }
           }
         }
@@ -88,8 +93,9 @@ public class DocWorker {
     return docVariables;
   }
 
-  public void saveDocument(String path) throws IOException {
-    document.write(new FileOutputStream(path));
+  public void saveDocument(String fileName) throws IOException {
+    document.write(new FileOutputStream(fileName));
+    LOGGER.info(String.format("Document %s has been created", fileName));
   }
 
   public void generateDocument(int studentId, String documentName)
@@ -344,7 +350,6 @@ public class DocWorker {
               DocVariableConst.values()) {
             final String variable = text.replaceAll(key, "");
             if (docVariableConst.getValue().equals(variable)) {
-              System.out.println(text);
               variables.put(docVariableConst,
                   new DocVariable(text, paragraph, cell, docVariableConst));
             }
@@ -455,6 +460,8 @@ public class DocWorker {
     } else {
       paragraph.getRuns().get(0).setText(value, 0);
     }
+
+    LOGGER.info(String.format("Paragraph{%s} has been changed, value(%s)", paragraph, value));
     //Todo split value("/") and add new line with second value
   }
 }

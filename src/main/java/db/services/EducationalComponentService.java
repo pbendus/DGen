@@ -40,12 +40,19 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
   }
 
   public List<EducationalComponent> getAllByDiplomaId(int diplomaId) throws SQLException {
-    return getDao().queryForEq("diploma_id", diplomaId);
+    final List<EducationalComponent> educationalComponents =
+        getDao().queryForEq("diploma_id", diplomaId);
+
+    LOGGER.info(
+        String.format("The diploma with id{%d} contains %d educational component(s)",
+            diplomaId, educationalComponents.size()));
+
+    return educationalComponents;
   }
 
   public List<EducationalComponent> getAllCoursesByDiplomaId(int diplomaId) throws
       SQLException {
-    List<EducationalComponent> educationalComponents = new ArrayList<>();
+    final List<EducationalComponent> educationalComponents = new ArrayList<>();
     for (EducationalComponent component :
         getAllByDiplomaId(diplomaId)) {
       if (component.getEducationalComponentTemplate()
@@ -56,12 +63,16 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
       }
     }
 
+    LOGGER.info(
+        String.format("The diploma with id{%d} contains %d course(s)", diplomaId,
+            educationalComponents.size()));
+
     return educationalComponents;
   }
 
   public List<EducationalComponent> getAllResearchProjectsByDiplomaId(int diplomaId)
       throws SQLException {
-    List<EducationalComponent> educationalComponents = new ArrayList<>();
+    final List<EducationalComponent> educationalComponents = new ArrayList<>();
     for (EducationalComponent component :
         getAllByDiplomaId(diplomaId)) {
       if (component.getEducationalComponentTemplate()
@@ -88,6 +99,10 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
       }
     }
 
+    LOGGER.info(
+        String.format("The diploma with id{%d} contains %d internship(s)", diplomaId,
+            educationalComponents.size()));
+
     return educationalComponents;
   }
 
@@ -104,6 +119,10 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
       }
     }
 
+    LOGGER.info(
+        String.format("The diploma with id{%d} contains %d state attestation(s)", diplomaId,
+            educationalComponents.size()));
+
     return educationalComponents;
   }
 
@@ -113,6 +132,10 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
         getAllByDiplomaId(diplomaId)) {
       value += component.getEducationalComponentTemplate().getCredit();
     }
+
+    LOGGER.info(
+        String.format("The diploma with id{%d} contains %d credit gained", diplomaId, value));
+
     return value;
   }
 }
