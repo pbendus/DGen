@@ -3,6 +3,8 @@ package ui.controllers;
 import db.mapper.StudentMapper;
 import db.services.StudentService;
 
+import doc_utils.DocWorker;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,6 +20,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.xmlbeans.XmlException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
@@ -26,6 +31,8 @@ import ui.utils.SpringFXMLLoader;
 
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @FXML
     private TableView<Student> tblView;
@@ -45,6 +52,9 @@ public class FXMLMainController implements Initializable {
     @FXML
     private Button btnAddStudent;
 
+    @FXML
+    public Button btnGenerate;
+
     private ObservableList<Student> students = FXCollections.observableArrayList();
 
     private StudentMapper studentMapper;
@@ -52,12 +62,15 @@ public class FXMLMainController implements Initializable {
 
     private FXMLStudentController fxmlStudentController;
 
+    private DocWorker docWorker;
+
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
-                              FXMLStudentController fxmlStudentController) {
+        FXMLStudentController fxmlStudentController, DocWorker docWorker) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
         this.fxmlStudentController = fxmlStudentController;
+        this.docWorker = docWorker;
     }
 
     @Override
@@ -105,6 +118,27 @@ public class FXMLMainController implements Initializable {
         });
 
         btnAddStudent.setOnAction(e -> openStudentModalWindow());
+        btnGenerate.setOnAction(event -> generateDocuments());
+    }
+
+    private void generateDocuments() {
+        if (containsSelectedStudents()){
+          for (Student student :
+              students) {
+            if (student.getSelect().isSelected()){
+              try {
+                docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+              } catch (IOException | XmlException | SQLException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+              }
+            }
+          }
+        }
+    }
+
+    private boolean containsSelectedStudents() {
+        return students.stream().anyMatch(student -> student.getSelect().isSelected());
     }
 
     private void openStudentModalWindow() {

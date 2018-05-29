@@ -1,6 +1,7 @@
 package ui;
 
 import db.configuration.DataSourceConfig;
+import doc_utils.DocConfig;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,7 +15,8 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-        applicationContext = new AnnotationConfigApplicationContext(AppConfig.class, DataSourceConfig.class);
+        applicationContext = new AnnotationConfigApplicationContext(AppConfig.class, DataSourceConfig.class,
+            DocConfig.class);
     }
 
     @Override

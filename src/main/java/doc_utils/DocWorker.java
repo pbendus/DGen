@@ -33,6 +33,8 @@ import org.springframework.stereotype.Component;
 public class DocWorker {
 
   private static final Logger LOGGER = LogManager.getLogger();
+  private static final String FOLDER = "documents/";
+  private static final String DOCX = ".docx";
 
   @Value("${doc.pattern}")
   private String key;
@@ -94,7 +96,7 @@ public class DocWorker {
   }
 
   public void saveDocument(String fileName) throws IOException {
-    document.write(new FileOutputStream(fileName));
+    document.write(new FileOutputStream(fileName + DOCX));
     LOGGER.info(String.format("Document %s has been created", fileName));
   }
 

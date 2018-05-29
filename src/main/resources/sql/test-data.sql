@@ -46,7 +46,7 @@ VALUES (
 INSERT INTO student (family_name, given_name, family_name_tr, given_name_tr, date_of_birth, protocol_id, diploma_subject_id, previous_document_id)
 VALUES ('Баклицький', 'Юрій Володимирович', 'Baklytskyi', 'Yurii', '1995-02-25', 1, 1, 1);
 INSERT INTO student (family_name, given_name, family_name_tr, given_name_tr, date_of_birth, protocol_id, diploma_subject_id, previous_document_id)
-VALUES ('Депутат', 'Андрый Богданович', 'Deputat', 'Andrii', '1997-04-06', 1, 2, 2);
+VALUES ('Депутат', 'Андрій Богданович', 'Deputat', 'Andrii', '1997-04-06', 1, 2, 2);
 
 INSERT INTO diploma (number, registration_number, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
 VALUES ('M17 № 086783', '555м/17', '2017-12-31', 1, 1, 1, 1, 1, 1, 1, 1, 1);
