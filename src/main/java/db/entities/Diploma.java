@@ -17,6 +17,9 @@ public class Diploma {
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "registration_number")
   private String registrationNumber;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "addition_registration_number")
+  private String additionRegistrationNumber;
+
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "date_of_issue",
       dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
   private Date dateOfIssue;
@@ -57,18 +60,24 @@ public class Diploma {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private DurationOfTraining durationOfTraining;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "ects_credits_id", foreign = true,
+      foreignAutoCreate = true, foreignAutoRefresh = true)
+  private EctsCredits ectsCredits;
+
   public Diploma() {
   }
 
-  public Diploma(int id, String number, String registrationNumber, Date dateOfIssue,
+  public Diploma(int id, String number, String registrationNumber,
+      String additionRegistrationNumber, Date dateOfIssue,
       Student student, MainField mainField, FieldOfStudy fieldOfStudy,
       OfficialDurationOfProgramme officialDurationOfProgramme,
       AccessRequirements accessRequirements, ModeOfStudy modeOfStudy,
       ProfessionalStatus professionalStatus, ClassificationSystem classificationSystem,
-      DurationOfTraining durationOfTraining) {
+      DurationOfTraining durationOfTraining, EctsCredits ectsCredits) {
     this.id = id;
     this.number = number;
     this.registrationNumber = registrationNumber;
+    this.additionRegistrationNumber = additionRegistrationNumber;
     this.dateOfIssue = dateOfIssue;
     this.student = student;
     this.mainField = mainField;
@@ -79,6 +88,7 @@ public class Diploma {
     this.professionalStatus = professionalStatus;
     this.classificationSystem = classificationSystem;
     this.durationOfTraining = durationOfTraining;
+    this.ectsCredits = ectsCredits;
   }
 
   public int getId() {
@@ -184,6 +194,22 @@ public class Diploma {
 
   public void setDurationOfTraining(DurationOfTraining durationOfTraining) {
     this.durationOfTraining = durationOfTraining;
+  }
+
+  public EctsCredits getEctsCredits() {
+    return ectsCredits;
+  }
+
+  public void setEctsCredits(EctsCredits ectsCredits) {
+    this.ectsCredits = ectsCredits;
+  }
+
+  public String getAdditionRegistrationNumber() {
+    return additionRegistrationNumber;
+  }
+
+  public void setAdditionRegistrationNumber(String additionRegistrationNumber) {
+    this.additionRegistrationNumber = additionRegistrationNumber;
   }
 
   public String getInformationOnCertification() {

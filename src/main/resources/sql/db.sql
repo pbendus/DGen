@@ -72,7 +72,9 @@ CREATE TABLE protocol (
 CREATE TABLE duration_of_training (
   id               INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   name            VARCHAR(255) NOT NULL,
-  mode_of_study_id INTEGER      NOT NULL
+  mode_of_study_id INTEGER      NOT NULL,
+
+  FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id)
 );
 
 ---------------------------------------------------------------------------------
@@ -102,6 +104,12 @@ CREATE TABLE student (
   FOREIGN KEY (diploma_subject_id) REFERENCES diploma_subject (id),
   FOREIGN KEY (previous_document_id) REFERENCES previous_document (id)
 );
+---------------------------------------------------------------------------------
+--  ECTS credits
+CREATE TABLE ects_credits (
+  id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name  VARCHAR(255)    NOT NULL UNIQUE
+);
 
 ---------------------------------------------------------------------------------
 -- Diploma
@@ -109,6 +117,8 @@ CREATE TABLE diploma (
   id                                INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   number                            VARCHAR(255) NOT NULL UNIQUE,
   registration_number               VARCHAR(255) NOT NULL,
+  addition_registration_number      VARCHAR(255) NOT NULL,
+  ects_credits_id                   VARCHAR(255) NOT NULL,
   date_of_issue                     DATE         NOT NULL,
   student_id                        INTEGER      NOT NULL UNIQUE,
   main_field_id                     INTEGER      NOT NULL,
@@ -128,7 +138,8 @@ CREATE TABLE diploma (
   FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
   FOREIGN KEY (professional_status_id) REFERENCES professional_status (id),
   FOREIGN KEY (duration_of_training_id) REFERENCES duration_of_training (id),
-  FOREIGN KEY (classification_system_id) REFERENCES classification_system (id)
+  FOREIGN KEY (classification_system_id) REFERENCES classification_system (id),
+  FOREIGN KEY (ects_credits_id) REFERENCES ects_credits (id)
 );
 -- A, B, C, D, E, FX, F
 CREATE TABLE rating_point (

@@ -3,6 +3,7 @@ package doc_utils;
 public enum DocVariableConst {
   DIPLOMA("diploma"),
   REGISTRATION_NUMBER("reg"),
+  ADD_REGISTRATION_NUMBER("add_reg"),
   DATE_OF_ISSUE("date_of_issue"),
   FAMILY_NAME("family_name"),
   GIVEN_NAME("given_name"),
@@ -46,7 +47,8 @@ public enum DocVariableConst {
   ATTESTATION_CREDITS("attestation_credits"),
   ATTESTATION_SCORE("attestation_score"),
   ATTESTATION_RATING_POINT("attestation_rating_point"),
-  ATTESTATION_NATIONAL_GRADE("attestation_national_grade");
+  ATTESTATION_NATIONAL_GRADE("attestation_national_grade"),
+  ECTS_CREDITS("ects_credits");
 
   private final String value;
 

@@ -10,7 +10,15 @@ VALUES
 
 INSERT INTO access_requirements (name)
 VALUES (
-  'Ступінь бакалавра (ОКР - спеціаліста). За результатами вступних випробувань / Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations');
+  'Повна загальна середня освіта, вступ здійснюється за результатами ЗНО / Complete general secondary secondary education, on the results of the external independent examination.');
+
+INSERT INTO access_requirements (name)
+VALUES (
+  'Початковий рівень вищої освіти, вступ здійснюється за результатами фахових вступних випробувань / The initial level of higher education, on the results of professional entrance examinations.');
+
+INSERT INTO access_requirements (name)
+VALUES (
+  'Вступ здійснюється за результатами вступних випробувань / On the results of entrance examinations.');
 
 INSERT INTO mode_of_study (name)
 VALUES ('Очна / Full time');
@@ -38,6 +46,9 @@ VALUES (
 INSERT INTO protocol (name_uk, name_en)
 VALUES ('(протокол №2 від 20/12/2017)', '(protocol №2 dated 20/12/2017)');
 
+insert into ects_credits (name) values ('1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
+insert into ects_credits (name) values ('1 кредит ЄКТС – 36 годин / 1 ECTS credits – 36 study hours');
+
 INSERT INTO duration_of_training (name, mode_of_study_id)
 VALUES (
   '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2016 – 31.12.2017',
@@ -48,10 +59,10 @@ VALUES ('Баклицький', 'Юрій Володимирович', 'Baklytsk
 INSERT INTO student (family_name, given_name, family_name_tr, given_name_tr, date_of_birth, protocol_id, diploma_subject_id, previous_document_id)
 VALUES ('Депутат', 'Андрій Богданович', 'Deputat', 'Andrii', '1997-04-06', 1, 2, 2);
 
-INSERT INTO diploma (number, registration_number, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
-VALUES ('M17 № 086783', '555м/17', '2017-12-31', 1, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO diploma (number, registration_number, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
-VALUES ('M18 № 086784', '555м/17', '2017-12-31', 2, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO diploma (number, registration_number, addition_registration_number, ects_credits_id, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
+VALUES ('M17 № 086783', '555м/17', '555м/17', 1, '2017-12-31', 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO diploma (number, registration_number, addition_registration_number, ects_credits_id, date_of_issue, student_id, main_field_id, field_of_study_id, official_duration_of_programme_id, access_requirements_id, mode_of_study_id, professional_status_id, classification_system_id, duration_of_training_id)
+VALUES ('M18 № 086784', '556м/17', '556м/17', 2, '2017-12-31', 2, 1, 1, 1, 1, 1, 1, 1, 1);
 
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('A', 90, 100);
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('B', 82, 89);

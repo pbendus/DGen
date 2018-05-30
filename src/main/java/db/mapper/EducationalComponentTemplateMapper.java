@@ -26,7 +26,7 @@ public class EducationalComponentTemplateMapper
         new EducationalComponentTemplate();
     educationalComponentTemplate.setId(value.getId());
     educationalComponentTemplate.setCourseTitle(value.getCourseTitle());
-    educationalComponentTemplate.setCredits(value.getCredit());
+    educationalComponentTemplate.setCredits(value.getCredits());
     educationalComponentTemplate.setEducationalComponentType(
         educationalComponentTypeMapper.map(value.getEducationalComponentType()));
     educationalComponentTemplate.setMainField(mainFieldMapper.map(value.getMainField()));
@@ -39,7 +39,7 @@ public class EducationalComponentTemplateMapper
         new db.entities.EducationalComponentTemplate();
     educationalComponentTemplate.setId(value.getId());
     educationalComponentTemplate.setCourseTitle(value.getCourseTitle());
-    educationalComponentTemplate.setCredit(value.getCredits());
+    educationalComponentTemplate.setCredits(value.getCredits());
     educationalComponentTemplate.setEducationalComponentType(
         educationalComponentTypeMapper.reverseMap(value.getEducationalComponentType()));
     educationalComponentTemplate.setMainField(mainFieldMapper.reverseMap(value.getMainField()));

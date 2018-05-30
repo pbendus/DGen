@@ -10,7 +10,7 @@ public class EducationalComponentTemplate {
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true)
-  private int credit;
+  private int credits;
 
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "course_title")
   private String courseTitle;
@@ -26,10 +26,10 @@ public class EducationalComponentTemplate {
   public EducationalComponentTemplate() {
   }
 
-  public EducationalComponentTemplate(int id, int credit, String courseTitle,
+  public EducationalComponentTemplate(int id, int credits, String courseTitle,
       EducationalComponentType educationalComponentType, MainField mainField) {
     this.id = id;
-    this.credit = credit;
+    this.credits = credits;
     this.courseTitle = courseTitle;
     this.educationalComponentType = educationalComponentType;
     this.mainField = mainField;
@@ -43,12 +43,12 @@ public class EducationalComponentTemplate {
     this.id = id;
   }
 
-  public int getCredit() {
-    return credit;
+  public int getCredits() {
+    return credits;
   }
 
-  public void setCredit(int credit) {
-    this.credit = credit;
+  public void setCredits(int credits) {
+    this.credits = credits;
   }
 
   public String getCourseTitle() {

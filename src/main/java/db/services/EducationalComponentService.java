@@ -130,7 +130,7 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
     int value = 0;
     for (EducationalComponent component :
         getAllByDiplomaId(diplomaId)) {
-      value += component.getEducationalComponentTemplate().getCredit();
+      value += component.getEducationalComponentTemplate().getCredits();
     }
 
     LOGGER.info(

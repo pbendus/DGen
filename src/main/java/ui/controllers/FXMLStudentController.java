@@ -362,9 +362,10 @@ public class FXMLStudentController implements Initializable {
         final db.entities.DurationOfTraining durationOfTraining = durationOfTrainingMapper
                 .reverseMap(cbDurationOfTraining.getSelectionModel().getSelectedItem());
 
-        db.entities.Diploma diploma = new db.entities.Diploma(id, number, registrationNumber, dateOfIssue, student,
+        db.entities.Diploma diploma = new db.entities.Diploma(id, number, registrationNumber,
+            null, dateOfIssue, student,
                 mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements, modeOfStudy,
-                professionalStatus, classificationSystem, durationOfTraining);
+                professionalStatus, classificationSystem, durationOfTraining, null);
 
         try {
             studentService.create(student);
