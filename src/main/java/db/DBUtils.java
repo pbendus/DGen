@@ -15,11 +15,11 @@ import db.entities.ModeOfStudy;
 import db.entities.NationalGrade;
 import db.entities.OfficialDurationOfProgramme;
 import db.entities.PreviousDocument;
-import db.entities.ProfessionalStatus;
 import db.entities.Protocol;
 import db.entities.RatingPoint;
 import db.entities.Student;
 import java.sql.SQLException;
+import ui.models.ProfessionalStatus;
 
 public class DBUtils {
   /**
@@ -35,7 +35,6 @@ public class DBUtils {
     TableUtils.createTableIfNotExists(connectionSource, PreviousDocument.class);
     TableUtils.createTableIfNotExists(connectionSource, ModeOfStudy.class);
     TableUtils.createTableIfNotExists(connectionSource, ClassificationSystem.class);
-    TableUtils.createTableIfNotExists(connectionSource, ProfessionalStatus.class);
     TableUtils.createTableIfNotExists(connectionSource, Protocol.class);
     TableUtils.createTableIfNotExists(connectionSource, DurationOfTraining.class);
     TableUtils.createTableIfNotExists(connectionSource, Student.class);

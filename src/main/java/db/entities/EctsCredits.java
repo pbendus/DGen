@@ -12,12 +12,17 @@ public class EctsCredits {
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
   private String name;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_study_id",
+      foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
+  private DurationOfStudy durationOfStudy;
+
   public EctsCredits() {
   }
 
-  public EctsCredits(int id, String name) {
+  public EctsCredits(int id, String name, DurationOfStudy durationOfStudy) {
     this.id = id;
     this.name = name;
+    this.durationOfStudy = durationOfStudy;
   }
 
   public int getId() {
@@ -34,5 +39,13 @@ public class EctsCredits {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public DurationOfStudy getDurationOfStudy() {
+    return durationOfStudy;
+  }
+
+  public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
+    this.durationOfStudy = durationOfStudy;
   }
 }

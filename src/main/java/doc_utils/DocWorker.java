@@ -240,8 +240,9 @@ public class DocWorker {
             component.getEducationalComponentTemplate().getCourseTitle(), true);
         break;
       case COMPONENT_CREDITS:
+        double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getEducationalComponentTemplate().getCredits()), false);
+            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), false);
         break;
       case COMPONENT_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -252,7 +253,7 @@ public class DocWorker {
         break;
       case COMPONENT_NATIONAL_GRADE:
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getNationalGrade().getName()), false);
+            String.valueOf(component.getNationalGrade().getName()), true);
         break;
     }
   }
@@ -265,22 +266,23 @@ public class DocWorker {
         break;
       case RESEARCH_TITLE:
         changeParagraph(docVariable.getParagraph(),
-            component.getEducationalComponentTemplate().getCourseTitle(), false);
+            component.getEducationalComponentTemplate().getCourseTitle(), true);
         break;
       case RESEARCH_CREDITS:
+        double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getEducationalComponentTemplate().getCredits()), false);
+            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), true);
         break;
       case RESEARCH_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
             false);
         break;
       case RESEARCH_RATING_POINT:
-        changeParagraph(docVariable.getParagraph(), component.getRatingPoint().getName(), false);
+        changeParagraph(docVariable.getParagraph(), component.getRatingPoint().getName(), true);
         break;
       case RESEARCH_NATIONAL_GRADE:
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getNationalGrade().getName()), false);
+            String.valueOf(component.getNationalGrade().getName()), true);
         break;
     }
   }
@@ -293,22 +295,23 @@ public class DocWorker {
         break;
       case INTERNSHIP_TITLE:
         changeParagraph(docVariable.getParagraph(),
-            component.getEducationalComponentTemplate().getCourseTitle(), false);
+            component.getEducationalComponentTemplate().getCourseTitle(), true);
         break;
       case INTERNSHIP_CREDITS:
+        double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getEducationalComponentTemplate().getCredits()), false);
+            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), true);
         break;
       case INTERNSHIP_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
             false);
         break;
       case INTERNSHIP_RATING_POINT:
-        changeParagraph(docVariable.getParagraph(), component.getRatingPoint().getName(), false);
+        changeParagraph(docVariable.getParagraph(), component.getRatingPoint().getName(), true);
         break;
       case INTERNSHIP_NATIONAL_GRADE:
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getNationalGrade().getName()), false);
+            String.valueOf(component.getNationalGrade().getName()), true);
         break;
     }
   }
@@ -321,22 +324,23 @@ public class DocWorker {
         break;
       case ATTESTATION_TITLE:
         changeParagraph(docVariable.getParagraph(),
-            component.getEducationalComponentTemplate().getCourseTitle(), false);
+            component.getEducationalComponentTemplate().getCourseTitle(), true);
         break;
       case ATTESTATION_CREDITS:
+        double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getEducationalComponentTemplate().getCredits()), false);
+            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), true);
         break;
       case ATTESTATION_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
             false);
         break;
       case ATTESTATION_RATING_POINT:
-        changeParagraph(docVariable.getParagraph(), component.getRatingPoint().getName(), false);
+        changeParagraph(docVariable.getParagraph(), component.getRatingPoint().getName(), true);
         break;
       case ATTESTATION_NATIONAL_GRADE:
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(component.getNationalGrade().getName()), false);
+            String.valueOf(component.getNationalGrade().getName()), true);
         break;
     }
   }
@@ -384,6 +388,10 @@ public class DocWorker {
         changeParagraph(docVariable.getParagraph(),
             new SimpleDateFormat("dd.MM.yyyy").format(diploma.getDateOfIssue()), false);
         break;
+      case DATE_OF_ISSUE_ADD:
+        changeParagraph(docVariable.getParagraph(),
+            new SimpleDateFormat("dd.MM.yyyy").format(diploma.getDateOfIssue()), false);
+        break;
       case FAMILY_NAME:
         changeParagraph(docVariable.getParagraph(), diploma.getStudent().getFamilyName(), false);
         break;
@@ -416,11 +424,13 @@ public class DocWorker {
             true);
         break;
       case MODE_OF_STUDY:
-        changeParagraph(docVariable.getParagraph(), diploma.getModeOfStudy().getName(), true);
+        changeParagraph(docVariable.getParagraph(),
+            diploma.getDurationOfTraining().getModeOfStudy().getName(), true);
         break;
       case CREDITS_GAINED:
+        double value = educationalComponentService.getCreditsGained(diploma.getId());
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf(educationalComponentService.getCreditsGained(diploma.getId())),
+            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value),
             false);
         break;
       case CLASSIFICATION_SYSTEM:
@@ -430,10 +440,6 @@ public class DocWorker {
       case CLASSIFICATION_SYSTEM_DESCRIPTION:
         changeParagraph(docVariable.getParagraph(),
             diploma.getClassificationSystem().getCriteria(), true);
-        break;
-      case PROFESSIONAL_STATUS:
-        changeParagraph(docVariable.getParagraph(), diploma.getProfessionalStatus().getName(),
-            true);
         break;
       case DURATION_OF_TRAINING:
         changeParagraph(docVariable.getParagraph(), diploma.getDurationOfTraining().getName(),
@@ -461,13 +467,13 @@ public class DocWorker {
     paragraph.getRuns().forEach(xwpfRun -> xwpfRun.setText("", 0));
     if (splitAndSetItalic) {
       final String[] s = value.split("/");
-      paragraph.getRuns().get(0).setText(value, 0);
-      //if (s.length == 2) {
-      //  paragraph.getRuns().get(0).setText(s[0] + " /", 0);
-      //  paragraph.getRuns().get(1).setText(s[1], 0);
-      //  paragraph.getRuns().get(1).setItalic(true);
-      //}
-      //Todo BUG
+      if (s.length == 2 && paragraph.getRuns().size() > 1) {
+        paragraph.getRuns().get(0).setText(s[0] + " /", 0);
+        paragraph.getRuns().get(1).setText(s[1], 0);
+        paragraph.getRuns().get(1).setItalic(true);
+      } else {
+        paragraph.getRuns().get(0).setText(value, 0);
+      }
     } else {
       paragraph.getRuns().get(0).setText(value, 0);
     }

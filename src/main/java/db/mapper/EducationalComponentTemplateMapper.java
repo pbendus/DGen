@@ -10,14 +10,12 @@ public class EducationalComponentTemplateMapper
     Mapper<db.entities.EducationalComponentTemplate, ui.models.EducationalComponentTemplate> {
 
   private EducationalComponentTypeMapper educationalComponentTypeMapper;
-  private MainFieldMapper mainFieldMapper;
 
   @Autowired
   public EducationalComponentTemplateMapper(
       EducationalComponentTypeMapper educationalComponentTypeMapper,
       MainFieldMapper mainFieldMapper) {
     this.educationalComponentTypeMapper = educationalComponentTypeMapper;
-    this.mainFieldMapper = mainFieldMapper;
   }
 
   @Override
@@ -29,7 +27,6 @@ public class EducationalComponentTemplateMapper
     educationalComponentTemplate.setCredits(value.getCredits());
     educationalComponentTemplate.setEducationalComponentType(
         educationalComponentTypeMapper.map(value.getEducationalComponentType()));
-    educationalComponentTemplate.setMainField(mainFieldMapper.map(value.getMainField()));
     return educationalComponentTemplate;
   }
 
@@ -42,7 +39,6 @@ public class EducationalComponentTemplateMapper
     educationalComponentTemplate.setCredits(value.getCredits());
     educationalComponentTemplate.setEducationalComponentType(
         educationalComponentTypeMapper.reverseMap(value.getEducationalComponentType()));
-    educationalComponentTemplate.setMainField(mainFieldMapper.reverseMap(value.getMainField()));
     return educationalComponentTemplate;
   }
 }

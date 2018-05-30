@@ -16,13 +16,19 @@ public class DurationOfTraining {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private ModeOfStudy modeOfStudy;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_study_id", foreign = true,
+      foreignAutoCreate = true, foreignAutoRefresh = true)
+  private DurationOfStudy durationOfStudy;
+
   public DurationOfTraining() {
   }
 
-  public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy) {
+  public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy,
+      DurationOfStudy durationOfStudy) {
     this.id = id;
     this.name = name;
     this.modeOfStudy = modeOfStudy;
+    this.durationOfStudy = durationOfStudy;
   }
 
   public int getId() {
@@ -47,5 +53,13 @@ public class DurationOfTraining {
 
   public void setModeOfStudy(ModeOfStudy modeOfStudy) {
     this.modeOfStudy = modeOfStudy;
+  }
+
+  public DurationOfStudy getDurationOfStudy() {
+    return durationOfStudy;
+  }
+
+  public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
+    this.durationOfStudy = durationOfStudy;
   }
 }

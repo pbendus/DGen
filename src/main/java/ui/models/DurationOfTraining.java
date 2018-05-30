@@ -7,17 +7,21 @@ public class DurationOfTraining {
     private IntegerProperty id;
     private StringProperty name;
     private ObjectProperty<ModeOfStudy> modeOfStudy;
+    private ObjectProperty<DurationOfStudy> durationOfStudy;
 
     public DurationOfTraining() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
         this.modeOfStudy = new SimpleObjectProperty<>();
+        this.durationOfStudy = new SimpleObjectProperty<>();
     }
 
-    public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy) {
+    public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy,
+        DurationOfStudy durationOfStudy) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.modeOfStudy = new SimpleObjectProperty<>(modeOfStudy);
+        this.durationOfStudy = new SimpleObjectProperty<>(durationOfStudy);
     }
 
     public int getId() {
@@ -59,5 +63,17 @@ public class DurationOfTraining {
     @Override
     public String toString() {
         return name.get();
+    }
+
+    public DurationOfStudy getDurationOfStudy() {
+        return durationOfStudy.get();
+    }
+
+    public ObjectProperty<DurationOfStudy> durationOfStudyProperty() {
+        return durationOfStudy;
+    }
+
+    public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
+        this.durationOfStudy.set(durationOfStudy);
     }
 }

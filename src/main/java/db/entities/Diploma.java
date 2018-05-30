@@ -44,14 +44,6 @@ public class Diploma {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private AccessRequirements accessRequirements;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "mode_of_study_id", foreign = true,
-      foreignAutoCreate = true, foreignAutoRefresh = true)
-  private ModeOfStudy modeOfStudy;
-
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "professional_status_id", foreign = true,
-      foreignAutoCreate = true, foreignAutoRefresh = true)
-  private ProfessionalStatus professionalStatus;
-
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "classification_system_id", foreign = true,
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private ClassificationSystem classificationSystem;
@@ -71,8 +63,8 @@ public class Diploma {
       String additionRegistrationNumber, Date dateOfIssue,
       Student student, MainField mainField, FieldOfStudy fieldOfStudy,
       OfficialDurationOfProgramme officialDurationOfProgramme,
-      AccessRequirements accessRequirements, ModeOfStudy modeOfStudy,
-      ProfessionalStatus professionalStatus, ClassificationSystem classificationSystem,
+      AccessRequirements accessRequirements,
+      ClassificationSystem classificationSystem,
       DurationOfTraining durationOfTraining, EctsCredits ectsCredits) {
     this.id = id;
     this.number = number;
@@ -84,8 +76,6 @@ public class Diploma {
     this.fieldOfStudy = fieldOfStudy;
     this.officialDurationOfProgramme = officialDurationOfProgramme;
     this.accessRequirements = accessRequirements;
-    this.modeOfStudy = modeOfStudy;
-    this.professionalStatus = professionalStatus;
     this.classificationSystem = classificationSystem;
     this.durationOfTraining = durationOfTraining;
     this.ectsCredits = ectsCredits;
@@ -162,22 +152,6 @@ public class Diploma {
 
   public void setAccessRequirements(AccessRequirements accessRequirements) {
     this.accessRequirements = accessRequirements;
-  }
-
-  public ModeOfStudy getModeOfStudy() {
-    return modeOfStudy;
-  }
-
-  public void setModeOfStudy(ModeOfStudy modeOfStudy) {
-    this.modeOfStudy = modeOfStudy;
-  }
-
-  public ProfessionalStatus getProfessionalStatus() {
-    return professionalStatus;
-  }
-
-  public void setProfessionalStatus(ProfessionalStatus professionalStatus) {
-    this.professionalStatus = professionalStatus;
   }
 
   public ClassificationSystem getClassificationSystem() {

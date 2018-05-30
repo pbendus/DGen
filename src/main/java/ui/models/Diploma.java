@@ -1,7 +1,6 @@
 package ui.models;
 
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
 
 import java.util.Date;
 
@@ -16,8 +15,7 @@ public class Diploma {
     private ObjectProperty<FieldOfStudy> fieldOfStudy;
     private ObjectProperty<OfficialDurationOfProgramme> officialDurationOfProgramme;
     private ObjectProperty<AccessRequirements> accessRequirements;
-    private ObjectProperty<ModeOfStudy> modeOfStudy;
-    private ObjectProperty<ProfessionalStatus> professionalStatus;
+    private ObjectProperty<EctsCredits> ectsCredits;
     private ObjectProperty<ClassificationSystem> classificationSystem;
     private ObjectProperty<DurationOfTraining> durationOfTraining;
 
@@ -31,18 +29,17 @@ public class Diploma {
         this.fieldOfStudy = new SimpleObjectProperty<>();
         this.officialDurationOfProgramme = new SimpleObjectProperty<>();
         this.accessRequirements = new SimpleObjectProperty<>();
-        this.modeOfStudy = new SimpleObjectProperty<>();
-        this.professionalStatus = new SimpleObjectProperty<>();
+        this.ectsCredits = new SimpleObjectProperty<>();
         this.classificationSystem = new SimpleObjectProperty<>();
         this.durationOfTraining = new SimpleObjectProperty<>();
     }
 
     public Diploma(int id, String number, String registrationNumber, Date dateOfIssue,
-                   Student student, MainField mainField, FieldOfStudy fieldOfStudy,
-                   OfficialDurationOfProgramme officialDurationOfProgramme,
-                   AccessRequirements accessRequirements, ModeOfStudy modeOfStudy,
-                   ProfessionalStatus professionalStatus, ClassificationSystem classificationSystem,
-                   DurationOfTraining durationOfTraining) {
+        Student student, MainField mainField, FieldOfStudy fieldOfStudy,
+        OfficialDurationOfProgramme officialDurationOfProgramme,
+        AccessRequirements accessRequirements,
+        EctsCredits ectsCredits, ClassificationSystem classificationSystem,
+        DurationOfTraining durationOfTraining) {
         this.id = new SimpleIntegerProperty(id);
         this.number = new SimpleStringProperty(number);
         this.registrationNumber = new SimpleStringProperty(registrationNumber);
@@ -52,8 +49,7 @@ public class Diploma {
         this.fieldOfStudy = new SimpleObjectProperty<>(fieldOfStudy);
         this.officialDurationOfProgramme = new SimpleObjectProperty<>(officialDurationOfProgramme);
         this.accessRequirements = new SimpleObjectProperty<>(accessRequirements);
-        this.modeOfStudy = new SimpleObjectProperty<>(modeOfStudy);
-        this.professionalStatus = new SimpleObjectProperty<>(professionalStatus);
+        this.ectsCredits = new SimpleObjectProperty<>(ectsCredits);
         this.classificationSystem = new SimpleObjectProperty<>(classificationSystem);
         this.durationOfTraining = new SimpleObjectProperty<>(durationOfTraining);
     }
@@ -166,28 +162,16 @@ public class Diploma {
         this.accessRequirements.set(accessRequirements);
     }
 
-    public ModeOfStudy getModeOfStudy() {
-        return modeOfStudy.get();
+    public EctsCredits getEctsCredits() {
+        return ectsCredits.get();
     }
 
-    public ObjectProperty<ModeOfStudy> modeOfStudyProperty() {
-        return modeOfStudy;
+    public ObjectProperty<EctsCredits> ectsCreditsProperty() {
+        return ectsCredits;
     }
 
-    public void setModeOfStudy(ModeOfStudy modeOfStudy) {
-        this.modeOfStudy.set(modeOfStudy);
-    }
-
-    public ProfessionalStatus getProfessionalStatus() {
-        return professionalStatus.get();
-    }
-
-    public ObjectProperty<ProfessionalStatus> professionalStatusProperty() {
-        return professionalStatus;
-    }
-
-    public void setProfessionalStatus(ProfessionalStatus professionalStatus) {
-        this.professionalStatus.set(professionalStatus);
+    public void setEctsCredits(EctsCredits ectsCredits) {
+        this.ectsCredits.set(ectsCredits);
     }
 
     public ClassificationSystem getClassificationSystem() {

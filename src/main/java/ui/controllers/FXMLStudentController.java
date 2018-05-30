@@ -141,7 +141,6 @@ public class FXMLStudentController implements Initializable {
     private ModeOfStudyService modeOfStudyService;
     private DurationOfTrainingService durationOfTrainingService;
     private DiplomaSubjectService diplomaSubjectService;
-    private ProfessionalStatusService professionalStatusService;
     private DiplomaService diplomaService;
     private EducationalComponentTypeService educationalComponentTypeService;
     private EducationalComponentTemplateService educationalComponentTemplateService;
@@ -187,7 +186,6 @@ public class FXMLStudentController implements Initializable {
                                  ModeOfStudyService modeOfStudyService,
                                  DurationOfTrainingService durationOfTrainingService,
                                  DiplomaSubjectService diplomaSubjectService,
-                                 ProfessionalStatusService professionalStatusService,
                                  DiplomaService diplomaService,
                                  EducationalComponentTypeService educationalComponentTypeService,
                                  EducationalComponentTemplateService educationalComponentTemplateService,
@@ -214,7 +212,6 @@ public class FXMLStudentController implements Initializable {
         this.modeOfStudyService = modeOfStudyService;
         this.durationOfTrainingService = durationOfTrainingService;
         this.diplomaSubjectService = diplomaSubjectService;
-        this.professionalStatusService = professionalStatusService;
         this.diplomaService = diplomaService;
         this.educationalComponentTypeService = educationalComponentTypeService;
         this.educationalComponentTemplateService = educationalComponentTemplateService;
@@ -310,12 +307,10 @@ public class FXMLStudentController implements Initializable {
 
         List<db.entities.Student> studentList = new ArrayList<>();
         List<db.entities.DiplomaSubject> diplomaSubjectList = new ArrayList<>();
-        List<db.entities.ProfessionalStatus> professionalStatusList = new ArrayList<>();
 
         try {
             studentList = studentService.getAll();
             diplomaSubjectList = diplomaSubjectService.getAll();
-            professionalStatusList = professionalStatusService.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -355,8 +350,6 @@ public class FXMLStudentController implements Initializable {
                 .reverseMap(cbAccessRequirements.getSelectionModel().getSelectedItem());
         final db.entities.ModeOfStudy modeOfStudy = modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel()
                 .getSelectedItem());
-        final db.entities.ProfessionalStatus professionalStatus = new db.entities.ProfessionalStatus(
-                professionalStatusList.size() + 1, taProfessionalStatus.getText().trim());
         final db.entities.ClassificationSystem classificationSystem = classificationSystemMapper
                 .reverseMap(cbClassificationSystem.getSelectionModel().getSelectedItem());
         final db.entities.DurationOfTraining durationOfTraining = durationOfTrainingMapper
@@ -364,8 +357,8 @@ public class FXMLStudentController implements Initializable {
 
         db.entities.Diploma diploma = new db.entities.Diploma(id, number, registrationNumber,
             null, dateOfIssue, student,
-                mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements, modeOfStudy,
-                professionalStatus, classificationSystem, durationOfTraining, null);
+                mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements,
+            classificationSystem, durationOfTraining, null);
 
         try {
             studentService.create(student);

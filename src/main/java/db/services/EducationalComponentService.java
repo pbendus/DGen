@@ -126,15 +126,15 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
     return educationalComponents;
   }
 
-  public int getCreditsGained(int diplomaId) throws SQLException {
-    int value = 0;
+  public double getCreditsGained(int diplomaId) throws SQLException {
+    double value = 0;
     for (EducationalComponent component :
         getAllByDiplomaId(diplomaId)) {
       value += component.getEducationalComponentTemplate().getCredits();
     }
 
     LOGGER.info(
-        String.format("The diploma with id{%d} contains %d credit gained", diplomaId, value));
+        String.format("The diploma with id{%d} contains %f credit gained", diplomaId, value));
 
     return value;
   }

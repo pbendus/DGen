@@ -15,15 +15,28 @@ CREATE TABLE main_field (
 
 ---------------------------------------------------------------------------------
 --  1 year 4 months of full-time study (90 ECTS credits)
-CREATE TABLE official_duration_of_programme (
+CREATE TABLE duration_of_study (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  value VARCHAR(255) NOT NULL UNIQUE
+);
+
+---------------------------------------------------------------------------------
+--  1 year 4 months of full-time study (90 ECTS credits)
+CREATE TABLE official_duration_of_programme (
+  id                   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name                 VARCHAR(255) NOT NULL UNIQUE,
+  mode_of_study_id     INTEGER      NOT NULL,
+  duration_of_study_id INTEGER      NOT NULL,
+
+  FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
+  FOREIGN KEY (duration_of_study_id) REFERENCES duration_of_study (id)
+
 );
 
 ---------------------------------------------------------------------------------
 -- Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations
 CREATE TABLE access_requirements (
-  id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -34,29 +47,22 @@ CREATE TABLE diploma_subject (
 );
 
 CREATE TABLE previous_document (
-  id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  id   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   name TEXT    NOT NULL
 );
 
 ---------------------------------------------------------------------------------
 -- Full time
 CREATE TABLE mode_of_study (
-  id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255) NOT NULL UNIQUE
 );
 ---------------------------------------------------------------------------------
 -- Overall classification of the qualification
 CREATE TABLE classification_system (
   id       INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name    VARCHAR(255) NOT NULL UNIQUE,
+  name     VARCHAR(255) NOT NULL UNIQUE,
   criteria VARCHAR(255) NOT NULL UNIQUE
-);
-
----------------------------------------------------------------------------------
---  INFORMATION ABOUT ACADEMIC AND PROFESSIONAL RIGHTS
-CREATE TABLE professional_status (
-  id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name TEXT    NOT NULL UNIQUE
 );
 
 ---------------------------------------------------------------------------------
@@ -70,22 +76,14 @@ CREATE TABLE protocol (
 ---------------------------------------------------------------------------------
 -- DURATION OF TRAINING
 CREATE TABLE duration_of_training (
-  id               INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name            VARCHAR(255) NOT NULL,
-  mode_of_study_id INTEGER      NOT NULL,
+  id                   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name                 VARCHAR(255) NOT NULL,
+  mode_of_study_id     INTEGER      NOT NULL,
+  duration_of_study_id INTEGER      NOT NULL,
 
-  FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id)
+  FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
+  FOREIGN KEY (duration_of_study_id) REFERENCES duration_of_study (id)
 );
-
----------------------------------------------------------------------------------
--- TYPE OF DIPLOMA
-/*
-CREATE TABLE type_of_diploma (
-  id      INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name_uk VARCHAR(255) NOT NULL UNIQUE,
-  name_en VARCHAR(255) NOT NULL UNIQUE
-);
-*/
 
 ---------------------------------------------------------------------------------
 -- Student
@@ -107,8 +105,11 @@ CREATE TABLE student (
 ---------------------------------------------------------------------------------
 --  ECTS credits
 CREATE TABLE ects_credits (
-  id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name  VARCHAR(255)    NOT NULL UNIQUE
+  id                   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name                 VARCHAR(255) NOT NULL,
+  duration_of_study_id INTEGER      NOT NULL,
+
+  FOREIGN KEY (duration_of_study_id) REFERENCES duration_of_study (id)
 );
 
 ---------------------------------------------------------------------------------
@@ -125,8 +126,6 @@ CREATE TABLE diploma (
   field_of_study_id                 INTEGER      NOT NULL,
   official_duration_of_programme_id INTEGER      NOT NULL,
   access_requirements_id            INTEGER      NOT NULL,
-  mode_of_study_id                  INTEGER      NOT NULL,
-  professional_status_id            INTEGER      NOT NULL,
   classification_system_id          INTEGER      NOT NULL,
   duration_of_training_id           INTEGER      NOT NULL,
 
@@ -135,26 +134,24 @@ CREATE TABLE diploma (
   FOREIGN KEY (field_of_study_id) REFERENCES field_of_study (id),
   FOREIGN KEY (official_duration_of_programme_id) REFERENCES official_duration_of_programme (id),
   FOREIGN KEY (access_requirements_id) REFERENCES access_requirements (id),
-  FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
-  FOREIGN KEY (professional_status_id) REFERENCES professional_status (id),
   FOREIGN KEY (duration_of_training_id) REFERENCES duration_of_training (id),
   FOREIGN KEY (classification_system_id) REFERENCES classification_system (id),
   FOREIGN KEY (ects_credits_id) REFERENCES ects_credits (id)
 );
 -- A, B, C, D, E, FX, F
 CREATE TABLE rating_point (
-  id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name CHAR(2) NOT NULL UNIQUE,
+  id                 INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name               CHAR(2) NOT NULL UNIQUE,
   min_national_score INTEGER NOT NULL,
   max_national_score INTEGER NOT NULL
 );
 
 --
 CREATE TABLE national_grade (
-  id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE,
-  min_national_score INTEGER NOT NULL,
-  max_national_score INTEGER NOT NULL
+  id                 INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name               VARCHAR(255) NOT NULL UNIQUE,
+  min_national_score INTEGER      NOT NULL,
+  max_national_score INTEGER      NOT NULL
 );
 
 -- Courses, Research Projects, Internship, State attestation
@@ -168,23 +165,21 @@ CREATE TABLE educational_component_type (
 CREATE TABLE educational_component_template (
   id                            INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   educational_component_type_id INTEGER      NOT NULL,
-  credits                        INTEGER      NOT NULL,
-  main_field_id                    INTEGER      NOT NULL,
+  credits                       REAL         NOT NULL,
   course_title                  VARCHAR(255) NOT NULL,
 
-  FOREIGN KEY (educational_component_type_id) REFERENCES educational_component_type (id),
-  FOREIGN KEY (main_field_id) REFERENCES main_field (id)
+  FOREIGN KEY (educational_component_type_id) REFERENCES educational_component_type (id)
 );
 
 ---------------------------------------------------------------------------------
 -- All grades
 CREATE TABLE educational_component (
-  id                            INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  id                                INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   educational_component_template_id INTEGER      NOT NULL,
-  national_score                INTEGER      NOT NULL,
-  rating_point_id               INTEGER      NOT NULL,
-  national_grade_id             INTEGER      NOT NULL,
-  diploma_id                    INTEGER      NOT NULL,
+  national_score                    INTEGER      NOT NULL,
+  rating_point_id                   INTEGER      NOT NULL,
+  national_grade_id                 INTEGER      NOT NULL,
+  diploma_id                        INTEGER      NOT NULL,
 
   FOREIGN KEY (educational_component_template_id) REFERENCES educational_component_template (id),
   FOREIGN KEY (rating_point_id) REFERENCES rating_point (id),
