@@ -17,6 +17,8 @@ public class OfficialDurationOfProgramme {
     public OfficialDurationOfProgramme() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
+        this.modeOfStudy = new SimpleObjectProperty<>();
+        this.durationOfStudy = new SimpleObjectProperty<>();
     }
 
     public OfficialDurationOfProgramme(int id, String name,
