@@ -31,10 +31,6 @@ public class Student {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private Protocol protocol;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "diploma_subject_id", foreign = true,
-      foreignAutoCreate = true, foreignAutoRefresh = true)
-  private DiplomaSubject diplomaSubject;
-
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "previous_document_id", foreign = true,
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private PreviousDocument previousDocument;
@@ -56,7 +52,7 @@ public class Student {
 
   public Student(int id, String familyName, String givenName, String familyNameTr,
       String givenNameTr, Date dateOfBirth, Protocol protocol,
-      DiplomaSubject diplomaSubject, PreviousDocument previousDocument,
+      PreviousDocument previousDocument,
       ModeOfStudy modeOfStudy, DurationOfStudy durationOfStudy, Group group) {
     this.id = id;
     this.familyName = familyName;
@@ -65,7 +61,6 @@ public class Student {
     this.givenNameTr = givenNameTr;
     this.dateOfBirth = dateOfBirth;
     this.protocol = protocol;
-    this.diplomaSubject = diplomaSubject;
     this.previousDocument = previousDocument;
     this.modeOfStudy = modeOfStudy;
     this.durationOfStudy = durationOfStudy;
@@ -126,14 +121,6 @@ public class Student {
 
   public void setProtocol(Protocol protocol) {
     this.protocol = protocol;
-  }
-
-  public DiplomaSubject getDiplomaSubject() {
-    return diplomaSubject;
-  }
-
-  public void setDiplomaSubject(DiplomaSubject diplomaSubject) {
-    this.diplomaSubject = diplomaSubject;
   }
 
   public PreviousDocument getPreviousDocument() {

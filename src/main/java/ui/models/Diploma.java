@@ -18,6 +18,7 @@ public class Diploma {
     private ObjectProperty<EctsCredits> ectsCredits;
     private ObjectProperty<ClassificationSystem> classificationSystem;
     private ObjectProperty<DurationOfTraining> durationOfTraining;
+    private ObjectProperty<DiplomaSubject> diplomaSubject;
 
     public Diploma() {
         this.id = new SimpleIntegerProperty();
@@ -32,6 +33,7 @@ public class Diploma {
         this.ectsCredits = new SimpleObjectProperty<>();
         this.classificationSystem = new SimpleObjectProperty<>();
         this.durationOfTraining = new SimpleObjectProperty<>();
+        this.diplomaSubject = new SimpleObjectProperty<>();
     }
 
     public Diploma(int id, String number, String registrationNumber, Date dateOfIssue,
@@ -39,7 +41,8 @@ public class Diploma {
         OfficialDurationOfProgramme officialDurationOfProgramme,
         AccessRequirements accessRequirements,
         EctsCredits ectsCredits, ClassificationSystem classificationSystem,
-        DurationOfTraining durationOfTraining) {
+        DurationOfTraining durationOfTraining,
+        DiplomaSubject diplomaSubject) {
         this.id = new SimpleIntegerProperty(id);
         this.number = new SimpleStringProperty(number);
         this.registrationNumber = new SimpleStringProperty(registrationNumber);
@@ -52,6 +55,7 @@ public class Diploma {
         this.ectsCredits = new SimpleObjectProperty<>(ectsCredits);
         this.classificationSystem = new SimpleObjectProperty<>(classificationSystem);
         this.durationOfTraining = new SimpleObjectProperty<>(durationOfTraining);
+        this.diplomaSubject = new SimpleObjectProperty<>(diplomaSubject);
     }
 
     public int getId() {
@@ -196,5 +200,17 @@ public class Diploma {
 
     public void setDurationOfTraining(DurationOfTraining durationOfTraining) {
         this.durationOfTraining.set(durationOfTraining);
+    }
+
+    public DiplomaSubject getDiplomaSubject() {
+        return diplomaSubject.get();
+    }
+
+    public ObjectProperty<DiplomaSubject> diplomaSubjectProperty() {
+        return diplomaSubject;
+    }
+
+    public void setDiplomaSubject(DiplomaSubject diplomaSubject) {
+        this.diplomaSubject.set(diplomaSubject);
     }
 }

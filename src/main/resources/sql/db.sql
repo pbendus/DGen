@@ -102,7 +102,6 @@ CREATE TABLE student (
   given_name_tr        VARCHAR(255) NOT NULL,
   date_of_birth        DATE         NOT NULL,
   protocol_id          INTEGER      NOT NULL,
-  diploma_subject_id   INTEGER      NOT NULL,
   previous_document_id INTEGER      NOT NULL,
   mode_of_study_id     INTEGER      NOT NULL,
   duration_of_study_id INTEGER      NOT NULL,
@@ -111,7 +110,6 @@ CREATE TABLE student (
   FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
   FOREIGN KEY (duration_of_study_id) REFERENCES duration_of_study (id),
   FOREIGN KEY (protocol_id) REFERENCES protocol (id),
-  FOREIGN KEY (diploma_subject_id) REFERENCES diploma_subject (id),
   FOREIGN KEY (previous_document_id) REFERENCES previous_document (id),
   FOREIGN KEY (group_id) REFERENCES "group" (id)
 );
@@ -141,6 +139,7 @@ CREATE TABLE diploma (
   access_requirements_id            INTEGER      NOT NULL,
   classification_system_id          INTEGER      NOT NULL,
   duration_of_training_id           INTEGER      NOT NULL,
+  diploma_subject_id                INTEGER      NOT NULL,
 
   FOREIGN KEY (student_id) REFERENCES student (id),
   FOREIGN KEY (main_field_id) REFERENCES main_field (id),
@@ -149,6 +148,7 @@ CREATE TABLE diploma (
   FOREIGN KEY (access_requirements_id) REFERENCES access_requirements (id),
   FOREIGN KEY (duration_of_training_id) REFERENCES duration_of_training (id),
   FOREIGN KEY (classification_system_id) REFERENCES classification_system (id),
+  FOREIGN KEY (diploma_subject_id) REFERENCES diploma_subject (id),
   FOREIGN KEY (ects_credits_id) REFERENCES ects_credits (id)
 );
 -- A, B, C, D, E, FX, F
