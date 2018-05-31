@@ -15,6 +15,7 @@ import db.entities.EducationalComponent;
 import db.entities.EducationalComponentTemplate;
 import db.entities.EducationalComponentType;
 import db.entities.FieldOfStudy;
+import db.entities.Group;
 import db.entities.MainField;
 import db.entities.ModeOfStudy;
 import db.entities.NationalGrade;
@@ -179,5 +180,12 @@ public class DataSourceConfig {
       ConnectionSource connectionSource)
       throws SQLException {
     return DaoManager.createDao(connectionSource, DurationOfStudy.class);
+  }
+
+  @Bean
+  public Dao<Group, Integer> getGroupDao(
+      ConnectionSource connectionSource)
+      throws SQLException {
+    return DaoManager.createDao(connectionSource, Group.class);
   }
 }
