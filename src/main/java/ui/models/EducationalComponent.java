@@ -26,7 +26,7 @@ public class EducationalComponent {
         this.diploma = new SimpleObjectProperty<>();
     }
 
-    public EducationalComponent(int id, int nationalScore,int credits, String courseTitle, String educationalComponentType,
+    public EducationalComponent(int id, int nationalScore, double credits, String courseTitle, String educationalComponentType,
                                 EducationalComponentTemplate educationalComponentTemplate, RatingPoint ratingPoint,
                                 NationalGrade nationalGrade, Diploma diploma) {
         this.id = new SimpleIntegerProperty(id);

@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
@@ -30,18 +29,6 @@ import java.util.*;
 
 @Controller("fxmlStudentController")
 public class FXMLStudentController implements Initializable {
-
-    @FXML
-    private AnchorPane ap;
-
-    @FXML
-    private TitledPane tpGeneralInfo;
-
-    @FXML
-    private TitledPane tpDiplomaInfo;
-
-    @FXML
-    private TitledPane tpEducationResults;
 
     @FXML
     private TableView<EducationalComponent> tvGrades;
@@ -86,10 +73,10 @@ public class FXMLStudentController implements Initializable {
     private TextField tfRegistrationNumber;
 
     @FXML
-    private TextArea taInformationOnCertification;
+    private TextArea taDurationOfTraining;
 
     @FXML
-    private TextArea taProfessionalStatus;
+    private TextArea taInformationOnCertification;
 
     @FXML
     private DatePicker dpDateOfBirth;
@@ -98,16 +85,10 @@ public class FXMLStudentController implements Initializable {
     private DatePicker dpDate;
 
     @FXML
-    private ComboBox<PreviousDocument> cbPreviousDocument;
-
-    @FXML
     private ComboBox<MainField> cbMainField;
 
     @FXML
     private ComboBox<FieldOfStudy> cbFieldOfStudy;
-
-    @FXML
-    private ComboBox<OfficialDurationOfProgramme> cbOfficialDuration;
 
     @FXML
     private ComboBox<AccessRequirements> cbAccessRequirements;
@@ -119,10 +100,7 @@ public class FXMLStudentController implements Initializable {
     private ComboBox<Protocol> cbProtocol;
 
     @FXML
-    private ComboBox<DurationOfTraining> cbDurationOfTraining;
-
-    @FXML
-    private ComboBox<ClassificationSystem> cbClassificationSystem;
+    private ComboBox<DurationOfStudy> cbDurationOfStudy;
 
     @FXML
     private Button btnSave;
@@ -131,6 +109,8 @@ public class FXMLStudentController implements Initializable {
     private Button btnCancel;
 
     private Stage stage;
+
+    private Integer studentId;
 
     private StudentService studentService;
     private ProtocolService protocolService;
@@ -142,10 +122,10 @@ public class FXMLStudentController implements Initializable {
     private ModeOfStudyService modeOfStudyService;
     private DurationOfTrainingService durationOfTrainingService;
     private DiplomaSubjectService diplomaSubjectService;
-    private DiplomaService diplomaService;
     private EducationalComponentTypeService educationalComponentTypeService;
     private EducationalComponentTemplateService educationalComponentTemplateService;
     private EducationalComponentService educationalComponentService;
+    private DurationOfStudyService durationOfStudyService;
 
     private ProtocolMapper protocolMapper;
     private PreviousDocumentMapper previousDocumentMapper;
@@ -155,13 +135,12 @@ public class FXMLStudentController implements Initializable {
     private AccessRequirementsMapper accessRequirementsMapper;
     private ModeOfStudyMapper modeOfStudyMapper;
     private DurationOfTrainingMapper durationOfTrainingMapper;
-    private ClassificationSystemMapper classificationSystemMapper;
     private EducationalComponentTypeMapper educationalComponentTypeMapper;
     private EducationalComponentTemplateMapper educationalComponentTemplateMapper;
     private EducationalComponentMapper educationalComponentMapper;
+    private DurationOfStudyMapper durationOfStudyMapper;
 
-    private ObservableList<Protocol> protocolObservableListList = FXCollections.observableArrayList();
-    private ObservableList<PreviousDocument> previousDocumentObservableList = FXCollections.observableArrayList();
+    private ObservableList<Protocol> protocolObservableList = FXCollections.observableArrayList();
     private ObservableList<MainField> mainFieldObservableList = FXCollections.observableArrayList();
     private ObservableList<FieldOfStudy> fieldOfStudyObservableList = FXCollections.observableArrayList();
     private ObservableList<OfficialDurationOfProgramme> officialDurationOfProgrammeObservableList = FXCollections
@@ -175,6 +154,8 @@ public class FXMLStudentController implements Initializable {
             .observableArrayList();
     private ObservableList<EducationalComponent> educationalComponentObservableList = FXCollections
             .observableArrayList();
+    private ObservableList<DurationOfStudy> durationOfStudyObservableList = FXCollections
+            .observableArrayList();
 
     @Autowired
     public FXMLStudentController(StudentService studentService,
@@ -187,10 +168,10 @@ public class FXMLStudentController implements Initializable {
                                  ModeOfStudyService modeOfStudyService,
                                  DurationOfTrainingService durationOfTrainingService,
                                  DiplomaSubjectService diplomaSubjectService,
-                                 DiplomaService diplomaService,
                                  EducationalComponentTypeService educationalComponentTypeService,
                                  EducationalComponentTemplateService educationalComponentTemplateService,
                                  EducationalComponentService educationalComponentService,
+                                 DurationOfStudyService durationOfStudyService,
                                  ProtocolMapper protocolMapper,
                                  PreviousDocumentMapper previousDocumentMapper,
                                  MainFieldMapper mainFieldMapper,
@@ -202,7 +183,8 @@ public class FXMLStudentController implements Initializable {
                                  ClassificationSystemMapper classificationSystemMapper,
                                  EducationalComponentTypeMapper educationalComponentTypeMapper,
                                  EducationalComponentTemplateMapper educationalComponentTemplateMapper,
-                                 EducationalComponentMapper educationalComponentMapper) {
+                                 EducationalComponentMapper educationalComponentMapper,
+                                 DurationOfStudyMapper durationOfStudyMapper) {
         this.studentService = studentService;
         this.protocolService = protocolService;
         this.previousDocumentService = previousDocumentService;
@@ -213,10 +195,10 @@ public class FXMLStudentController implements Initializable {
         this.modeOfStudyService = modeOfStudyService;
         this.durationOfTrainingService = durationOfTrainingService;
         this.diplomaSubjectService = diplomaSubjectService;
-        this.diplomaService = diplomaService;
         this.educationalComponentTypeService = educationalComponentTypeService;
         this.educationalComponentTemplateService = educationalComponentTemplateService;
         this.educationalComponentService = educationalComponentService;
+        this.durationOfStudyService = durationOfStudyService;
 
         this.protocolMapper = protocolMapper;
         this.previousDocumentMapper = previousDocumentMapper;
@@ -226,69 +208,40 @@ public class FXMLStudentController implements Initializable {
         this.accessRequirementsMapper = accessRequirementsMapper;
         this.modeOfStudyMapper = modeOfStudyMapper;
         this.durationOfTrainingMapper = durationOfTrainingMapper;
-        this.classificationSystemMapper = classificationSystemMapper;
         this.educationalComponentTypeMapper = educationalComponentTypeMapper;
         this.educationalComponentTemplateMapper = educationalComponentTemplateMapper;
         this.educationalComponentMapper = educationalComponentMapper;
+        this.durationOfStudyMapper = durationOfStudyMapper;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        clearObservableLists();
+        initializeObservableLists();
         initializeComboBoxes();
         initializeTableView();
         setListenersOnButtons();
-        setListenersOnInformationOnCertification();
-    }
-
-    private void setListenersOnButtons() {
-        btnCancel.setOnMouseClicked(e -> closeWindow());
-        btnSave.setOnMouseClicked(e -> {
-            for(EducationalComponent educationalComponent:
-                    educationalComponentObservableList) {
-                System.out.println(educationalComponent);
-            }
-//            if (validateInputs()) {
-//                addStudent();
-//                closeWindow();
-//            }
-        });
+        setListenersOnInputs();
     }
 
     private void initializeComboBoxes() {
-        try {
-            protocolObservableListList.addAll(protocolMapper.map(protocolService.getAll()));
-            previousDocumentObservableList.addAll(previousDocumentMapper.map(previousDocumentService.getAll()));
-            mainFieldObservableList.addAll(mainFieldMapper.map(mainFieldService.getAll()));
-            fieldOfStudyObservableList.addAll(fieldOfStudyMapper.map(fieldOfStudyService.getAll()));
-            officialDurationOfProgrammeObservableList.addAll(officialDurationOfProgrammeMapper
-                    .map(officialDurationOfProgrammeService.getAll()));
-            accessRequirementsObservableList.addAll(accessRequirementsMapper.map(accessRequirementsService.getAll()));
-            modeOfStudyObservableList.addAll(modeOfStudyMapper.map(modeOfStudyService.getAll()));
-            durationOfTrainingObservableList.addAll(durationOfTrainingMapper.map(durationOfTrainingService.getAll()));
-            educationalComponentTypeObservableList.addAll(educationalComponentTypeMapper
-                    .map(educationalComponentTypeService.getAll()));
-            educationalComponentTemplateObservableList.addAll(educationalComponentTemplateMapper
-                    .map(educationalComponentTemplateService.getAll()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        cbProtocol.getItems().addAll(protocolObservableListList);
-        cbPreviousDocument.getItems().addAll(previousDocumentObservableList);
+        cbModeOfStudy.getItems().addAll(modeOfStudyObservableList);
+        cbDurationOfStudy.getItems().addAll(durationOfStudyObservableList);
         cbMainField.getItems().addAll(mainFieldObservableList);
         cbFieldOfStudy.getItems().addAll(fieldOfStudyObservableList);
-        cbOfficialDuration.getItems().addAll(officialDurationOfProgrammeObservableList);
+        cbProtocol.getItems().addAll(protocolObservableList);
         cbAccessRequirements.getItems().addAll(accessRequirementsObservableList);
-        cbModeOfStudy.getItems().addAll(modeOfStudyObservableList);
-        cbDurationOfTraining.getItems().addAll(durationOfTrainingObservableList);
     }
 
     private void initializeTableView() {
-        try {
-            educationalComponentObservableList.addAll(educationalComponentMapper
-                    .map(educationalComponentService.getAll()));
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        for (EducationalComponentTemplate educationalComponentTemplate :
+                educationalComponentTemplateObservableList) {
+            educationalComponentObservableList.add(new EducationalComponent(educationalComponentTemplate.getId(),
+                    0, educationalComponentTemplate.getCredits(),
+                    educationalComponentTemplate.getCourseTitle(), educationalComponentTemplate
+                    .getEducationalComponentType().getName(), educationalComponentTemplate,
+                    null, null, null));
         }
 
         tcNumber.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -303,98 +256,97 @@ public class FXMLStudentController implements Initializable {
         tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
+    
+    private void clearObservableLists() {
+        modeOfStudyObservableList.clear();
+        durationOfStudyObservableList.clear();
+        mainFieldObservableList.clear();
+        fieldOfStudyObservableList.clear();
+        protocolObservableList.clear();
+        accessRequirementsObservableList.clear();
+        educationalComponentObservableList.clear();
+        educationalComponentTemplateObservableList.clear();
+        educationalComponentTypeObservableList.clear();
+    }
 
-    private void addStudent() {
-
-        List<db.entities.Student> studentList = new ArrayList<>();
-        List<db.entities.DiplomaSubject> diplomaSubjectList = new ArrayList<>();
-
+    private void initializeObservableLists() {
         try {
-            studentList = studentService.getAll();
-            diplomaSubjectList = diplomaSubjectService.getAll();
-        } catch (SQLException e) {
+            modeOfStudyObservableList.addAll(modeOfStudyMapper.map(modeOfStudyService.getAll()));
+            durationOfStudyObservableList.addAll(durationOfStudyMapper.map(durationOfStudyService.getAll()));
+            mainFieldObservableList.addAll(mainFieldMapper.map(mainFieldService.getAll()));
+            fieldOfStudyObservableList.addAll(fieldOfStudyMapper.map(fieldOfStudyService.getAll()));
+            protocolObservableList.addAll(protocolMapper.map(protocolService.getAll()));
+            accessRequirementsObservableList.addAll(accessRequirementsMapper.map(accessRequirementsService.getAll()));
+            educationalComponentTypeObservableList.addAll(educationalComponentTypeMapper
+                    .map(educationalComponentTypeService.getAll()));
+            educationalComponentTemplateObservableList.addAll(educationalComponentTemplateMapper
+                    .map(educationalComponentTemplateService.getAll()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-        LocalDate lc = dpDateOfBirth.getValue();
-        Calendar c = Calendar.getInstance();
-        c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
-
-        final int id = studentList.size() + 1;
-        final String familyName = tfFamilyName.getText().trim();
-        final String givenName = tfGivenName.getText().trim();
-        final String familyNameTr = tfFamilyNameTr.getText().trim();
-        final String givenNameTr = tfGivenNameTr.getText().trim();
-        final Date dateOfBirth = c.getTime();
-        final db.entities.Protocol protocol = protocolMapper.reverseMap(cbProtocol.getSelectionModel()
-                .getSelectedItem());
-        final db.entities.DiplomaSubject diplomaSubject = new db.entities.DiplomaSubject(diplomaSubjectList.size() + 1,
-                tfDiplomaSubjectUk.getText().trim(), tfDiplomaSubjectEn.getText().trim());
-        final db.entities.PreviousDocument previousDocument = previousDocumentMapper.reverseMap(cbPreviousDocument
-                .getSelectionModel().getSelectedItem());
-
-        db.entities.Student student = new db.entities.Student(id, familyName, givenName, familyNameTr, givenNameTr,
-            dateOfBirth, protocol, diplomaSubject, previousDocument,
-            modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel().getSelectedItem()),
-            null, null);
-
-        LocalDate lc2 = dpDate.getValue();
-        c.set(lc2.getYear(), lc2.getMonthValue(), lc2.getDayOfMonth());
-
-        final String number = tfNumber.getText().trim();
-        final String registrationNumber = tfRegistrationNumber.getText().trim();
-        final Date dateOfIssue = c.getTime();
-        final db.entities.MainField mainField = mainFieldMapper.reverseMap(cbMainField.getSelectionModel().getSelectedItem());
-        final db.entities.FieldOfStudy fieldOfStudy = fieldOfStudyMapper.reverseMap(cbFieldOfStudy.getSelectionModel()
-                .getSelectedItem());
-        final db.entities.OfficialDurationOfProgramme officialDurationOfProgramme = officialDurationOfProgrammeMapper
-                .reverseMap(cbOfficialDuration.getSelectionModel().getSelectedItem());
-        final db.entities.AccessRequirements accessRequirements = accessRequirementsMapper
-                .reverseMap(cbAccessRequirements.getSelectionModel().getSelectedItem());
-        final db.entities.ModeOfStudy modeOfStudy = modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel()
-                .getSelectedItem());
-        final db.entities.ClassificationSystem classificationSystem = classificationSystemMapper
-                .reverseMap(cbClassificationSystem.getSelectionModel().getSelectedItem());
-        final db.entities.DurationOfTraining durationOfTraining = durationOfTrainingMapper
-                .reverseMap(cbDurationOfTraining.getSelectionModel().getSelectedItem());
-
-        db.entities.Diploma diploma = new db.entities.Diploma(id, number, registrationNumber,
-            null, dateOfIssue, student,
-                mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements,
-            classificationSystem, durationOfTraining, null);
-
-        try {
-            studentService.create(student);
-            diplomaService.create(diploma);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void initializeEditStudentWindow() {
 
     }
 
-    private void setListenersOnInformationOnCertification() {
+    private void setListenersOnButtons() {
+        btnCancel.setOnMouseClicked(e -> closeWindow());
+        btnSave.setOnMouseClicked(e -> {
+            for (EducationalComponent educationalComponent :
+                    educationalComponentObservableList) {
+                System.out.println(educationalComponent);
+            }
+//            if (validateInputs()) {
+//                addStudent();
+//                closeWindow();
+//            }
+        });
+    }
+
+    private void setListenersOnInputs() {
+
+        // listeners for Duration of Programme & Official Duration of Programme
+        cbModeOfStudy.valueProperty().addListener(observable -> setDurationOfTraining(cbModeOfStudy.getSelectionModel()
+                        .getSelectedItem(), cbDurationOfStudy.getSelectionModel().getSelectedItem()));
+
+        cbDurationOfStudy.valueProperty().addListener(observable -> setDurationOfTraining(cbModeOfStudy.
+                        getSelectionModel().getSelectedItem(), cbDurationOfStudy.getSelectionModel().getSelectedItem()));
+
+        // listeners for Information on Certification
         tfDiplomaSubjectUk.textProperty().addListener(observable -> {
             if (tfDiplomaSubjectEn.getText().trim().length() != 0 && cbProtocol.getSelectionModel()
                     .getSelectedItem() != null) {
-                displayInformationOnCertification();
+                setInformationOnCertification();
             }
         });
 
         tfDiplomaSubjectEn.textProperty().addListener(observable -> {
             if (tfDiplomaSubjectUk.getText().trim().length() != 0 && cbProtocol.getSelectionModel()
                     .getSelectedItem() != null) {
-                displayInformationOnCertification();
+                setInformationOnCertification();
             }
         });
 
         cbProtocol.valueProperty().addListener(observable -> {
             if (tfDiplomaSubjectUk.getText().trim().length() != 0 && tfDiplomaSubjectEn.getText().trim().length() != 0) {
-                displayInformationOnCertification();
+                setInformationOnCertification();
             }
         });
     }
 
-    private void displayInformationOnCertification() {
+    private void setDurationOfTraining(ModeOfStudy modeOfStudy, DurationOfStudy durationOfStudy) {
+        if (modeOfStudy != null && durationOfStudy != null) {
+            try {
+                taDurationOfTraining.setText(durationOfTrainingMapper.map(durationOfTrainingService
+                        .getByModeAndDurationOfStudy(modeOfStudy.getId(), durationOfStudy.getId())).getName());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void setInformationOnCertification() {
         taInformationOnCertification.setText("Бакалаврська робота - \"" +
                 tfDiplomaSubjectUk.getText().trim() + "\" " + cbProtocol.getSelectionModel()
                 .getSelectedItem().getNameUK() + " / " + "Bachelor's Thesis - \"" +
@@ -402,6 +354,17 @@ public class FXMLStudentController implements Initializable {
                 .getSelectedItem().getNameEN());
 
         taInformationOnCertification.setWrapText(true);
+    }
+
+    private void addStudent() {
+
+        final Student student = new Student();
+        final Diploma diploma = new Diploma();
+
+        LocalDate lc = dpDateOfBirth.getValue();
+        Calendar c = Calendar.getInstance();
+        c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+
     }
 
     private boolean validateInputs() {
@@ -449,5 +412,9 @@ public class FXMLStudentController implements Initializable {
 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
+    }
+
+    public void setStudentId(Integer id) {
+        this.studentId = id;
     }
 }
