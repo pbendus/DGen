@@ -73,6 +73,12 @@ public class FXMLStudentController implements Initializable {
     private TextField tfRegistrationNumber;
 
     @FXML
+    private TextField tfPreviousDocument;
+
+    @FXML
+    private TextField tfAdditionRegistrationNumber;
+
+    @FXML
     private TextArea taDurationOfTraining;
 
     @FXML
@@ -126,6 +132,7 @@ public class FXMLStudentController implements Initializable {
     private EducationalComponentTemplateService educationalComponentTemplateService;
     private EducationalComponentService educationalComponentService;
     private DurationOfStudyService durationOfStudyService;
+    private ArDosService arDosService;
 
     private ProtocolMapper protocolMapper;
     private PreviousDocumentMapper previousDocumentMapper;
@@ -172,6 +179,7 @@ public class FXMLStudentController implements Initializable {
                                  EducationalComponentTemplateService educationalComponentTemplateService,
                                  EducationalComponentService educationalComponentService,
                                  DurationOfStudyService durationOfStudyService,
+                                 ArDosService arDosService,
                                  ProtocolMapper protocolMapper,
                                  PreviousDocumentMapper previousDocumentMapper,
                                  MainFieldMapper mainFieldMapper,
@@ -199,6 +207,7 @@ public class FXMLStudentController implements Initializable {
         this.educationalComponentTemplateService = educationalComponentTemplateService;
         this.educationalComponentService = educationalComponentService;
         this.durationOfStudyService = durationOfStudyService;
+        this.arDosService = arDosService;
 
         this.protocolMapper = protocolMapper;
         this.previousDocumentMapper = previousDocumentMapper;
@@ -256,7 +265,7 @@ public class FXMLStudentController implements Initializable {
         tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
-    
+
     private void clearObservableLists() {
         modeOfStudyObservableList.clear();
         durationOfStudyObservableList.clear();
@@ -286,21 +295,13 @@ public class FXMLStudentController implements Initializable {
         }
     }
 
-    private void initializeEditStudentWindow() {
-
-    }
-
     private void setListenersOnButtons() {
         btnCancel.setOnMouseClicked(e -> closeWindow());
         btnSave.setOnMouseClicked(e -> {
-            for (EducationalComponent educationalComponent :
-                    educationalComponentObservableList) {
-                System.out.println(educationalComponent);
+            if (validateInputs()) {
+                addStudent();
+                closeWindow();
             }
-//            if (validateInputs()) {
-//                addStudent();
-//                closeWindow();
-//            }
         });
     }
 
@@ -308,10 +309,27 @@ public class FXMLStudentController implements Initializable {
 
         // listeners for Duration of Programme & Official Duration of Programme
         cbModeOfStudy.valueProperty().addListener(observable -> setDurationOfTraining(cbModeOfStudy.getSelectionModel()
-                        .getSelectedItem(), cbDurationOfStudy.getSelectionModel().getSelectedItem()));
+                .getSelectedItem(), cbDurationOfStudy.getSelectionModel().getSelectedItem()));
 
-        cbDurationOfStudy.valueProperty().addListener(observable -> setDurationOfTraining(cbModeOfStudy.
-                        getSelectionModel().getSelectedItem(), cbDurationOfStudy.getSelectionModel().getSelectedItem()));
+        cbDurationOfStudy.valueProperty().addListener(observable -> {
+            setDurationOfTraining(cbModeOfStudy.
+                    getSelectionModel().getSelectedItem(), cbDurationOfStudy.getSelectionModel().getSelectedItem());
+
+            try {
+                AccessRequirements accessRequirements = accessRequirementsMapper.map(arDosService
+                        .getAccessRequirementsByDurationOfStudyId(cbDurationOfStudy.getSelectionModel()
+                                .getSelectedItem().getId()));
+                for (AccessRequirements accessRequirements1:
+                        accessRequirementsObservableList) {
+                    if (accessRequirements.getId() == accessRequirements1.getId()) {
+                        cbAccessRequirements.getSelectionModel().select(accessRequirements1);
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
 
         // listeners for Information on Certification
         tfDiplomaSubjectUk.textProperty().addListener(observable -> {
@@ -372,17 +390,97 @@ public class FXMLStudentController implements Initializable {
 
         if (!Validation.validateTextField(tfFamilyName)) {
             tfFamilyName.setStyle(Validation.getTextFieldErrorStyle());
+            tfFamilyName.textProperty().addListener(e -> tfFamilyName.setStyle(null));
             result = false;
         }
 
-        if (!Validation.validateTextField(tfFamilyName)) {
-            tfFamilyName.setStyle(Validation.getTextFieldErrorStyle());
+        if (!Validation.validateTextField(tfFamilyNameTr)) {
+            tfFamilyNameTr.setStyle(Validation.getTextFieldErrorStyle());
+            tfFamilyNameTr.textProperty().addListener(e -> tfFamilyNameTr.setStyle(null));
             result = false;
         }
 
-        if (!Validation.validateTextField(tfFamilyName)) {
-            tfFamilyName.setStyle(Validation.getTextFieldErrorStyle());
+        if (!Validation.validateTextField(tfGivenName)) {
+            tfGivenName.setStyle(Validation.getTextFieldErrorStyle());
+            tfGivenName.textProperty().addListener(e -> tfGivenName.setStyle(null));
             result = false;
+        }
+
+        if (!Validation.validateTextField(tfGivenNameTr)) {
+            tfGivenNameTr.setStyle(Validation.getTextFieldErrorStyle());
+            tfFamilyName.textProperty().addListener(e -> tfFamilyName.setStyle(null));
+            result = false;
+        }
+
+        if (!Validation.validateTextField(tfPreviousDocument)) {
+            tfPreviousDocument.setStyle(Validation.getTextFieldErrorStyle());
+            tfFamilyName.textProperty().addListener(e -> tfFamilyName.setStyle(null));
+            result = false;
+        }
+
+        if (!Validation.validateTextField(tfDiplomaSubjectUk)) {
+            tfDiplomaSubjectUk.setStyle(Validation.getTextFieldErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateTextField(tfDiplomaSubjectEn)) {
+            tfDiplomaSubjectEn.setStyle(Validation.getTextFieldErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateTextField(tfNumber)) {
+            tfNumber.setStyle(Validation.getTextFieldErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateTextField(tfRegistrationNumber)) {
+            tfRegistrationNumber.setStyle(Validation.getTextFieldErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateTextField(tfAdditionRegistrationNumber)) {
+            tfAdditionRegistrationNumber.setStyle(Validation.getTextFieldErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbModeOfStudy)) {
+            cbModeOfStudy.setStyle(Validation.getComboBoxErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbDurationOfStudy)) {
+            cbDurationOfStudy.setStyle(Validation.getComboBoxErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbMainField)) {
+            cbMainField.setStyle(Validation.getComboBoxErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbFieldOfStudy)) {
+            cbFieldOfStudy.setStyle(Validation.getComboBoxErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbProtocol)) {
+            cbProtocol.setStyle(Validation.getComboBoxErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbAccessRequirements)) {
+            cbAccessRequirements.setStyle(Validation.getComboBoxErrorStyle());
+            result = false;
+        }
+
+        if (!Validation.validateDatePicker(dpDateOfBirth)) {
+            dpDateOfBirth.setStyle(Validation.getDatePickerErrorStyle());
+            return false;
+        }
+
+        if (!Validation.validateDatePicker(dpDate)) {
+            dpDate.setStyle(Validation.getDatePickerErrorStyle());
+            return false;
         }
 
         return result;

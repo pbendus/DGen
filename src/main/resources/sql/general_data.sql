@@ -63,6 +63,23 @@ INSERT INTO access_requirements (name)
 VALUES (
   'Вступ здійснюється за результатами вступних випробувань / On the results of entrance examinations.');
 ------------------------------------------------------------------------------------------------------
+INSERT INTO ar_dos (access_requirements_id, duration_of_study_id)
+VALUES (
+  1, 1
+);
+INSERT INTO ar_dos (access_requirements_id, duration_of_study_id)
+VALUES (
+  2, 2
+);
+INSERT INTO ar_dos (access_requirements_id, duration_of_study_id)
+VALUES (
+  2, 3
+);
+INSERT INTO ar_dos (access_requirements_id, duration_of_study_id)
+VALUES (
+  3, NULL
+);
+------------------------------------------------------------------------------------------------------
 INSERT INTO classification_system (name, criteria)
 VALUES ('Диплом / Diploma',
         'Диплом засвідчує успішне виконання програми підготовки / Diploma certifies a successful academic performance');
