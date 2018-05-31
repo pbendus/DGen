@@ -14,7 +14,6 @@ public class Student {
     private StringProperty givenNameTr;
     private ObjectProperty<Date> dateOfBirth;
     private ObjectProperty<Protocol> protocol;
-    private ObjectProperty<DiplomaSubject> diplomaSubject;
     private ObjectProperty<PreviousDocument> previousDocument;
     private ObjectProperty<ModeOfStudy> modeOfStudyObject;
     private ObjectProperty<DurationOfStudy> durationOfStudy;
@@ -31,7 +30,6 @@ public class Student {
         this.givenNameTr = new SimpleStringProperty();
         this.dateOfBirth = new SimpleObjectProperty<>();
         this.protocol = new SimpleObjectProperty<>();
-        this.diplomaSubject = new SimpleObjectProperty<>();
         this.previousDocument = new SimpleObjectProperty<>();
         this.modeOfStudyObject = new SimpleObjectProperty<>();
         this.durationOfStudy = new SimpleObjectProperty<>();
@@ -41,7 +39,7 @@ public class Student {
 
     public Student(int id, String familyName, String givenName, String familyNameTr,
         String givenNameTr, Date dateOfBirth, Protocol protocol,
-        DiplomaSubject diplomaSubject, PreviousDocument previousDocument,
+        PreviousDocument previousDocument,
         ModeOfStudy modeOfStudyObject,
         DurationOfStudy durationOfStudy,
         Group group) {
@@ -52,7 +50,6 @@ public class Student {
         this.givenNameTr = new SimpleStringProperty(givenNameTr);
         this.dateOfBirth = new SimpleObjectProperty<>(dateOfBirth);
         this.protocol = new SimpleObjectProperty<>(protocol);
-        this.diplomaSubject = new SimpleObjectProperty<>(diplomaSubject);
         this.previousDocument = new SimpleObjectProperty<>(previousDocument);
         this.modeOfStudyObject = new SimpleObjectProperty<>(modeOfStudyObject);
         this.durationOfStudy = new SimpleObjectProperty<>(durationOfStudy);
@@ -146,18 +143,6 @@ public class Student {
 
     public void setProtocol(Protocol protocol) {
         this.protocol.set(protocol);
-    }
-
-    public DiplomaSubject getDiplomaSubject() {
-        return diplomaSubject.get();
-    }
-
-    public ObjectProperty<DiplomaSubject> diplomaSubjectProperty() {
-        return diplomaSubject;
-    }
-
-    public void setDiplomaSubject(DiplomaSubject diplomaSubject) {
-        this.diplomaSubject.set(diplomaSubject);
     }
 
     public PreviousDocument getPreviousDocument() {
