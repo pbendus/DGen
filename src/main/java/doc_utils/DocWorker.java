@@ -4,6 +4,7 @@ import db.entities.Diploma;
 import db.entities.EducationalComponent;
 import db.services.DiplomaService;
 import db.services.EducationalComponentService;
+import db.services.StudentService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Component;
 public class DocWorker {
 
   private static final Logger LOGGER = LogManager.getLogger();
-  private static final String FOLDER = "documents/";
+  private static final String DIRECTORY_PATH = "documents/";
   private static final String DOCX = ".docx";
 
   @Value("${doc.pattern}")
@@ -45,12 +46,14 @@ public class DocWorker {
 
   private EducationalComponentService educationalComponentService;
   private DiplomaService diplomaService;
+  private StudentService studentService;
 
   @Autowired
   public DocWorker(EducationalComponentService educationalComponentService,
-      DiplomaService diplomaService) {
+      DiplomaService diplomaService, StudentService studentService) {
     this.educationalComponentService = educationalComponentService;
     this.diplomaService = diplomaService;
+    this.studentService = studentService;
   }
 
   public boolean isVariable(String string) {
@@ -95,8 +98,14 @@ public class DocWorker {
     return docVariables;
   }
 
-  public void saveDocument(String fileName) throws IOException {
-    document.write(new FileOutputStream(fileName + DOCX));
+  public void saveDocument(String fileName, int studentId) throws IOException, SQLException {
+    final String groupName = studentService.getGroupByStudentId(studentId).getName() + "/";
+    final String directoryName = DIRECTORY_PATH.concat(groupName);
+    final File directory = new File(directoryName);
+    if (!directory.exists()) {
+      directory.mkdirs();
+    }
+    document.write(new FileOutputStream(directoryName + fileName.trim() + DOCX));
     LOGGER.info(String.format("Document %s has been created", fileName));
   }
 
@@ -120,7 +129,7 @@ public class DocWorker {
     addStateAttestations(
         educationalComponentService.getAllStateAttestationsByDiplomaId(diploma.getId()), variables);
 
-    saveDocument(documentName);
+    saveDocument(documentName, studentId);
   }
 
   private void addCourses(List<EducationalComponent> components,
@@ -242,7 +251,7 @@ public class DocWorker {
       case COMPONENT_CREDITS:
         double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), false);
+            String.valueOf((value - Math.floor(value) == 0) ? "" + ((int) value) : value), false);
         break;
       case COMPONENT_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -271,7 +280,7 @@ public class DocWorker {
       case RESEARCH_CREDITS:
         double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), true);
+            String.valueOf((value - Math.floor(value) == 0) ? "" + ((int) value) : value), true);
         break;
       case RESEARCH_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -300,7 +309,7 @@ public class DocWorker {
       case INTERNSHIP_CREDITS:
         double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), true);
+            String.valueOf((value - Math.floor(value) == 0) ? "" + ((int) value) : value), true);
         break;
       case INTERNSHIP_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -329,7 +338,7 @@ public class DocWorker {
       case ATTESTATION_CREDITS:
         double value = component.getEducationalComponentTemplate().getCredits();
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value), true);
+            String.valueOf((value - Math.floor(value) == 0) ? "" + ((int) value) : value), true);
         break;
       case ATTESTATION_SCORE:
         changeParagraph(docVariable.getParagraph(), String.valueOf(component.getNationalScore()),
@@ -430,7 +439,7 @@ public class DocWorker {
       case CREDITS_GAINED:
         double value = educationalComponentService.getCreditsGained(diploma.getId());
         changeParagraph(docVariable.getParagraph(),
-            String.valueOf((value - Math.floor(value) == 0 )? "" + ((int) value) : value),
+            String.valueOf((value - Math.floor(value) == 0) ? "" + ((int) value) : value),
             false);
         break;
       case CLASSIFICATION_SYSTEM:

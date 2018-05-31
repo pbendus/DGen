@@ -336,7 +336,7 @@ public class FXMLStudentController implements Initializable {
         db.entities.Student student = new db.entities.Student(id, familyName, givenName, familyNameTr, givenNameTr,
             dateOfBirth, protocol, diplomaSubject, previousDocument,
             modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel().getSelectedItem()),
-            null);
+            null, null);
 
         LocalDate lc2 = dpDate.getValue();
         c.set(lc2.getYear(), lc2.getMonthValue(), lc2.getDayOfMonth());

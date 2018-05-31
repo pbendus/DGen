@@ -47,13 +47,17 @@ public class Student {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private DurationOfStudy durationOfStudy;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "group_id", foreign = true,
+      foreignAutoCreate = true, foreignAutoRefresh = true)
+  private Group group;
+
   public Student() {
   }
 
   public Student(int id, String familyName, String givenName, String familyNameTr,
       String givenNameTr, Date dateOfBirth, Protocol protocol,
       DiplomaSubject diplomaSubject, PreviousDocument previousDocument,
-      ModeOfStudy modeOfStudy, DurationOfStudy durationOfStudy) {
+      ModeOfStudy modeOfStudy, DurationOfStudy durationOfStudy, Group group) {
     this.id = id;
     this.familyName = familyName;
     this.givenName = givenName;
@@ -65,6 +69,7 @@ public class Student {
     this.previousDocument = previousDocument;
     this.modeOfStudy = modeOfStudy;
     this.durationOfStudy = durationOfStudy;
+    this.group = group;
   }
 
   public int getId() {
@@ -153,5 +158,13 @@ public class Student {
 
   public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
     this.durationOfStudy = durationOfStudy;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
+
+  public void setGroup(Group group) {
+    this.group = group;
   }
 }

@@ -84,13 +84,19 @@ INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES (
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('E', 60, 66);
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('FX', 35, 59);
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('F', 0, 34);
-
+-----------------------------------------------------------------------------------------------------
 INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Відмінно / Excellent', 90, 100);
 INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Добре / Good', 75, 89);
 INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Задовільно / Satisfactory', 60, 74);
 INSERT INTO national_grade (name, min_national_score, max_national_score) VALUES ('Незадовільно / Fail', 0, 59);
-
+-----------------------------------------------------------------------------------------------------
 INSERT INTO educational_component_type (name) VALUES ('Дисципліни / Courses');
 INSERT INTO educational_component_type (name) VALUES ('Курсові роботи / Research projects');
 INSERT INTO educational_component_type (name) VALUES ('Практика / Internship');
 INSERT INTO educational_component_type (name) VALUES ('Державна атестація / State attestation');
+-----------------------------------------------------------------------------------------------------
+insert into "group" (name) values ('ПІт-16-3');
+insert into "group" (name) values ('ПІт-16-4');
+insert into "group" (name) values ('ПІ-14-1');
+insert into "group" (name) values ('ПІз-14-1');
+insert into "group" (name) values ('ПІт-15-2');

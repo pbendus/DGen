@@ -18,6 +18,7 @@ public class Student {
     private ObjectProperty<PreviousDocument> previousDocument;
     private ObjectProperty<ModeOfStudy> modeOfStudyObject;
     private ObjectProperty<DurationOfStudy> durationOfStudy;
+    private ObjectProperty<Group> group;
 
     private StringProperty fullName;
     private CheckBox select;
@@ -34,6 +35,7 @@ public class Student {
         this.previousDocument = new SimpleObjectProperty<>();
         this.modeOfStudyObject = new SimpleObjectProperty<>();
         this.durationOfStudy = new SimpleObjectProperty<>();
+        this.group = new SimpleObjectProperty<>();
         this.select = new CheckBox();
     }
 
@@ -41,7 +43,8 @@ public class Student {
         String givenNameTr, Date dateOfBirth, Protocol protocol,
         DiplomaSubject diplomaSubject, PreviousDocument previousDocument,
         ModeOfStudy modeOfStudyObject,
-        DurationOfStudy durationOfStudy) {
+        DurationOfStudy durationOfStudy,
+        Group group) {
         this.id = new SimpleIntegerProperty(id);
         this.familyName = new SimpleStringProperty(familyName);
         this.givenName = new SimpleStringProperty(givenName);
@@ -53,6 +56,7 @@ public class Student {
         this.previousDocument = new SimpleObjectProperty<>(previousDocument);
         this.modeOfStudyObject = new SimpleObjectProperty<>(modeOfStudyObject);
         this.durationOfStudy = new SimpleObjectProperty<>(durationOfStudy);
+        this.group = new SimpleObjectProperty<>(group);
 
         updateFullName();
         this.select = new CheckBox();
@@ -210,5 +214,17 @@ public class Student {
 
     public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
         this.durationOfStudy.set(durationOfStudy);
+    }
+
+    public Group getGroup() {
+        return group.get();
+    }
+
+    public ObjectProperty<Group> groupProperty() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group.set(group);
     }
 }
