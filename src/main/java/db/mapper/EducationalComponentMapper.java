@@ -34,6 +34,10 @@ public class EducationalComponentMapper
     educationalComponent.setNationalGrade(nationalGradeMapper.map(value.getNationalGrade()));
     educationalComponent.setNationalScore(value.getNationalScore());
     educationalComponent.setRatingPoint(ratingPointMapper.map(value.getRatingPoint()));
+    educationalComponent.setCredits(value.getEducationalComponentTemplate().getCredits());
+    educationalComponent.setCourseTitle(value.getEducationalComponentTemplate().getCourseTitle());
+    educationalComponent.setEducationalComponentType(
+        value.getEducationalComponentTemplate().getEducationalComponentType().getName());
     return educationalComponent;
   }
 

@@ -97,7 +97,11 @@ CREATE TABLE student (
   protocol_id          INTEGER      NOT NULL,
   diploma_subject_id   INTEGER      NOT NULL,
   previous_document_id INTEGER      NOT NULL,
+  mode_of_study_id     INTEGER      NOT NULL,
+  duration_of_study_id INTEGER      NOT NULL,
 
+  FOREIGN KEY (mode_of_study_id) REFERENCES mode_of_study (id),
+  FOREIGN KEY (duration_of_study_id) REFERENCES duration_of_study (id),
   FOREIGN KEY (protocol_id) REFERENCES protocol (id),
   FOREIGN KEY (diploma_subject_id) REFERENCES diploma_subject (id),
   FOREIGN KEY (previous_document_id) REFERENCES previous_document (id)

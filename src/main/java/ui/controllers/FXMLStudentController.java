@@ -14,6 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,7 @@ public class FXMLStudentController implements Initializable {
     private TableColumn<EducationalComponent, String> tcName;
 
     @FXML
-    private TableColumn<EducationalComponent, Integer> tcCredit;
+    private TableColumn<EducationalComponent, Double> tcCredit;
 
     @FXML
     private TableColumn<EducationalComponent, Integer> tcGrade;
@@ -299,7 +300,7 @@ public class FXMLStudentController implements Initializable {
         tvGrades.setItems(educationalComponentObservableList);
 
         tvGrades.setEditable(true);
-        tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
 
@@ -333,7 +334,9 @@ public class FXMLStudentController implements Initializable {
                 .getSelectionModel().getSelectedItem());
 
         db.entities.Student student = new db.entities.Student(id, familyName, givenName, familyNameTr, givenNameTr,
-                dateOfBirth, protocol, diplomaSubject, previousDocument);
+            dateOfBirth, protocol, diplomaSubject, previousDocument,
+            modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel().getSelectedItem()),
+            null);
 
         LocalDate lc2 = dpDate.getValue();
         c.set(lc2.getYear(), lc2.getMonthValue(), lc2.getDayOfMonth());

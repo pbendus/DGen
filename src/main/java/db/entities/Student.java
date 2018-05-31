@@ -39,12 +39,21 @@ public class Student {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private PreviousDocument previousDocument;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "mode_of_study_id", foreign = true,
+      foreignAutoCreate = true, foreignAutoRefresh = true)
+  private ModeOfStudy modeOfStudy;
+
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_study_id", foreign = true,
+      foreignAutoCreate = true, foreignAutoRefresh = true)
+  private DurationOfStudy durationOfStudy;
+
   public Student() {
   }
 
   public Student(int id, String familyName, String givenName, String familyNameTr,
       String givenNameTr, Date dateOfBirth, Protocol protocol,
-      DiplomaSubject diplomaSubject, PreviousDocument previousDocument) {
+      DiplomaSubject diplomaSubject, PreviousDocument previousDocument,
+      ModeOfStudy modeOfStudy, DurationOfStudy durationOfStudy) {
     this.id = id;
     this.familyName = familyName;
     this.givenName = givenName;
@@ -54,6 +63,8 @@ public class Student {
     this.protocol = protocol;
     this.diplomaSubject = diplomaSubject;
     this.previousDocument = previousDocument;
+    this.modeOfStudy = modeOfStudy;
+    this.durationOfStudy = durationOfStudy;
   }
 
   public int getId() {
@@ -126,5 +137,21 @@ public class Student {
 
   public void setPreviousDocument(PreviousDocument previousDocument) {
     this.previousDocument = previousDocument;
+  }
+
+  public ModeOfStudy getModeOfStudy() {
+    return modeOfStudy;
+  }
+
+  public void setModeOfStudy(ModeOfStudy modeOfStudy) {
+    this.modeOfStudy = modeOfStudy;
+  }
+
+  public DurationOfStudy getDurationOfStudy() {
+    return durationOfStudy;
+  }
+
+  public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
+    this.durationOfStudy = durationOfStudy;
   }
 }

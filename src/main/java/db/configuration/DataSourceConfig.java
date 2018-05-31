@@ -8,6 +8,7 @@ import db.entities.AccessRequirements;
 import db.entities.ClassificationSystem;
 import db.entities.Diploma;
 import db.entities.DiplomaSubject;
+import db.entities.DurationOfStudy;
 import db.entities.DurationOfTraining;
 import db.entities.EctsCredits;
 import db.entities.EducationalComponent;
@@ -171,5 +172,12 @@ public class DataSourceConfig {
       ConnectionSource connectionSource)
       throws SQLException {
     return DaoManager.createDao(connectionSource, EctsCredits.class);
+  }
+
+  @Bean
+  public Dao<DurationOfStudy, Integer> getDurationOfStudyDao(
+      ConnectionSource connectionSource)
+      throws SQLException {
+    return DaoManager.createDao(connectionSource, DurationOfStudy.class);
   }
 }
