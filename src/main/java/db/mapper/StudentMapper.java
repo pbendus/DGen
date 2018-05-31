@@ -11,14 +11,19 @@ public class StudentMapper
   private ProtocolMapper protocolMapper;
   private DiplomaSubjectMapper diplomaSubjectMapper;
   private PreviousDocumentMapper previousDocumentMapper;
+  private ModeOfStudyMapper modeOfStudyMapper;
+  private DurationOfStudyMapper durationOfStudyMapper;
 
   @Autowired
   public StudentMapper(ProtocolMapper protocolMapper,
       DiplomaSubjectMapper diplomaSubjectMapper,
-      PreviousDocumentMapper previousDocumentMapper) {
+      PreviousDocumentMapper previousDocumentMapper, ModeOfStudyMapper modeOfStudyMapper,
+      DurationOfStudyMapper durationOfStudyMapper) {
     this.protocolMapper = protocolMapper;
     this.diplomaSubjectMapper = diplomaSubjectMapper;
     this.previousDocumentMapper = previousDocumentMapper;
+    this.modeOfStudyMapper = modeOfStudyMapper;
+    this.durationOfStudyMapper = durationOfStudyMapper;
   }
 
   @Override public Student map(db.entities.Student value) {
@@ -32,6 +37,8 @@ public class StudentMapper
     student.setProtocol(protocolMapper.map(value.getProtocol()));
     student.setDiplomaSubject(diplomaSubjectMapper.map(value.getDiplomaSubject()));
     student.setPreviousDocument(previousDocumentMapper.map(value.getPreviousDocument()));
+    student.setModeOfStudyObject(modeOfStudyMapper.map(value.getModeOfStudy()));
+    student.setDurationOfStudy(durationOfStudyMapper.map(value.getDurationOfStudy()));
     return student;
   }
 
@@ -46,6 +53,7 @@ public class StudentMapper
     student.setProtocol(protocolMapper.reverseMap(value.getProtocol()));
     student.setDiplomaSubject(diplomaSubjectMapper.reverseMap(value.getDiplomaSubject()));
     student.setPreviousDocument(previousDocumentMapper.reverseMap(value.getPreviousDocument()));
+    student.setDurationOfStudy(durationOfStudyMapper.reverseMap(value.getDurationOfStudy()));
     return student;
   }
 }

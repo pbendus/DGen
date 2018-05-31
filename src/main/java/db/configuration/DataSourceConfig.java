@@ -8,7 +8,9 @@ import db.entities.AccessRequirements;
 import db.entities.ClassificationSystem;
 import db.entities.Diploma;
 import db.entities.DiplomaSubject;
+import db.entities.DurationOfStudy;
 import db.entities.DurationOfTraining;
+import db.entities.EctsCredits;
 import db.entities.EducationalComponent;
 import db.entities.EducationalComponentTemplate;
 import db.entities.EducationalComponentType;
@@ -18,7 +20,6 @@ import db.entities.ModeOfStudy;
 import db.entities.NationalGrade;
 import db.entities.OfficialDurationOfProgramme;
 import db.entities.PreviousDocument;
-import db.entities.ProfessionalStatus;
 import db.entities.Protocol;
 import db.entities.RatingPoint;
 import db.entities.Student;
@@ -139,13 +140,6 @@ public class DataSourceConfig {
   }
 
   @Bean
-  public Dao<ProfessionalStatus, Integer> getProfessionalStatusDao(
-      ConnectionSource connectionSource)
-      throws SQLException {
-    return DaoManager.createDao(connectionSource, ProfessionalStatus.class);
-  }
-
-  @Bean
   public Dao<Protocol, Integer> getProtocolDao(
       ConnectionSource connectionSource)
       throws SQLException {
@@ -171,5 +165,19 @@ public class DataSourceConfig {
       ConnectionSource connectionSource)
       throws SQLException {
     return DaoManager.createDao(connectionSource, Diploma.class);
+  }
+
+  @Bean
+  public Dao<EctsCredits, Integer> getEctsCreditsDao(
+      ConnectionSource connectionSource)
+      throws SQLException {
+    return DaoManager.createDao(connectionSource, EctsCredits.class);
+  }
+
+  @Bean
+  public Dao<DurationOfStudy, Integer> getDurationOfStudyDao(
+      ConnectionSource connectionSource)
+      throws SQLException {
+    return DaoManager.createDao(connectionSource, DurationOfStudy.class);
   }
 }

@@ -6,7 +6,7 @@ public class EducationalComponent {
 
     private IntegerProperty id;
     private IntegerProperty nationalScore;
-    private IntegerProperty credits;
+    private DoubleProperty credits;
     private StringProperty courseTitle;
     private StringProperty educationalComponentType;
     private ObjectProperty<EducationalComponentTemplate> educationalComponentTemplate;
@@ -17,7 +17,7 @@ public class EducationalComponent {
     public EducationalComponent() {
         this.id = new SimpleIntegerProperty();
         this.nationalScore = new SimpleIntegerProperty();
-        this.credits = new SimpleIntegerProperty();
+        this.credits = new SimpleDoubleProperty();
         this.courseTitle = new SimpleStringProperty();
         this.educationalComponentType = new SimpleStringProperty();
         this.educationalComponentTemplate = new SimpleObjectProperty<>();
@@ -30,7 +30,7 @@ public class EducationalComponent {
                                 EducationalComponentTemplate educationalComponentTemplate, RatingPoint ratingPoint,
                                 NationalGrade nationalGrade, Diploma diploma) {
         this.id = new SimpleIntegerProperty(id);
-        this.credits = new SimpleIntegerProperty(credits);
+        this.credits = new SimpleDoubleProperty(credits);
         this.courseTitle = new SimpleStringProperty(courseTitle);
         this.educationalComponentType = new SimpleStringProperty(educationalComponentType);
         this.nationalScore = new SimpleIntegerProperty(nationalScore);
@@ -64,15 +64,15 @@ public class EducationalComponent {
         this.nationalScore.set(nationalScore);
     }
 
-    public int getCredits() {
+    public double getCredits() {
         return credits.get();
     }
 
-    public IntegerProperty creditsProperty() {
+    public DoubleProperty creditsProperty() {
         return credits;
     }
 
-    public void setCredits(int credits) {
+    public void setCredits(double credits) {
         this.credits.set(credits);
     }
 

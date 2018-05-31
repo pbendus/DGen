@@ -16,6 +16,8 @@ public class Student {
     private ObjectProperty<Protocol> protocol;
     private ObjectProperty<DiplomaSubject> diplomaSubject;
     private ObjectProperty<PreviousDocument> previousDocument;
+    private ObjectProperty<ModeOfStudy> modeOfStudyObject;
+    private ObjectProperty<DurationOfStudy> durationOfStudy;
 
     private StringProperty fullName;
     private CheckBox select;
@@ -30,12 +32,16 @@ public class Student {
         this.protocol = new SimpleObjectProperty<>();
         this.diplomaSubject = new SimpleObjectProperty<>();
         this.previousDocument = new SimpleObjectProperty<>();
+        this.modeOfStudyObject = new SimpleObjectProperty<>();
+        this.durationOfStudy = new SimpleObjectProperty<>();
         this.select = new CheckBox();
     }
 
     public Student(int id, String familyName, String givenName, String familyNameTr,
-                   String givenNameTr, Date dateOfBirth, Protocol protocol,
-                   DiplomaSubject diplomaSubject, PreviousDocument previousDocument) {
+        String givenNameTr, Date dateOfBirth, Protocol protocol,
+        DiplomaSubject diplomaSubject, PreviousDocument previousDocument,
+        ModeOfStudy modeOfStudyObject,
+        DurationOfStudy durationOfStudy) {
         this.id = new SimpleIntegerProperty(id);
         this.familyName = new SimpleStringProperty(familyName);
         this.givenName = new SimpleStringProperty(givenName);
@@ -45,6 +51,8 @@ public class Student {
         this.protocol = new SimpleObjectProperty<>(protocol);
         this.diplomaSubject = new SimpleObjectProperty<>(diplomaSubject);
         this.previousDocument = new SimpleObjectProperty<>(previousDocument);
+        this.modeOfStudyObject = new SimpleObjectProperty<>(modeOfStudyObject);
+        this.durationOfStudy = new SimpleObjectProperty<>(durationOfStudy);
 
         updateFullName();
         this.select = new CheckBox();
@@ -178,5 +186,29 @@ public class Student {
 
     public CheckBox getSelect() {
         return select;
+    }
+
+    public ModeOfStudy getModeOfStudy() {
+        return modeOfStudyObject.get();
+    }
+
+    public ObjectProperty<ModeOfStudy> modeOfStudyObjectProperty() {
+        return modeOfStudyObject;
+    }
+
+    public void setModeOfStudyObject(ModeOfStudy modeOfStudyObject) {
+        this.modeOfStudyObject.set(modeOfStudyObject);
+    }
+
+    public DurationOfStudy getDurationOfStudy() {
+        return durationOfStudy.get();
+    }
+
+    public ObjectProperty<DurationOfStudy> durationOfStudyProperty() {
+        return durationOfStudy;
+    }
+
+    public void setDurationOfStudy(DurationOfStudy durationOfStudy) {
+        this.durationOfStudy.set(durationOfStudy);
     }
 }

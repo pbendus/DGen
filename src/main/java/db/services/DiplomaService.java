@@ -15,7 +15,14 @@ public class DiplomaService extends BaseServiceImpl<Diploma> {
 
   public Diploma getByStudentId(int studentId) throws SQLException {
     final List<Diploma> diplomas = getDao().queryForEq("student_id", studentId);
+    if (diplomas.size() == 1) {
+      LOGGER.info(
+          String.format("The diploma with student id{%d} exists in the storage", studentId));
+      return diplomas.get(0);
+    } else {
+      LOGGER.info(String.format("The diploma with student id{%d} was not found", studentId));
 
-    return diplomas.size() == 1 ? diplomas.get(0) : null;
+      return null;
+    }
   }
 }

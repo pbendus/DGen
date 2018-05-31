@@ -3,8 +3,8 @@ package db.entities;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "duration_of_training")
-public class DurationOfTraining {
+@DatabaseTable(tableName = "ects_credits")
+public class EctsCredits {
 
   @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
@@ -12,22 +12,16 @@ public class DurationOfTraining {
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
   private String name;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "mode_of_study_id", foreign = true,
-      foreignAutoCreate = true, foreignAutoRefresh = true)
-  private ModeOfStudy modeOfStudy;
-
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_study_id", foreign = true,
-      foreignAutoCreate = true, foreignAutoRefresh = true)
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "duration_of_study_id",
+      foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
   private DurationOfStudy durationOfStudy;
 
-  public DurationOfTraining() {
+  public EctsCredits() {
   }
 
-  public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy,
-      DurationOfStudy durationOfStudy) {
+  public EctsCredits(int id, String name, DurationOfStudy durationOfStudy) {
     this.id = id;
     this.name = name;
-    this.modeOfStudy = modeOfStudy;
     this.durationOfStudy = durationOfStudy;
   }
 
@@ -45,14 +39,6 @@ public class DurationOfTraining {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public ModeOfStudy getModeOfStudy() {
-    return modeOfStudy;
-  }
-
-  public void setModeOfStudy(ModeOfStudy modeOfStudy) {
-    this.modeOfStudy = modeOfStudy;
   }
 
   public DurationOfStudy getDurationOfStudy() {

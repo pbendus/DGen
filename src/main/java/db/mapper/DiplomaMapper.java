@@ -15,9 +15,9 @@ public class DiplomaMapper
   private OfficialDurationOfProgrammeMapper officialDurationOfProgrammeMapper;
   private AccessRequirementsMapper accessRequirementsMapper;
   private ModeOfStudyMapper modeOfStudyMapper;
-  private ProfessionalStatusMapper professionalStatusMapper;
   private ClassificationSystemMapper classificationSystemMapper;
   private DurationOfTrainingMapper durationOfTrainingMapper;
+  private EctsCreditsMapper ectsCreditsMapper;
 
   @Autowired
   public DiplomaMapper(StudentMapper studentMapper, MainFieldMapper mainFieldMapper,
@@ -25,18 +25,18 @@ public class DiplomaMapper
       OfficialDurationOfProgrammeMapper officialDurationOfProgrammeMapper,
       AccessRequirementsMapper accessRequirementsMapper,
       ModeOfStudyMapper modeOfStudyMapper,
-      ProfessionalStatusMapper professionalStatusMapper,
       ClassificationSystemMapper classificationSystemMapper,
-      DurationOfTrainingMapper durationOfTrainingMapper) {
+      DurationOfTrainingMapper durationOfTrainingMapper,
+      EctsCreditsMapper ectsCreditsMapper) {
     this.studentMapper = studentMapper;
     this.mainFieldMapper = mainFieldMapper;
     this.fieldOfStudyMapper = fieldOfStudyMapper;
     this.officialDurationOfProgrammeMapper = officialDurationOfProgrammeMapper;
     this.accessRequirementsMapper = accessRequirementsMapper;
     this.modeOfStudyMapper = modeOfStudyMapper;
-    this.professionalStatusMapper = professionalStatusMapper;
     this.classificationSystemMapper = classificationSystemMapper;
     this.durationOfTrainingMapper = durationOfTrainingMapper;
+    this.ectsCreditsMapper = ectsCreditsMapper;
   }
 
   @Override public ui.models.Diploma map(db.entities.Diploma value) {
@@ -51,11 +51,10 @@ public class DiplomaMapper
     diploma.setOfficialDurationOfProgramme(
         officialDurationOfProgrammeMapper.map(value.getOfficialDurationOfProgramme()));
     diploma.setAccessRequirements(accessRequirementsMapper.map(value.getAccessRequirements()));
-    diploma.setModeOfStudy(modeOfStudyMapper.map(value.getModeOfStudy()));
-    diploma.setProfessionalStatus(professionalStatusMapper.map(value.getProfessionalStatus()));
     diploma.setClassificationSystem(
         classificationSystemMapper.map(value.getClassificationSystem()));
     diploma.setDurationOfTraining(durationOfTrainingMapper.map(value.getDurationOfTraining()));
+    diploma.setEctsCredits(ectsCreditsMapper.map(value.getEctsCredits()));
 
     return diploma;
   }
@@ -74,13 +73,11 @@ public class DiplomaMapper
         officialDurationOfProgrammeMapper.reverseMap(value.getOfficialDurationOfProgramme()));
     diploma.setAccessRequirements(
         accessRequirementsMapper.reverseMap(value.getAccessRequirements()));
-    diploma.setModeOfStudy(modeOfStudyMapper.reverseMap(value.getModeOfStudy()));
-    diploma.setProfessionalStatus(
-        professionalStatusMapper.reverseMap(value.getProfessionalStatus()));
     diploma.setClassificationSystem(
         classificationSystemMapper.reverseMap(value.getClassificationSystem()));
     diploma.setDurationOfTraining(
         durationOfTrainingMapper.reverseMap(value.getDurationOfTraining()));
+    diploma.setEctsCredits(ectsCreditsMapper.reverseMap(value.getEctsCredits()));
 
     return diploma;
   }

@@ -8,10 +8,13 @@ public class DurationOfTrainingMapper
     extends Mapper<db.entities.DurationOfTraining, ui.models.DurationOfTraining> {
 
   private ModeOfStudyMapper modeOfStudyMapper;
+  private DurationOfStudyMapper durationOfStudyMapper;
 
   @Autowired
-  public DurationOfTrainingMapper(ModeOfStudyMapper modeOfStudyMapper) {
+  public DurationOfTrainingMapper(ModeOfStudyMapper modeOfStudyMapper,
+      DurationOfStudyMapper durationOfStudyMapper) {
     this.modeOfStudyMapper = modeOfStudyMapper;
+    this.durationOfStudyMapper = durationOfStudyMapper;
   }
 
   @Override public ui.models.DurationOfTraining map(db.entities.DurationOfTraining value) {
@@ -19,6 +22,7 @@ public class DurationOfTrainingMapper
     diplomaSubject.setId(value.getId());
     diplomaSubject.setName(value.getName());
     diplomaSubject.setModeOfStudy(modeOfStudyMapper.map(value.getModeOfStudy()));
+    diplomaSubject.setDurationOfStudy(durationOfStudyMapper.map(value.getDurationOfStudy()));
 
     return diplomaSubject;
   }
@@ -29,6 +33,7 @@ public class DurationOfTrainingMapper
     diplomaSubject.setId(value.getId());
     diplomaSubject.setName(value.getName());
     diplomaSubject.setModeOfStudy(modeOfStudyMapper.reverseMap(value.getModeOfStudy()));
+    diplomaSubject.setDurationOfStudy(durationOfStudyMapper.reverseMap(value.getDurationOfStudy()));
 
     return diplomaSubject;
   }

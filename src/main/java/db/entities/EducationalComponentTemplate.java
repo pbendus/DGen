@@ -10,7 +10,7 @@ public class EducationalComponentTemplate {
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true)
-  private int credit;
+  private double credits;
 
   @DatabaseField(canBeNull = false, useGetSet = true, columnName = "course_title")
   private String courseTitle;
@@ -19,20 +19,15 @@ public class EducationalComponentTemplate {
       foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
   private EducationalComponentType educationalComponentType;
 
-  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "main_field_id",
-      foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
-  private MainField mainField;
-
   public EducationalComponentTemplate() {
   }
 
-  public EducationalComponentTemplate(int id, int credit, String courseTitle,
-      EducationalComponentType educationalComponentType, MainField mainField) {
+  public EducationalComponentTemplate(int id, double credits, String courseTitle,
+      EducationalComponentType educationalComponentType) {
     this.id = id;
-    this.credit = credit;
+    this.credits = credits;
     this.courseTitle = courseTitle;
     this.educationalComponentType = educationalComponentType;
-    this.mainField = mainField;
   }
 
   public int getId() {
@@ -43,12 +38,12 @@ public class EducationalComponentTemplate {
     this.id = id;
   }
 
-  public int getCredit() {
-    return credit;
+  public double getCredits() {
+    return credits;
   }
 
-  public void setCredit(int credit) {
-    this.credit = credit;
+  public void setCredits(double credits) {
+    this.credits = credits;
   }
 
   public String getCourseTitle() {
@@ -65,13 +60,5 @@ public class EducationalComponentTemplate {
 
   public void setEducationalComponentType(EducationalComponentType educationalComponentType) {
     this.educationalComponentType = educationalComponentType;
-  }
-
-  public MainField getMainField() {
-    return mainField;
-  }
-
-  public void setMainField(MainField mainField) {
-    this.mainField = mainField;
   }
 }

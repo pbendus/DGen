@@ -14,6 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,7 @@ public class FXMLStudentController implements Initializable {
     private TableColumn<EducationalComponent, String> tcName;
 
     @FXML
-    private TableColumn<EducationalComponent, Integer> tcCredit;
+    private TableColumn<EducationalComponent, Double> tcCredit;
 
     @FXML
     private TableColumn<EducationalComponent, Integer> tcGrade;
@@ -141,7 +142,6 @@ public class FXMLStudentController implements Initializable {
     private ModeOfStudyService modeOfStudyService;
     private DurationOfTrainingService durationOfTrainingService;
     private DiplomaSubjectService diplomaSubjectService;
-    private ProfessionalStatusService professionalStatusService;
     private DiplomaService diplomaService;
     private EducationalComponentTypeService educationalComponentTypeService;
     private EducationalComponentTemplateService educationalComponentTemplateService;
@@ -187,7 +187,6 @@ public class FXMLStudentController implements Initializable {
                                  ModeOfStudyService modeOfStudyService,
                                  DurationOfTrainingService durationOfTrainingService,
                                  DiplomaSubjectService diplomaSubjectService,
-                                 ProfessionalStatusService professionalStatusService,
                                  DiplomaService diplomaService,
                                  EducationalComponentTypeService educationalComponentTypeService,
                                  EducationalComponentTemplateService educationalComponentTemplateService,
@@ -214,7 +213,6 @@ public class FXMLStudentController implements Initializable {
         this.modeOfStudyService = modeOfStudyService;
         this.durationOfTrainingService = durationOfTrainingService;
         this.diplomaSubjectService = diplomaSubjectService;
-        this.professionalStatusService = professionalStatusService;
         this.diplomaService = diplomaService;
         this.educationalComponentTypeService = educationalComponentTypeService;
         this.educationalComponentTemplateService = educationalComponentTemplateService;
@@ -302,7 +300,7 @@ public class FXMLStudentController implements Initializable {
         tvGrades.setItems(educationalComponentObservableList);
 
         tvGrades.setEditable(true);
-        tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
 
@@ -310,12 +308,10 @@ public class FXMLStudentController implements Initializable {
 
         List<db.entities.Student> studentList = new ArrayList<>();
         List<db.entities.DiplomaSubject> diplomaSubjectList = new ArrayList<>();
-        List<db.entities.ProfessionalStatus> professionalStatusList = new ArrayList<>();
 
         try {
             studentList = studentService.getAll();
             diplomaSubjectList = diplomaSubjectService.getAll();
-            professionalStatusList = professionalStatusService.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -338,7 +334,9 @@ public class FXMLStudentController implements Initializable {
                 .getSelectionModel().getSelectedItem());
 
         db.entities.Student student = new db.entities.Student(id, familyName, givenName, familyNameTr, givenNameTr,
-                dateOfBirth, protocol, diplomaSubject, previousDocument);
+            dateOfBirth, protocol, diplomaSubject, previousDocument,
+            modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel().getSelectedItem()),
+            null);
 
         LocalDate lc2 = dpDate.getValue();
         c.set(lc2.getYear(), lc2.getMonthValue(), lc2.getDayOfMonth());
@@ -355,16 +353,15 @@ public class FXMLStudentController implements Initializable {
                 .reverseMap(cbAccessRequirements.getSelectionModel().getSelectedItem());
         final db.entities.ModeOfStudy modeOfStudy = modeOfStudyMapper.reverseMap(cbModeOfStudy.getSelectionModel()
                 .getSelectedItem());
-        final db.entities.ProfessionalStatus professionalStatus = new db.entities.ProfessionalStatus(
-                professionalStatusList.size() + 1, taProfessionalStatus.getText().trim());
         final db.entities.ClassificationSystem classificationSystem = classificationSystemMapper
                 .reverseMap(cbClassificationSystem.getSelectionModel().getSelectedItem());
         final db.entities.DurationOfTraining durationOfTraining = durationOfTrainingMapper
                 .reverseMap(cbDurationOfTraining.getSelectionModel().getSelectedItem());
 
-        db.entities.Diploma diploma = new db.entities.Diploma(id, number, registrationNumber, dateOfIssue, student,
-                mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements, modeOfStudy,
-                professionalStatus, classificationSystem, durationOfTraining);
+        db.entities.Diploma diploma = new db.entities.Diploma(id, number, registrationNumber,
+            null, dateOfIssue, student,
+                mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements,
+            classificationSystem, durationOfTraining, null);
 
         try {
             studentService.create(student);

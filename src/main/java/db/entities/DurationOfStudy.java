@@ -3,21 +3,21 @@ package db.entities;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "professional_status")
-public class ProfessionalStatus {
+@DatabaseTable(tableName = "duration_of_study")
+public class DurationOfStudy {
 
   @DatabaseField(generatedId = true, useGetSet = true)
   private int id;
 
   @DatabaseField(canBeNull = false, useGetSet = true, unique = true)
-  private String name;
+  private String value;
 
-  public ProfessionalStatus() {
+  public DurationOfStudy() {
   }
 
-  public ProfessionalStatus(int id, String name) {
+  public DurationOfStudy(int id, String value) {
     this.id = id;
-    this.name = name;
+    this.value = value;
   }
 
   public int getId() {
@@ -28,11 +28,11 @@ public class ProfessionalStatus {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getValue() {
+    return value;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setValue(String name) {
+    this.value = name;
   }
 }

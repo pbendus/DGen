@@ -1,26 +1,27 @@
 package ui.models;
 
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-public class DurationOfTraining {
+public class EctsCredits {
 
     private IntegerProperty id;
     private StringProperty name;
-    private ObjectProperty<ModeOfStudy> modeOfStudy;
-    private ObjectProperty<DurationOfStudy> durationOfStudy;
+    private SimpleObjectProperty<DurationOfStudy> durationOfStudy;
 
-    public DurationOfTraining() {
+    public EctsCredits() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
-        this.modeOfStudy = new SimpleObjectProperty<>();
         this.durationOfStudy = new SimpleObjectProperty<>();
     }
 
-    public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy,
+    public EctsCredits(int id, String name,
         DurationOfStudy durationOfStudy) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
-        this.modeOfStudy = new SimpleObjectProperty<>(modeOfStudy);
         this.durationOfStudy = new SimpleObjectProperty<>(durationOfStudy);
     }
 
@@ -48,18 +49,6 @@ public class DurationOfTraining {
         this.name.set(name);
     }
 
-    public ModeOfStudy getModeOfStudy() {
-        return modeOfStudy.get();
-    }
-
-    public ObjectProperty<ModeOfStudy> modeOfStudyProperty() {
-        return modeOfStudy;
-    }
-
-    public void setModeOfStudy(ModeOfStudy modeOfStudy) {
-        this.modeOfStudy.set(modeOfStudy);
-    }
-
     @Override
     public String toString() {
         return name.get();
@@ -69,7 +58,7 @@ public class DurationOfTraining {
         return durationOfStudy.get();
     }
 
-    public ObjectProperty<DurationOfStudy> durationOfStudyProperty() {
+    public SimpleObjectProperty<DurationOfStudy> durationOfStudyProperty() {
         return durationOfStudy;
     }
 
