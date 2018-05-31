@@ -4,26 +4,8 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import db.entities.AccessRequirements;
-import db.entities.ClassificationSystem;
-import db.entities.Diploma;
-import db.entities.DiplomaSubject;
-import db.entities.DurationOfStudy;
-import db.entities.DurationOfTraining;
-import db.entities.EctsCredits;
-import db.entities.EducationalComponent;
-import db.entities.EducationalComponentTemplate;
-import db.entities.EducationalComponentType;
-import db.entities.FieldOfStudy;
-import db.entities.Group;
-import db.entities.MainField;
-import db.entities.ModeOfStudy;
-import db.entities.NationalGrade;
-import db.entities.OfficialDurationOfProgramme;
-import db.entities.PreviousDocument;
-import db.entities.Protocol;
-import db.entities.RatingPoint;
-import db.entities.Student;
+import db.entities.*;
+
 import java.sql.SQLException;
 import javax.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -54,6 +36,13 @@ public class DataSourceConfig {
       ConnectionSource connectionSource)
       throws SQLException {
     return DaoManager.createDao(connectionSource, AccessRequirements.class);
+  }
+
+  @Bean
+  public Dao<ArDos, Integer> getArDosDao(
+          ConnectionSource connectionSource)
+          throws SQLException {
+    return DaoManager.createDao(connectionSource, ArDos.class);
   }
 
   @Bean

@@ -36,8 +36,8 @@ CREATE TABLE official_duration_of_programme (
 ---------------------------------------------------------------------------------
 -- Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations
 CREATE TABLE access_requirements (
-  id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  id                   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name                 VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE diploma_subject (
@@ -49,6 +49,14 @@ CREATE TABLE diploma_subject (
 CREATE TABLE previous_document (
   id   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   name TEXT    NOT NULL
+);
+
+---------------------------------------------------------------------------------
+-- Duration of Study ID & Access Requirements connection
+CREATE TABLE ar_dos (
+  id                     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  duration_of_study_id   INTEGER NULL,
+  access_requirements_id INTEGER NOT NULL
 );
 
 ---------------------------------------------------------------------------------
@@ -187,12 +195,12 @@ CREATE TABLE educational_component_template (
 ---------------------------------------------------------------------------------
 -- All grades
 CREATE TABLE educational_component (
-  id                                INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  educational_component_template_id INTEGER      NOT NULL,
-  national_score                    INTEGER      NOT NULL,
-  rating_point_id                   INTEGER      NOT NULL,
-  national_grade_id                 INTEGER      NOT NULL,
-  diploma_id                        INTEGER      NOT NULL,
+  id                                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  educational_component_template_id INTEGER NOT NULL,
+  national_score                    INTEGER NOT NULL,
+  rating_point_id                   INTEGER NOT NULL,
+  national_grade_id                 INTEGER NOT NULL,
+  diploma_id                        INTEGER NOT NULL,
 
   FOREIGN KEY (educational_component_template_id) REFERENCES educational_component_template (id),
   FOREIGN KEY (rating_point_id) REFERENCES rating_point (id),
