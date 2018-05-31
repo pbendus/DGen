@@ -56,6 +56,10 @@ public class Diploma {
       foreignAutoCreate = true, foreignAutoRefresh = true)
   private EctsCredits ectsCredits;
 
+  @DatabaseField(canBeNull = false, useGetSet = true, columnName = "diploma_subject_id", foreign = true,
+      foreignAutoCreate = true, foreignAutoRefresh = true)
+  private DiplomaSubject diplomaSubject;
+
   public Diploma() {
   }
 
@@ -65,7 +69,8 @@ public class Diploma {
       OfficialDurationOfProgramme officialDurationOfProgramme,
       AccessRequirements accessRequirements,
       ClassificationSystem classificationSystem,
-      DurationOfTraining durationOfTraining, EctsCredits ectsCredits) {
+      DurationOfTraining durationOfTraining, EctsCredits ectsCredits,
+      DiplomaSubject diplomaSubject) {
     this.id = id;
     this.number = number;
     this.registrationNumber = registrationNumber;
@@ -79,6 +84,7 @@ public class Diploma {
     this.classificationSystem = classificationSystem;
     this.durationOfTraining = durationOfTraining;
     this.ectsCredits = ectsCredits;
+    this.diplomaSubject = diplomaSubject;
   }
 
   public int getId() {
@@ -188,7 +194,15 @@ public class Diploma {
 
   public String getInformationOnCertification() {
     return String.format("Магістерська робота - %s (%s) / Master’s Thesis - %s (%s)",
-        student.getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
-        student.getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
+        getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
+        getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
+  }
+
+  public DiplomaSubject getDiplomaSubject() {
+    return diplomaSubject;
+  }
+
+  public void setDiplomaSubject(DiplomaSubject diplomaSubject) {
+    this.diplomaSubject = diplomaSubject;
   }
 }
