@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLSettingsController">
+   <children>
+      <TabPane prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Протоколи">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0">
+                          <columns>
+                            <TableColumn maxWidth="30.0" minWidth="15.0" prefWidth="30.0" />
+                            <TableColumn maxWidth="45.0" minWidth="0.0" prefWidth="45.0" text="№" />
+                              <TableColumn maxWidth="260.0" minWidth="0.0" prefWidth="260.0" text="Назва українською" />
+                              <TableColumn maxWidth="260.0" minWidth="0.0" prefWidth="260.0" text="Назва англійською" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="9.0" layoutY="10.0" text="Таблиця протоколів">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="9.0" layoutY="241.0" text="Додати протокол">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfNumber" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="170.0" promptText="number" />
+                        <TextField fx:id="tfRegistrationNumber" layoutX="202.0" layoutY="269.0" prefHeight="30.0" prefWidth="170.0" promptText="registration_number" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
