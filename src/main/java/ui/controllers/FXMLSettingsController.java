@@ -1,10 +1,20 @@
 package ui.controllers;
 
+import db.mapper.DurationOfStudyMapper;
+import db.mapper.DurationOfTrainingMapper;
 import db.mapper.FieldOfStudyMapper;
+import db.mapper.GroupMapper;
 import db.mapper.MainFieldMapper;
+import db.mapper.ModeOfStudyMapper;
+import db.mapper.OfficialDurationOfProgrammeMapper;
 import db.mapper.ProtocolMapper;
+import db.services.DurationOfStudyService;
+import db.services.DurationOfTrainingService;
 import db.services.FieldOfStudyService;
+import db.services.GroupService;
 import db.services.MainFieldService;
+import db.services.ModeOfStudyService;
+import db.services.OfficialDurationOfProgrammeService;
 import db.services.ProtocolService;
 import java.net.URL;
 import java.sql.SQLException;
@@ -17,12 +27,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
@@ -32,8 +45,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
+import ui.models.DurationOfStudy;
+import ui.models.DurationOfTraining;
 import ui.models.FieldOfStudy;
+import ui.models.Group;
 import ui.models.MainField;
+import ui.models.ModeOfStudy;
+import ui.models.OfficialDurationOfProgramme;
 import ui.models.Protocol;
 import ui.utils.SpringFXMLLoader;
 import ui.utils.Validation;
@@ -42,6 +60,21 @@ import ui.utils.Validation;
 public class FXMLSettingsController implements Initializable {
 
   private static final Logger LOGGER = LogManager.getLogger();
+
+  @FXML
+  public TabPane tabPane;
+  @FXML
+  public javafx.scene.control.Tab tabDurationOfTraining;
+  @FXML
+  public javafx.scene.control.Tab tabOfficialDuration;
+  @FXML
+  public javafx.scene.control.Tab tabGroups;
+  @FXML
+  public javafx.scene.control.Tab tabMainField;
+  @FXML
+  public javafx.scene.control.Tab tabFieldOfStudy;
+  @FXML
+  public javafx.scene.control.Tab tabProtocols;
 
   @FXML
   public TextField tfNameUKProtocol;
@@ -80,6 +113,55 @@ public class FXMLSettingsController implements Initializable {
   @FXML
   public Button btnAddMainField;
 
+  @FXML
+  public TableView<Group> tblGroups;
+  @FXML
+  public TableColumn<Group, Integer> tblColIdGroups;
+  @FXML
+  public TableColumn<Group, String> tblColNameGroups;
+  @FXML
+  public TextField tfNameGroups;
+  @FXML
+  public Button btnAddGroups;
+
+  @FXML
+  public TableView<OfficialDurationOfProgramme> tblOfficialDuration;
+  @FXML
+  public TableColumn<OfficialDurationOfProgramme, Integer> tblColIdOfficialDuration;
+  @FXML
+  public TableColumn<OfficialDurationOfProgramme, String> tblColNameOfficialDuration;
+  @FXML
+  public TableColumn<OfficialDurationOfProgramme, ModeOfStudy> tblColModeOfStudyOD;
+  @FXML
+  public TableColumn<OfficialDurationOfProgramme, DurationOfStudy> tblColDurationOfStudyOD;
+  @FXML
+  public TextField tfNameOfficialDuration;
+  @FXML
+  public ComboBox<ModeOfStudy> cbModeOfStudyOD;
+  @FXML
+  public ComboBox<DurationOfStudy> cbDurationOfStudyOD;
+  @FXML
+  public Button btnAddOfficialDuration;
+
+  @FXML
+  public TableView<DurationOfTraining> tblDurationOfTraining;
+  @FXML
+  public TableColumn<DurationOfTraining, Integer> tblColIdDurationOfTraining;
+  @FXML
+  public TableColumn<DurationOfTraining, String> tblColNameDurationOfTraining;
+  @FXML
+  public TableColumn<DurationOfTraining, ModeOfStudy> tblColModeOfStudyDoT;
+  @FXML
+  public TableColumn<DurationOfTraining, DurationOfStudy> tblColDurationOfStudyDoT;
+  @FXML
+  public TextField tfNameDurationOfTraining;
+  @FXML
+  public ComboBox<ModeOfStudy> cbModeOfStudyDoT;
+  @FXML
+  public ComboBox<DurationOfStudy> cbDurationOfStudyDoT;
+  @FXML
+  public Button btnAddDurationOfTraining;
+
   private Stage stage;
 
   private ProtocolService protocolService;
@@ -91,32 +173,85 @@ public class FXMLSettingsController implements Initializable {
   private MainFieldService mainFieldService;
   private MainFieldMapper mainFieldMapper;
 
+  private GroupService groupService;
+  private GroupMapper groupMapper;
+
+  private OfficialDurationOfProgrammeService officialDurationOfProgrammeService;
+  private OfficialDurationOfProgrammeMapper officialDurationOfProgrammeMapper;
+
+  private DurationOfStudyService durationOfStudyService;
+  private DurationOfStudyMapper durationOfStudyMapper;
+
+  private DurationOfTrainingService durationOfTrainingService;
+  private DurationOfTrainingMapper durationOfTrainingMapper;
+
+  private ModeOfStudyService modeOfStudyService;
+  private ModeOfStudyMapper modeOfStudyMapper;
+
   private ObservableList<Protocol> protocols = FXCollections.observableArrayList();
   private ObservableList<FieldOfStudy> fieldOfStudies = FXCollections.observableArrayList();
   private ObservableList<MainField> mainFields = FXCollections.observableArrayList();
+  private ObservableList<Group> groups = FXCollections.observableArrayList();
+  private ObservableList<OfficialDurationOfProgramme> officialDurationOfProgrammes =
+      FXCollections.observableArrayList();
+  private ObservableList<DurationOfStudy> durationOfStudies = FXCollections.observableArrayList();
+  private ObservableList<DurationOfTraining> durationOfTrainings =
+      FXCollections.observableArrayList();
+  private ObservableList<ModeOfStudy> modeOfStudies = FXCollections.observableArrayList();
+
+  private Tab tab;
 
   @Autowired
   public FXMLSettingsController(ProtocolService protocolService,
       ProtocolMapper protocolMapper, FieldOfStudyService fieldOfStudyService,
       FieldOfStudyMapper fieldOfStudiesMapper, MainFieldService mainFieldService,
-      MainFieldMapper mainFieldMapper) {
+      MainFieldMapper mainFieldMapper, GroupService groupService, GroupMapper groupMapper,
+      OfficialDurationOfProgrammeService officialDurationOfProgrammeService,
+      OfficialDurationOfProgrammeMapper officialDurationOfProgrammeMapper,
+      DurationOfStudyService durationOfStudyService,
+      DurationOfStudyMapper durationOfStudyMapper,
+      DurationOfTrainingService durationOfTrainingService,
+      DurationOfTrainingMapper durationOfTrainingMapper,
+      ModeOfStudyService modeOfStudyService, ModeOfStudyMapper modeOfStudyMapper) {
     this.protocolService = protocolService;
     this.protocolMapper = protocolMapper;
     this.fieldOfStudyService = fieldOfStudyService;
     this.fieldOfStudyMapper = fieldOfStudiesMapper;
     this.mainFieldService = mainFieldService;
     this.mainFieldMapper = mainFieldMapper;
+    this.groupService = groupService;
+    this.groupMapper = groupMapper;
+    this.officialDurationOfProgrammeService = officialDurationOfProgrammeService;
+    this.officialDurationOfProgrammeMapper = officialDurationOfProgrammeMapper;
+    this.durationOfStudyService = durationOfStudyService;
+    this.durationOfStudyMapper = durationOfStudyMapper;
+    this.durationOfTrainingService = durationOfTrainingService;
+    this.durationOfTrainingMapper = durationOfTrainingMapper;
+    this.modeOfStudyService = modeOfStudyService;
+    this.modeOfStudyMapper = modeOfStudyMapper;
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    selectTab();
     clearComponents();
     initializeTableProtocols();
     initializeTableFieldOfStudy();
     initializeTableMainField();
+    initializeTableGroups();
+    initializeTableOfficialDuration();
+    initializeTableDurationOfTraining();
+
+    fillModeOfStudies();
+    fillDurationOfStudies();
+
     fillTableProtocols();
     fillTableFieldOfStudy();
     fillTableMainField();
+    fillTableGroups();
+    fillTableOfficialDuration();
+    fillTableDurationOfTraining();
+
     btnAddProtocol.setOnAction(event -> {
       if (validateProtocolInputs()) addProtocol();
     });
@@ -126,12 +261,72 @@ public class FXMLSettingsController implements Initializable {
     btnAddMainField.setOnAction(event -> {
       if (validateMainFieldInputs()) addMainField();
     });
+    btnAddGroups.setOnAction(event -> {
+      if (validateGroupInputs()) addGroup();
+    });
+    btnAddOfficialDuration.setOnAction(event -> {
+      if (validateOfficialDurationInputs()) addOfficialDuration();
+    });
+    btnAddDurationOfTraining.setOnAction(event -> {
+      if (validateDurationOfTrainingInputs()) addDurationOfTraining();
+    });
+  }
+
+  private void selectTab() {
+    switch (tab) {
+      default:
+      case PROTOCOLS:
+        tabPane.getSelectionModel().select(tabProtocols);
+        break;
+      case GROUPS:
+        tabPane.getSelectionModel().select(tabGroups);
+        break;
+      case MAIN_FIELD:
+        tabPane.getSelectionModel().select(tabMainField);
+        break;
+      case FIELD_OF_STUDY:
+        tabPane.getSelectionModel().select(tabFieldOfStudy);
+        break;
+      case DURATION_OF_TRAINING:
+        tabPane.getSelectionModel().select(tabDurationOfTraining);
+        break;
+      case OFFICIAL_DURATION_OF_PROGRAMME:
+        tabPane.getSelectionModel().select(tabOfficialDuration);
+        break;
+    }
   }
 
   private void clearComponents() {
     protocols.clear();
     fieldOfStudies.clear();
     mainFields.clear();
+    groups.clear();
+    officialDurationOfProgrammes.clear();
+    durationOfStudies.clear();
+    durationOfTrainings.clear();
+    modeOfStudies.clear();
+  }
+
+  private void fillDurationOfStudies() {
+    try {
+      durationOfStudies.addAll(durationOfStudyMapper.map(durationOfStudyService.getAll()));
+      cbDurationOfStudyDoT.getItems().addAll(durationOfStudies);
+      cbDurationOfStudyOD.getItems().addAll(durationOfStudies);
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void fillModeOfStudies() {
+    try {
+      modeOfStudies.addAll(modeOfStudyMapper.map(modeOfStudyService.getAll()));
+      cbModeOfStudyDoT.getItems().addAll(modeOfStudies);
+      cbModeOfStudyOD.getItems().addAll(modeOfStudies);
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
   }
 
   //-------------------------------------------------------------------------------
@@ -187,7 +382,7 @@ public class FXMLSettingsController implements Initializable {
 
     try {
       if (protocolService.create(protocolMapper.reverseMap(protocol)) == 1) {
-        protocols.add(protocol);
+        protocols.add(protocolMapper.map(protocolService.getByName(nameEN, nameUK)));
       }
     } catch (SQLException e) {
       LOGGER.error(e.getMessage());
@@ -278,7 +473,7 @@ public class FXMLSettingsController implements Initializable {
 
     try {
       if (mainFieldService.create(mainFieldMapper.reverseMap(mainField)) == 1) {
-        mainFields.add(mainField);
+        mainFields.add(mainFieldMapper.map(mainFieldService.getByName(name)));
       }
     } catch (SQLException e) {
       LOGGER.error(e.getMessage());
@@ -363,7 +558,7 @@ public class FXMLSettingsController implements Initializable {
 
     try {
       if (fieldOfStudyService.create(fieldOfStudyMapper.reverseMap(fieldOfStudy)) == 1) {
-        fieldOfStudies.add(fieldOfStudy);
+        fieldOfStudies.add(fieldOfStudyMapper.map(fieldOfStudyService.getByName(name)));
       }
     } catch (SQLException e) {
       LOGGER.error(e.getMessage());
@@ -402,6 +597,329 @@ public class FXMLSettingsController implements Initializable {
     return result;
   }
 
+  //-------------------------------------------------------------------------------
+  // GROUPS
+  //-------------------------------------------------------------------------------
+  private void initializeTableGroups() {
+    tblColIdGroups.setCellValueFactory(new PropertyValueFactory<>("id"));
+    tblColNameGroups.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+    tblColNameGroups.setCellFactory(TextFieldTableCell.forTableColumn());
+    tblColNameGroups.setOnEditCommit(event -> {
+      event.getRowValue().setName(event.getNewValue());
+      updateGroup(event.getRowValue());
+    });
+
+    tblGroups.setRowFactory(
+        tableView -> {
+          final TableRow<Group> row = new TableRow<>();
+          final ContextMenu rowMenu = new ContextMenu();
+          final MenuItem removeItem = new MenuItem("Delete");
+          removeItem.setOnAction(event -> removeGroup(row.getItem()));
+          rowMenu.getItems().addAll(removeItem);
+
+          // only display context menu for non-null items:
+          row.contextMenuProperty().bind(
+              Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                  .then(rowMenu)
+                  .otherwise((ContextMenu) null));
+          return row;
+        });
+  }
+
+  private void fillTableGroups() {
+    try {
+      groups.addAll(groupMapper.map(groupService.getAll()));
+      tblGroups.setItems(groups);
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void addGroup() {
+    final String name = tfNameGroups.getText().trim();
+    final Group group = new Group(groups.size() + 1, name);
+
+    try {
+      if (groupService.create(groupMapper.reverseMap(group)) == 1) {
+        groups.add(groupMapper.map(groupService.getByName(name)));
+      }
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void updateGroup(Group item) {
+    try {
+      groupService.update(groupMapper.reverseMap(item));
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void removeGroup(Group item) {
+    try {
+      if (groupService.delete(item.getId()) == 1) {
+        tblGroups.getItems().remove(item);
+      }
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private boolean validateGroupInputs() {
+    boolean result = true;
+
+    if (!Validation.validateTextField(tfNameGroups)) {
+      tfNameGroups.setStyle(Validation.getTextFieldErrorStyle());
+      tfNameGroups.textProperty().addListener(e -> tfNameGroups.setStyle(null));
+      result = false;
+    }
+    return result;
+  }
+
+  //-------------------------------------------------------------------------------
+  // OFFICIAL DURATION OF PROGRAMME
+  //-------------------------------------------------------------------------------
+  private void initializeTableOfficialDuration() {
+    tblColIdOfficialDuration.setCellValueFactory(new PropertyValueFactory<>("id"));
+    tblColNameOfficialDuration.setCellValueFactory(new PropertyValueFactory<>("name"));
+    tblColDurationOfStudyOD.setCellValueFactory(
+        param -> param.getValue().durationOfStudyProperty());
+    tblColDurationOfStudyOD.setCellFactory(ComboBoxTableCell.forTableColumn(durationOfStudies));
+    tblColDurationOfStudyOD.setOnEditCommit(event -> {
+      event.getRowValue().setDurationOfStudy(event.getNewValue());
+      updateOfficialDuration(event.getRowValue());
+    });
+
+    tblColModeOfStudyOD.setCellValueFactory(param -> param.getValue().modeOfStudyProperty());
+    tblColModeOfStudyOD.setCellFactory(ComboBoxTableCell.forTableColumn(modeOfStudies));
+    tblColModeOfStudyOD.setOnEditCommit(event -> {
+      event.getRowValue().setModeOfStudy(event.getNewValue());
+      updateOfficialDuration(event.getRowValue());
+    });
+
+    tblColNameOfficialDuration.setCellFactory(TextFieldTableCell.forTableColumn());
+    tblColNameOfficialDuration.setOnEditCommit(event -> {
+      event.getRowValue().setName(event.getNewValue());
+      updateOfficialDuration(event.getRowValue());
+    });
+
+    tblOfficialDuration.setRowFactory(
+        tableView -> {
+          final TableRow<OfficialDurationOfProgramme> row = new TableRow<>();
+          final ContextMenu rowMenu = new ContextMenu();
+          final MenuItem removeItem = new MenuItem("Delete");
+          removeItem.setOnAction(event -> removeOfficialDuration(row.getItem()));
+          rowMenu.getItems().addAll(removeItem);
+
+          // only display context menu for non-null items:
+          row.contextMenuProperty().bind(
+              Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                  .then(rowMenu)
+                  .otherwise((ContextMenu) null));
+          return row;
+        });
+  }
+
+  private void fillTableOfficialDuration() {
+    try {
+      officialDurationOfProgrammes.addAll(
+          officialDurationOfProgrammeMapper.map(officialDurationOfProgrammeService.getAll()));
+      tblOfficialDuration.setItems(officialDurationOfProgrammes);
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void addOfficialDuration() {
+    final String name = tfNameOfficialDuration.getText().trim();
+    final ModeOfStudy modeOfStudy = cbModeOfStudyOD.getSelectionModel().getSelectedItem();
+    final DurationOfStudy durationOfStudy =
+        cbDurationOfStudyOD.getSelectionModel().getSelectedItem();
+    final OfficialDurationOfProgramme officialDurationOfProgramme =
+        new OfficialDurationOfProgramme(officialDurationOfProgrammes.size() + 1, name, modeOfStudy,
+            durationOfStudy);
+
+    try {
+      if (officialDurationOfProgrammeService.create(
+          officialDurationOfProgrammeMapper.reverseMap(officialDurationOfProgramme)) == 1) {
+        officialDurationOfProgrammes.add(officialDurationOfProgrammeMapper.map(
+            officialDurationOfProgrammeService.getByName(name)));
+      }
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void updateOfficialDuration(OfficialDurationOfProgramme item) {
+    try {
+      officialDurationOfProgrammeService.update(officialDurationOfProgrammeMapper.reverseMap(item));
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void removeOfficialDuration(OfficialDurationOfProgramme item) {
+    try {
+      if (officialDurationOfProgrammeService.delete(item.getId()) == 1) {
+        tblOfficialDuration.getItems().remove(item);
+      }
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private boolean validateOfficialDurationInputs() {
+    boolean result = true;
+
+    if (!Validation.validateTextField(tfNameOfficialDuration)) {
+      tfNameOfficialDuration.setStyle(Validation.getTextFieldErrorStyle());
+      tfNameOfficialDuration.textProperty().addListener(e -> tfNameOfficialDuration.setStyle(null));
+      result = false;
+    }
+
+    if (!Validation.validateComboBox(cbModeOfStudyOD)) {
+      cbModeOfStudyOD.setStyle(Validation.getComboBoxErrorStyle());
+      cbModeOfStudyOD.valueProperty().addListener(e -> cbModeOfStudyOD.setStyle(null));
+      result = false;
+    }
+
+    if (!Validation.validateComboBox(cbDurationOfStudyOD)) {
+      cbDurationOfStudyOD.setStyle(Validation.getComboBoxErrorStyle());
+      cbDurationOfStudyOD.valueProperty().addListener(e -> cbDurationOfStudyOD.setStyle(null));
+      result = false;
+    }
+    return result;
+  }
+
+  //-------------------------------------------------------------------------------
+  // DURATION OF TRAINING
+  //-------------------------------------------------------------------------------
+  private void initializeTableDurationOfTraining() {
+    tblColIdDurationOfTraining.setCellValueFactory(new PropertyValueFactory<>("id"));
+    tblColNameDurationOfTraining.setCellValueFactory(new PropertyValueFactory<>("name"));
+    tblColDurationOfStudyDoT.setCellValueFactory(
+        param -> param.getValue().durationOfStudyProperty());
+    tblColDurationOfStudyDoT.setCellFactory(ComboBoxTableCell.forTableColumn(durationOfStudies));
+    tblColDurationOfStudyDoT.setOnEditCommit(event -> {
+      event.getRowValue().setDurationOfStudy(event.getNewValue());
+      updateDurationOfTraining(event.getRowValue());
+    });
+
+    tblColModeOfStudyDoT.setCellValueFactory(param -> param.getValue().modeOfStudyProperty());
+    tblColModeOfStudyDoT.setCellFactory(ComboBoxTableCell.forTableColumn(modeOfStudies));
+    tblColModeOfStudyDoT.setOnEditCommit(event -> {
+      event.getRowValue().setModeOfStudy(event.getNewValue());
+      updateDurationOfTraining(event.getRowValue());
+    });
+
+    tblColNameDurationOfTraining.setCellFactory(TextFieldTableCell.forTableColumn());
+    tblColNameDurationOfTraining.setOnEditCommit(event -> {
+      event.getRowValue().setName(event.getNewValue());
+      updateDurationOfTraining(event.getRowValue());
+    });
+
+    tblDurationOfTraining.setRowFactory(
+        tableView -> {
+          final TableRow<DurationOfTraining> row = new TableRow<>();
+          final ContextMenu rowMenu = new ContextMenu();
+          final MenuItem removeItem = new MenuItem("Delete");
+          removeItem.setOnAction(event -> removeDurationOfTraining(row.getItem()));
+          rowMenu.getItems().addAll(removeItem);
+
+          // only display context menu for non-null items:
+          row.contextMenuProperty().bind(
+              Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                  .then(rowMenu)
+                  .otherwise((ContextMenu) null));
+          return row;
+        });
+  }
+
+  private void fillTableDurationOfTraining() {
+    try {
+      durationOfTrainings.addAll(
+          durationOfTrainingMapper.map(durationOfTrainingService.getAll()));
+      tblDurationOfTraining.setItems(durationOfTrainings);
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void addDurationOfTraining() {
+    final String name = tfNameDurationOfTraining.getText().trim();
+    final ModeOfStudy modeOfStudy = cbModeOfStudyDoT.getSelectionModel().getSelectedItem();
+    final DurationOfStudy durationOfStudy =
+        cbDurationOfStudyDoT.getSelectionModel().getSelectedItem();
+    final DurationOfTraining durationOfTraining =
+        new DurationOfTraining(durationOfTrainings.size() + 1, name, modeOfStudy,
+            durationOfStudy);
+
+    try {
+      if (durationOfTrainingService.create(
+          durationOfTrainingMapper.reverseMap(durationOfTraining)) == 1) {
+        durationOfTrainings.add(
+            durationOfTrainingMapper.map(durationOfTrainingService.getByName(name)));
+      }
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void updateDurationOfTraining(DurationOfTraining item) {
+    try {
+      durationOfTrainingService.update(durationOfTrainingMapper.reverseMap(item));
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private void removeDurationOfTraining(DurationOfTraining item) {
+    try {
+      if (durationOfTrainingService.delete(item.getId()) == 1) {
+        tblDurationOfTraining.getItems().remove(item);
+      }
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  private boolean validateDurationOfTrainingInputs() {
+    boolean result = true;
+
+    if (!Validation.validateTextField(tfNameDurationOfTraining)) {
+      tfNameDurationOfTraining.setStyle(Validation.getTextFieldErrorStyle());
+      tfNameDurationOfTraining.textProperty().addListener(e -> tfNameDurationOfTraining.setStyle(null));
+      result = false;
+    }
+
+    if (!Validation.validateComboBox(cbModeOfStudyDoT)) {
+      cbModeOfStudyDoT.setStyle(Validation.getComboBoxErrorStyle());
+      cbModeOfStudyDoT.valueProperty().addListener(e -> cbModeOfStudyDoT.setStyle(null));
+      result = false;
+    }
+
+    if (!Validation.validateComboBox(cbDurationOfStudyDoT)) {
+      cbDurationOfStudyDoT.setStyle(Validation.getComboBoxErrorStyle());
+      cbDurationOfStudyDoT.valueProperty().addListener(e -> cbDurationOfStudyDoT.setStyle(null));
+      result = false;
+    }
+    return result;
+  }
+
   void display() throws Exception {
     final Parent root = SpringFXMLLoader.create()
         .applicationContext(Main.getContext())
@@ -426,5 +944,14 @@ public class FXMLSettingsController implements Initializable {
 
   private void closeWindow() {
     stage.close();
+  }
+
+  public void setTab(Tab tab) {
+    this.tab = tab;
+  }
+
+  public enum Tab {
+    PROTOCOLS, MAIN_FIELD, FIELD_OF_STUDY, GROUPS, OFFICIAL_DURATION_OF_PROGRAMME,
+    DURATION_OF_TRAINING
   }
 }

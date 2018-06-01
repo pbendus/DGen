@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,19 +13,21 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLSettingsController">
    <children>
-      <TabPane prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Протоколи">
+          <Tab text="Протоколи" fx:id="tabProtocols">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
                      <children>
                         <TableView fx:id="tblProtocols" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="31.0">
                           <columns>
-                            <TableColumn maxWidth="30.0" minWidth="0.0" prefWidth="0.0" />
-                            <TableColumn fx:id="tblColIdProtocol" maxWidth="75.0" minWidth="0.0" prefWidth="34.0" text="№" />
-                              <TableColumn fx:id="tblColNameUKProtocol" maxWidth="307.0" minWidth="0.0" prefWidth="301.0" text="Назва українською" />
-                              <TableColumn fx:id="tblColNameENProtocol" maxWidth="260.0" minWidth="0.0" prefWidth="260.0" text="Назва англійською" />
+                            <TableColumn fx:id="tblColIdProtocol" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№" />
+                              <TableColumn fx:id="tblColNameUKProtocol" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Назва українською" />
+                              <TableColumn fx:id="tblColNameENProtocol" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Назва англійською" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця протоколів" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
@@ -43,16 +46,18 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Галузь знань">
+          <Tab text="Галузь знань" fx:id="tabFieldOfStudy">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
                      <children>
                         <TableView fx:id="tblFieldOfStudy" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="31.0">
                            <columns>
-                              <TableColumn maxWidth="30.0" minWidth="0.0" prefWidth="0.0" />
-                              <TableColumn fx:id="tblColIdFieldOfStudy" maxWidth="75.0" minWidth="0.0" prefWidth="34.0" text="№" />
-                              <TableColumn fx:id="tblColNameFieldOfStudy" maxWidth="550.0" minWidth="0.0" prefWidth="550.0" text="Назва " />
+                              <TableColumn fx:id="tblColIdFieldOfStudy" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№" />
+                              <TableColumn fx:id="tblColNameFieldOfStudy" maxWidth="1.7976931348623157E308" minWidth="500.0" prefWidth="-1.0" text="Назва " />
                            </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця галузь знань" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
@@ -64,22 +69,24 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfNameFieldOfStudy" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" />
+                        <TextField fx:id="tfNameFieldOfStudy" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="123.0" />
                         <Button fx:id="btnAddFieldOfStudy" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="122.0" AnchorPane.rightAnchor="14.0" />
                      </children>
                   </AnchorPane>
                </content>
           </Tab>
-            <Tab text="Спеціальність">
+            <Tab text="Спеціальність"  fx:id="tabMainField">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
                      <children>
                         <TableView fx:id="tblMainField" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="31.0">
                            <columns>
-                              <TableColumn maxWidth="30.0" minWidth="0.0" prefWidth="0.0" />
-                              <TableColumn fx:id="tblColIdMainField" maxWidth="75.0" minWidth="0.0" prefWidth="34.0" text="№" />
-                              <TableColumn fx:id="tblColNameMainField" maxWidth="550.0" minWidth="0.0" prefWidth="550.0" text="Назва " />
+                              <TableColumn fx:id="tblColIdMainField" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№" />
+                              <TableColumn fx:id="tblColNameMainField" maxWidth="1.7976931348623157E308" minWidth="500.0" prefWidth="-1.0" text="Назва " />
                            </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця спеціальність" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
@@ -91,25 +98,105 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfNameMainField" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" />
+                        <TextField fx:id="tfNameMainField" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="123.0" />
                         <Button fx:id="btnAddMainField" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="122.0" AnchorPane.rightAnchor="14.0" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Вимоги до вступу">
+            <Tab text="Групи"  fx:id="tabGroups">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
+                     <children>
+                        <TableView fx:id="tblGroups" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="31.0">
+                           <columns>
+                              <TableColumn fx:id="tblColIdGroups" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№" />
+                              <TableColumn fx:id="tblColNameGroups" maxWidth="1.7976931348623157E308" minWidth="500.0" prefWidth="-1.0" text="Назва " />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label layoutX="9.0" layoutY="10.0" text="Таблиця групи" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="9.0" layoutY="241.0" prefHeight="20.0" prefWidth="206.0" text="Додати групу" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="9.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfNameGroups" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="123.0" />
+                        <Button fx:id="btnAddGroups" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="122.0" AnchorPane.rightAnchor="14.0" />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Офіційна тривалість програми">
+            <Tab text="Офіційна тривалість програми"  fx:id="tabOfficialDuration">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
+                     <children>
+                        <TableView fx:id="tblOfficialDuration" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="31.0">
+                           <columns>
+                              <TableColumn fx:id="tblColIdOfficialDuration" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№" />
+                              <TableColumn fx:id="tblColNameOfficialDuration" maxWidth="1.7976931348623157E308" minWidth="180.0" prefWidth="-1.0" text="Тривалість програми " />
+                              <TableColumn fx:id="tblColModeOfStudyOD" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Форма навчання" />
+                              <TableColumn fx:id="tblColDurationOfStudyOD" maxWidth="1.7976931348623157E308" minWidth="180.0" prefWidth="-1.0" text="Тип навчання" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label layoutX="9.0" layoutY="10.0" text="Таблиця офіційна тривалість програми" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="9.0" layoutY="241.0" text="Додати  тривалість програми" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="9.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfNameOfficialDuration" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="130.0" promptText="Тривалість програми " AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0" />
+                        <Button fx:id="btnAddOfficialDuration" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="122.0" AnchorPane.rightAnchor="14.0" />
+                        <ComboBox fx:id="cbModeOfStudyOD" layoutX="157.0" layoutY="272.0" prefWidth="150.0" promptText="mode_of_study" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="293.0" />
+                        <ComboBox fx:id="cbDurationOfStudyOD" layoutX="327.0" layoutY="272.0" prefWidth="150.0" promptText="duration_of_study" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="123.0" />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Строки навчання у кожному ВНЗ ">
+            <Tab text="Строки навчання у кожному ВНЗ "  fx:id="tabDurationOfTraining">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
+                     <children>
+                        <TableView fx:id="tblDurationOfTraining" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="31.0">
+                           <columns>
+                              <TableColumn fx:id="tblColIdDurationOfTraining" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№" />
+                              <TableColumn fx:id="tblColNameDurationOfTraining" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="Строки навчання " />
+                              <TableColumn fx:id="tblColModeOfStudyDoT" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="Форма навчання" />
+                              <TableColumn fx:id="tblColDurationOfStudyDoT" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="Тип навчання" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label layoutX="9.0" layoutY="10.0" text="Строки навчання у кожному ВНЗ " AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="9.0" layoutY="241.0" text="Додати строки навчання" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="9.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfNameDurationOfTraining" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="130.0" promptText="Строки навчання" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0" />
+                        <Button fx:id="btnAddDurationOfTraining" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="122.0" AnchorPane.rightAnchor="14.0" />
+                        <ComboBox fx:id="cbModeOfStudyDoT" layoutX="157.0" layoutY="272.0" prefWidth="150.0" promptText="mode_of_study" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="293.0" />
+                        <ComboBox fx:id="cbDurationOfStudyDoT" layoutX="327.0" layoutY="272.0" prefWidth="150.0" promptText="duration_of_study" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="123.0" />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>

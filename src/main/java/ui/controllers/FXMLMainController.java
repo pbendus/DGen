@@ -39,6 +39,16 @@ public class FXMLMainController implements Initializable {
 
   @FXML
   public MenuItem menuItemProtocols;
+  @FXML
+  public MenuItem menuItemFieldOfStudy;
+  @FXML
+  public MenuItem menuItemMainField;
+  @FXML
+  public MenuItem menuItemGroups;
+  @FXML
+  public MenuItem menuItemOfficialDurationOfProgramme;
+  @FXML
+  public MenuItem menuItemDurationOfTraining;
 
   @FXML
   private TableView<Student> tblView;
@@ -128,7 +138,19 @@ public class FXMLMainController implements Initializable {
 
     btnAddStudent.setOnAction(e -> openStudentModalWindow());
     btnGenerate.setOnAction(event -> generateDocuments());
-    menuItemProtocols.setOnAction(event -> openSettingsModalWindow() );
+    menuItemProtocols.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.PROTOCOLS));
+    menuItemGroups.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.GROUPS));
+    menuItemDurationOfTraining.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.DURATION_OF_TRAINING));
+    menuItemFieldOfStudy.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.FIELD_OF_STUDY));
+    menuItemMainField.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.MAIN_FIELD));
+    menuItemOfficialDurationOfProgramme.setOnAction(
+        event -> openSettingsModalWindow(
+            FXMLSettingsController.Tab.OFFICIAL_DURATION_OF_PROGRAMME));
   }
 
   private void generateDocuments() {
@@ -159,8 +181,9 @@ public class FXMLMainController implements Initializable {
     }
   }
 
-  private void openSettingsModalWindow() {
+  private void openSettingsModalWindow(FXMLSettingsController.Tab tab) {
     try {
+      fxmlSettingsController.setTab(tab);
       fxmlSettingsController.display();
     } catch (Exception e) {
       e.printStackTrace();
