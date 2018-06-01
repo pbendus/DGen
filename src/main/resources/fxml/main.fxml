@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLMainController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLMainController">
    <children>
       <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -25,9 +25,14 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Налаштування">
+            <Menu fx:id="menuSettings" mnemonicParsing="false" text="Налаштування">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="menuItemProtocols" mnemonicParsing="false" text="Протоколи" />
+                  <MenuItem fx:id="menuItemFieldOfStudy" mnemonicParsing="false" text="Галузь знань" />
+                  <MenuItem fx:id="menuItemMainField" mnemonicParsing="false" text="Спеціальність" />
+                  <MenuItem fx:id="menuItemAccessRequirements" mnemonicParsing="false" text="Вимоги до вступу" />
+                  <MenuItem fx:id="menuItemOfficialDurationOfProgramme" mnemonicParsing="false" text="Офіційна тривалість програми" />
+                  <MenuItem fx:id="menuItemDurationOfTraining" mnemonicParsing="false" text="Строки навчання у кожному ВНЗ " />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Допомога">

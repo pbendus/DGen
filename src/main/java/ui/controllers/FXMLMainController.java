@@ -32,155 +32,173 @@ import ui.utils.SpringFXMLLoader;
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+  private static final Logger LOGGER = LogManager.getLogger();
 
-    @FXML
-    private TableView<Student> tblView;
+  @FXML
+  public Menu menuSettings;
 
-    @FXML
-    private TableColumn<Student, CheckBox> tblColCheckbox;
+  @FXML
+  public MenuItem menuItemProtocols;
 
-    @FXML
-    private TableColumn<Student, Integer> tblColId;
+  @FXML
+  private TableView<Student> tblView;
 
-    @FXML
-    private TableColumn<Student, String> tblColStudent;
+  @FXML
+  private TableColumn<Student, CheckBox> tblColCheckbox;
 
-    @FXML
-    private CheckBox chkboxSelectAll;
+  @FXML
+  private TableColumn<Student, Integer> tblColId;
 
-    @FXML
-    private Button btnAddStudent;
+  @FXML
+  private TableColumn<Student, String> tblColStudent;
 
-    @FXML
-    public Button btnGenerate;
+  @FXML
+  private CheckBox chkboxSelectAll;
 
-    private ObservableList<Student> students = FXCollections.observableArrayList();
+  @FXML
+  private Button btnAddStudent;
 
-    private StudentMapper studentMapper;
-    private StudentService studentService;
+  @FXML
+  public Button btnGenerate;
 
-    private FXMLStudentController fxmlStudentController;
+  private ObservableList<Student> students = FXCollections.observableArrayList();
 
-    private DocWorker docWorker;
+  private StudentMapper studentMapper;
+  private StudentService studentService;
 
-    @Autowired
-    public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
-        FXMLStudentController fxmlStudentController, DocWorker docWorker) {
-        this.studentMapper = studentMapper;
-        this.studentService = studentService;
-        this.fxmlStudentController = fxmlStudentController;
-        this.docWorker = docWorker;
+  private FXMLStudentController fxmlStudentController;
+
+  private DocWorker docWorker;
+  private FXMLSettingsController fxmlSettingsController;
+
+  @Autowired
+  public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
+      FXMLStudentController fxmlStudentController, DocWorker docWorker,
+      FXMLSettingsController fxmlSettingsController) {
+    this.studentMapper = studentMapper;
+    this.studentService = studentService;
+    this.fxmlStudentController = fxmlStudentController;
+    this.docWorker = docWorker;
+    this.fxmlSettingsController = fxmlSettingsController;
+  }
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+
+    try {
+      List<db.entities.Student> list = studentService.getAll();
+      students.addAll(studentMapper.map(list));
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
+    tblColCheckbox.setCellValueFactory(new PropertyValueFactory<>("select"));
+    tblColStudent.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        try {
-            List<db.entities.Student> list = studentService.getAll();
-            students.addAll(studentMapper.map(list));
-        } catch (SQLException e) {
+    tblView.setItems(students);
+
+    chkboxSelectAll.setOnAction(e -> {
+      if (!chkboxSelectAll.isSelected()) {
+        setChboxUnselectAll();
+      } else {
+        setChkboxSelectAll();
+      }
+    });
+
+    tblView.setRowFactory(param -> {
+      final TableRow<Student> row = new TableRow<>();
+      final ContextMenu contextMenu = new ContextMenu();
+      contextMenu.setStyle("-fx-pref-width: 150px;");
+
+      MenuItem editItem = new MenuItem("Edit");
+      editItem.setOnAction(e -> System.out.println("Edit Item"));
+
+      MenuItem removeItem = new MenuItem("Delete");
+      removeItem.setOnAction(e -> tblView.getItems().remove(row.getItem()));
+      contextMenu.getItems().addAll(editItem, removeItem);
+
+      // only display context menu for non-null items:
+      row.contextMenuProperty().bind(
+          Bindings.when(Bindings.isNotNull(row.itemProperty()))
+              .then(contextMenu)
+              .otherwise((ContextMenu) null));
+      return row;
+    });
+
+    btnAddStudent.setOnAction(e -> openStudentModalWindow());
+    btnGenerate.setOnAction(event -> generateDocuments());
+    menuItemProtocols.setOnAction(event -> openSettingsModalWindow() );
+  }
+
+  private void generateDocuments() {
+    if (containsSelectedStudents()) {
+      for (Student student :
+          students) {
+        if (student.getSelect().isSelected()) {
+          try {
+            docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+          } catch (IOException | XmlException | SQLException e) {
+            LOGGER.error(e.getMessage());
             e.printStackTrace();
-        }
-
-        tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tblColCheckbox.setCellValueFactory(new PropertyValueFactory<>("select"));
-        tblColStudent.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-        tblView.setItems(students);
-
-        chkboxSelectAll.setOnAction(e -> {
-            if (!chkboxSelectAll.isSelected()) {
-                setChboxUnselectAll();
-            } else {
-                setChkboxSelectAll();
-            }
-        });
-
-        tblView.setRowFactory(param -> {
-            final TableRow<Student> row = new TableRow<>();
-            final ContextMenu contextMenu = new ContextMenu();
-            contextMenu.setStyle("-fx-pref-width: 150px;");
-
-            MenuItem editItem = new MenuItem("Edit");
-            editItem.setOnAction(e -> System.out.println("Edit Item"));
-
-            MenuItem removeItem = new MenuItem("Delete");
-            removeItem.setOnAction(e -> tblView.getItems().remove(row.getItem()));
-            contextMenu.getItems().addAll(editItem, removeItem);
-
-            // only display context menu for non-null items:
-            row.contextMenuProperty().bind(
-                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
-                            .then(contextMenu)
-                            .otherwise((ContextMenu) null));
-            return row;
-        });
-
-        btnAddStudent.setOnAction(e -> openStudentModalWindow());
-        btnGenerate.setOnAction(event -> generateDocuments());
-    }
-
-    private void generateDocuments() {
-        if (containsSelectedStudents()){
-          for (Student student :
-              students) {
-            if (student.getSelect().isSelected()){
-              try {
-                docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
-              } catch (IOException | XmlException | SQLException e) {
-                LOGGER.error(e.getMessage());
-                e.printStackTrace();
-              }
-            }
           }
         }
+      }
     }
+  }
 
-    private boolean containsSelectedStudents() {
-        return students.stream().anyMatch(student -> student.getSelect().isSelected());
+  private boolean containsSelectedStudents() {
+    return students.stream().anyMatch(student -> student.getSelect().isSelected());
+  }
+
+  private void openStudentModalWindow() {
+    try {
+      fxmlStudentController.display();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    private void openStudentModalWindow() {
-        try {
-            fxmlStudentController.display();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+  private void openSettingsModalWindow() {
+    try {
+      fxmlSettingsController.display();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    private void setChkboxSelectAll() {
-        for (Student student :
-                students) {
-            student.getSelect().setSelected(true);
-        }
+  private void setChkboxSelectAll() {
+    for (Student student :
+        students) {
+      student.getSelect().setSelected(true);
     }
+  }
 
-    private void setChboxUnselectAll() {
-        for (Student student :
-                students) {
-            student.getSelect().setSelected(false);
-        }
+  private void setChboxUnselectAll() {
+    for (Student student :
+        students) {
+      student.getSelect().setSelected(false);
     }
+  }
 
-    public void display(Stage primaryStage) throws Exception {
-        Parent root = SpringFXMLLoader.create()
-                .applicationContext(Main.getContext())
-                .location(FXMLMainController.class
-                        .getResource("../../fxml/main.fxml"))
-                .load();
+  public void display(Stage primaryStage) throws Exception {
+    Parent root = SpringFXMLLoader.create()
+        .applicationContext(Main.getContext())
+        .location(FXMLMainController.class
+            .getResource("../../fxml/main.fxml"))
+        .load();
 
-        Scene scene = new Scene(root);
+    Scene scene = new Scene(root);
 
-        primaryStage.setScene(scene);
+    primaryStage.setScene(scene);
 
-        primaryStage.setTitle("Генерація додатків до дипломів");
+    primaryStage.setTitle("Генерація додатків до дипломів");
 
-        //setting up min width & height parameters for window
-        primaryStage.setMinWidth(600);
-        primaryStage.setMinHeight(400);
+    //setting up min width & height parameters for window
+    primaryStage.setMinWidth(600);
+    primaryStage.setMinHeight(400);
 
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-    }
+    primaryStage.setMaximized(true);
+    primaryStage.show();
+  }
 }
