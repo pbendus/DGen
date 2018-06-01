@@ -51,6 +51,7 @@ public class StudentMapper
     student.setDateOfBirth(value.getDateOfBirth());
     student.setProtocol(protocolMapper.reverseMap(value.getProtocol()));
     student.setPreviousDocument(previousDocumentMapper.reverseMap(value.getPreviousDocument()));
+    student.setModeOfStudy(modeOfStudyMapper.reverseMap(value.getModeOfStudy()));
     student.setDurationOfStudy(durationOfStudyMapper.reverseMap(value.getDurationOfStudy()));
     student.setGroup(groupMapper.reverseMap(value.getGroup()));
     return student;

@@ -31,9 +31,11 @@ public class EducationalComponentMapper
     educationalComponent.setDiploma(diplomaMapper.map(value.getDiploma()));
     educationalComponent.setEducationalComponentTemplate(
         educationalComponentTemplateMapper.map(value.getEducationalComponentTemplate()));
-    educationalComponent.setNationalGrade(nationalGradeMapper.map(value.getNationalGrade()));
+      educationalComponent.setNationalGrade(value.getNationalGrade() == null ? null :
+              nationalGradeMapper.map(value.getNationalGrade()));
     educationalComponent.setNationalScore(value.getNationalScore());
-    educationalComponent.setRatingPoint(ratingPointMapper.map(value.getRatingPoint()));
+      educationalComponent.setRatingPoint(value.getRatingPoint() == null ? null :
+              ratingPointMapper.map(value.getRatingPoint()));
     educationalComponent.setCredits(value.getEducationalComponentTemplate().getCredits());
     educationalComponent.setCourseTitle(value.getEducationalComponentTemplate().getCourseTitle());
     educationalComponent.setEducationalComponentType(
@@ -48,9 +50,11 @@ public class EducationalComponentMapper
     educationalComponent.setDiploma(diplomaMapper.reverseMap(value.getDiploma()));
     educationalComponent.setEducationalComponentTemplate(
         educationalComponentTemplateMapper.reverseMap(value.getEducationalComponentTemplate()));
-    educationalComponent.setNationalGrade(nationalGradeMapper.reverseMap(value.getNationalGrade()));
+    educationalComponent.setNationalGrade(value.getNationalGrade() == null ? null :
+            nationalGradeMapper.reverseMap(value.getNationalGrade()));
     educationalComponent.setNationalScore(value.getNationalScore());
-    educationalComponent.setRatingPoint(ratingPointMapper.reverseMap(value.getRatingPoint()));
+    educationalComponent.setRatingPoint(value.getRatingPoint() == null ? null :
+            ratingPointMapper.reverseMap(value.getRatingPoint()));
     return educationalComponent;
   }
 }
