@@ -43,6 +43,7 @@ public class DiplomaMapper
     diploma.setId(value.getId());
     diploma.setNumber(value.getNumber());
     diploma.setRegistrationNumber(value.getRegistrationNumber());
+    diploma.setAdditionRegistrationNumber(value.getAdditionRegistrationNumber());
     diploma.setDateOfIssue(value.getDateOfIssue());
     diploma.setStudent(studentMapper.map(value.getStudent()));
     diploma.setMainField(mainFieldMapper.map(value.getMainField()));
@@ -65,6 +66,7 @@ public class DiplomaMapper
     diploma.setId(value.getId());
     diploma.setNumber(value.getNumber());
     diploma.setRegistrationNumber(value.getRegistrationNumber());
+    diploma.setAdditionRegistrationNumber(value.getAdditionRegistrationNumber());
     diploma.setDateOfIssue(value.getDateOfIssue());
     diploma.setStudent(studentMapper.reverseMap(value.getStudent()));
     diploma.setMainField(mainFieldMapper.reverseMap(value.getMainField()));

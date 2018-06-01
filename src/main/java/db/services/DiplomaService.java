@@ -25,4 +25,8 @@ public class DiplomaService extends BaseServiceImpl<Diploma> {
       return null;
     }
   }
+
+  public Diploma getByNumber(String number) throws SQLException {
+    return getDao().queryForEq("number", number).get(0);
+  }
 }

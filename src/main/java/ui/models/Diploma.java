@@ -9,6 +9,7 @@ public class Diploma {
     private IntegerProperty id;
     private StringProperty number;
     private StringProperty registrationNumber;
+    private StringProperty additionRegistrationNumber;
     private ObjectProperty<Date> dateOfIssue;
     private ObjectProperty<Student> student;
     private ObjectProperty<MainField> mainField;
@@ -34,18 +35,20 @@ public class Diploma {
         this.classificationSystem = new SimpleObjectProperty<>();
         this.durationOfTraining = new SimpleObjectProperty<>();
         this.diplomaSubject = new SimpleObjectProperty<>();
+        this.additionRegistrationNumber = new SimpleStringProperty();
     }
 
-    public Diploma(int id, String number, String registrationNumber, Date dateOfIssue,
-        Student student, MainField mainField, FieldOfStudy fieldOfStudy,
-        OfficialDurationOfProgramme officialDurationOfProgramme,
-        AccessRequirements accessRequirements,
-        EctsCredits ectsCredits, ClassificationSystem classificationSystem,
-        DurationOfTraining durationOfTraining,
-        DiplomaSubject diplomaSubject) {
+    public Diploma(int id, String number, String registrationNumber, String additionRegistrationNumber,
+                   Date dateOfIssue, Student student, MainField mainField, FieldOfStudy fieldOfStudy,
+                   OfficialDurationOfProgramme officialDurationOfProgramme,
+                   AccessRequirements accessRequirements,
+                   EctsCredits ectsCredits, ClassificationSystem classificationSystem,
+                   DurationOfTraining durationOfTraining,
+                   DiplomaSubject diplomaSubject) {
         this.id = new SimpleIntegerProperty(id);
         this.number = new SimpleStringProperty(number);
         this.registrationNumber = new SimpleStringProperty(registrationNumber);
+        this.additionRegistrationNumber = new SimpleStringProperty(additionRegistrationNumber);
         this.dateOfIssue = new SimpleObjectProperty<>(dateOfIssue);
         this.student = new SimpleObjectProperty<>(student);
         this.mainField = new SimpleObjectProperty<>(mainField);
@@ -212,5 +215,17 @@ public class Diploma {
 
     public void setDiplomaSubject(DiplomaSubject diplomaSubject) {
         this.diplomaSubject.set(diplomaSubject);
+    }
+
+    public String getAdditionRegistrationNumber() {
+        return additionRegistrationNumber.get();
+    }
+
+    public StringProperty additionRegistrationNumberProperty() {
+        return additionRegistrationNumber;
+    }
+
+    public void setAdditionRegistrationNumber(String additionRegistrationNumber) {
+        this.additionRegistrationNumber.set(additionRegistrationNumber);
     }
 }

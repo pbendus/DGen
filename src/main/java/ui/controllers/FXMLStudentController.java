@@ -1,5 +1,6 @@
 package ui.controllers;
 
+import db.entities.ClassificationSystemConst;
 import db.mapper.*;
 import db.services.*;
 import javafx.collections.FXCollections;
@@ -109,6 +110,12 @@ public class FXMLStudentController implements Initializable {
     private ComboBox<DurationOfStudy> cbDurationOfStudy;
 
     @FXML
+    private ComboBox<Group> cbGroup;
+
+    @FXML
+    private CheckBox chkboxClassificationSystem;
+
+    @FXML
     private Button btnSave;
 
     @FXML
@@ -133,6 +140,10 @@ public class FXMLStudentController implements Initializable {
     private EducationalComponentService educationalComponentService;
     private DurationOfStudyService durationOfStudyService;
     private ArDosService arDosService;
+    private GroupService groupService;
+    private DiplomaService diplomaService;
+    private EctsCreditsService ectsCreditsService;
+    private ClassificationSystemService classificationSystemService;
 
     private ProtocolMapper protocolMapper;
     private PreviousDocumentMapper previousDocumentMapper;
@@ -146,6 +157,12 @@ public class FXMLStudentController implements Initializable {
     private EducationalComponentTemplateMapper educationalComponentTemplateMapper;
     private EducationalComponentMapper educationalComponentMapper;
     private DurationOfStudyMapper durationOfStudyMapper;
+    private GroupMapper groupMapper;
+    private EctsCreditsMapper ectsCreditsMapper;
+    private ClassificationSystemMapper classificationSystemMapper;
+    private StudentMapper studentMapper;
+    private DiplomaMapper diplomaMapper;
+    private DiplomaSubjectMapper diplomaSubjectMapper;
 
     private ObservableList<Protocol> protocolObservableList = FXCollections.observableArrayList();
     private ObservableList<MainField> mainFieldObservableList = FXCollections.observableArrayList();
@@ -163,6 +180,7 @@ public class FXMLStudentController implements Initializable {
             .observableArrayList();
     private ObservableList<DurationOfStudy> durationOfStudyObservableList = FXCollections
             .observableArrayList();
+    private ObservableList<Group> groupObservableList = FXCollections.observableArrayList();
 
     @Autowired
     public FXMLStudentController(StudentService studentService,
@@ -180,6 +198,10 @@ public class FXMLStudentController implements Initializable {
                                  EducationalComponentService educationalComponentService,
                                  DurationOfStudyService durationOfStudyService,
                                  ArDosService arDosService,
+                                 GroupService groupService,
+                                 DiplomaService diplomaService,
+                                 EctsCreditsService ectsCreditsService,
+                                 ClassificationSystemService classificationSystemService,
                                  ProtocolMapper protocolMapper,
                                  PreviousDocumentMapper previousDocumentMapper,
                                  MainFieldMapper mainFieldMapper,
@@ -192,7 +214,9 @@ public class FXMLStudentController implements Initializable {
                                  EducationalComponentTypeMapper educationalComponentTypeMapper,
                                  EducationalComponentTemplateMapper educationalComponentTemplateMapper,
                                  EducationalComponentMapper educationalComponentMapper,
-                                 DurationOfStudyMapper durationOfStudyMapper) {
+                                 DurationOfStudyMapper durationOfStudyMapper,
+                                 GroupMapper groupMapper,
+                                 EctsCreditsMapper ectsCreditsMapper, StudentMapper studentMapper, DiplomaMapper diplomaMapper, DiplomaSubjectMapper diplomaSubjectMapper) {
         this.studentService = studentService;
         this.protocolService = protocolService;
         this.previousDocumentService = previousDocumentService;
@@ -208,6 +232,10 @@ public class FXMLStudentController implements Initializable {
         this.educationalComponentService = educationalComponentService;
         this.durationOfStudyService = durationOfStudyService;
         this.arDosService = arDosService;
+        this.groupService = groupService;
+        this.ectsCreditsService = ectsCreditsService;
+        this.classificationSystemService = classificationSystemService;
+        this.diplomaService = diplomaService;
 
         this.protocolMapper = protocolMapper;
         this.previousDocumentMapper = previousDocumentMapper;
@@ -221,6 +249,12 @@ public class FXMLStudentController implements Initializable {
         this.educationalComponentTemplateMapper = educationalComponentTemplateMapper;
         this.educationalComponentMapper = educationalComponentMapper;
         this.durationOfStudyMapper = durationOfStudyMapper;
+        this.ectsCreditsMapper = ectsCreditsMapper;
+        this.classificationSystemMapper = classificationSystemMapper;
+        this.studentMapper = studentMapper;
+        this.diplomaMapper = diplomaMapper;
+        this.groupMapper = groupMapper;
+        this.diplomaSubjectMapper = diplomaSubjectMapper;
     }
 
     @Override
@@ -240,6 +274,7 @@ public class FXMLStudentController implements Initializable {
         cbFieldOfStudy.getItems().addAll(fieldOfStudyObservableList);
         cbProtocol.getItems().addAll(protocolObservableList);
         cbAccessRequirements.getItems().addAll(accessRequirementsObservableList);
+        cbGroup.getItems().addAll(groupObservableList);
     }
 
     private void initializeTableView() {
@@ -276,6 +311,7 @@ public class FXMLStudentController implements Initializable {
         educationalComponentObservableList.clear();
         educationalComponentTemplateObservableList.clear();
         educationalComponentTypeObservableList.clear();
+        groupObservableList.clear();
     }
 
     private void initializeObservableLists() {
@@ -290,6 +326,7 @@ public class FXMLStudentController implements Initializable {
                     .map(educationalComponentTypeService.getAll()));
             educationalComponentTemplateObservableList.addAll(educationalComponentTemplateMapper
                     .map(educationalComponentTemplateService.getAll()));
+            groupObservableList.addAll(groupMapper.map(groupService.getAll()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -299,7 +336,11 @@ public class FXMLStudentController implements Initializable {
         btnCancel.setOnMouseClicked(e -> closeWindow());
         btnSave.setOnMouseClicked(e -> {
             if (validateInputs()) {
-                addStudent();
+                try {
+                    addStudent();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
                 closeWindow();
             }
         });
@@ -319,7 +360,7 @@ public class FXMLStudentController implements Initializable {
                 AccessRequirements accessRequirements = accessRequirementsMapper.map(arDosService
                         .getAccessRequirementsByDurationOfStudyId(cbDurationOfStudy.getSelectionModel()
                                 .getSelectedItem().getId()));
-                for (AccessRequirements accessRequirements1:
+                for (AccessRequirements accessRequirements1 :
                         accessRequirementsObservableList) {
                     if (accessRequirements.getId() == accessRequirements1.getId()) {
                         cbAccessRequirements.getSelectionModel().select(accessRequirements1);
@@ -374,15 +415,87 @@ public class FXMLStudentController implements Initializable {
         taInformationOnCertification.setWrapText(true);
     }
 
-    private void addStudent() {
+    private void addStudent() throws SQLException {
 
-        final Student student = new Student();
-        final Diploma diploma = new Diploma();
-
+        // add student
         LocalDate lc = dpDateOfBirth.getValue();
         Calendar c = Calendar.getInstance();
         c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+        final int studentId = studentService.getAll().size() + 1;
+        final String familyName = tfFamilyName.getText().trim();
+        final String givenName = tfGivenName.getText().trim();
+        final String familyNameTr = tfFamilyNameTr.getText().trim();
+        final String givenNameTr = tfGivenNameTr.getText().trim();
+        final Date dateOfBirth = c.getTime();
+        final Protocol protocol = cbProtocol.getSelectionModel().getSelectedItem();
+        final PreviousDocument previousDocument = new PreviousDocument(previousDocumentService.getAll().size() + 1,
+                tfPreviousDocument.getText().trim());
+        final ModeOfStudy modeOfStudy = cbModeOfStudy.getSelectionModel().getSelectedItem();
+        final DurationOfStudy durationOfStudy = cbDurationOfStudy.getSelectionModel().getSelectedItem();
+        final Group group = cbGroup.getSelectionModel().getSelectedItem();
 
+        previousDocumentService.create(previousDocumentMapper.reverseMap(previousDocument));
+
+        Student student = new Student(studentId, familyName, givenName, familyNameTr, givenNameTr, dateOfBirth,
+                protocol, previousDocumentMapper.map(previousDocumentService.getByName(previousDocument.getName())),
+                modeOfStudy, durationOfStudy, group);
+
+        studentService.create(studentMapper.reverseMap(student));
+
+        // add diploma
+        LocalDate locDate = dpDate.getValue();
+        Calendar cal = Calendar.getInstance();
+        cal.set(locDate.getYear(), locDate.getMonthValue(), locDate.getDayOfMonth());
+        final int diplomaId = diplomaService.getAll().size() + 1;
+        final String number = tfNumber.getText().trim();
+        final String registrationNumber = tfRegistrationNumber.getText().trim();
+        final String additionRegistrationNumber = tfAdditionRegistrationNumber.getText().trim();
+        final Date dateOfIssue = cal.getTime();
+        final MainField mainField = cbMainField.getSelectionModel().getSelectedItem();
+        final FieldOfStudy fieldOfStudy = cbFieldOfStudy.getSelectionModel().getSelectedItem();
+        final OfficialDurationOfProgramme officialDurationOfProgramme = officialDurationOfProgrammeMapper
+                .map(officialDurationOfProgrammeService.getByModeAndDurationOfStudy(cbModeOfStudy.getSelectionModel()
+                        .getSelectedItem().getId(), cbDurationOfStudy.getSelectionModel().getSelectedItem()
+                        .getId()));
+        final AccessRequirements accessRequirements = cbAccessRequirements.getSelectionModel().getSelectedItem();
+        final EctsCredits ectsCredits = ectsCreditsMapper.map(ectsCreditsService.getByDurationOfStudy(cbDurationOfStudy
+                .getSelectionModel().getSelectedItem().getId()));
+        final ClassificationSystem classificationSystem = getClassificationSystem();
+        final DurationOfTraining durationOfTraining = durationOfTrainingMapper.map(durationOfTrainingService
+                .getByModeAndDurationOfStudy(modeOfStudy.getId(), durationOfStudy.getId()));
+        final DiplomaSubject diplomaSubject = new DiplomaSubject(diplomaSubjectService.getAll().size() + 1,
+                tfDiplomaSubjectUk.getText().trim(), tfDiplomaSubjectEn.getText().trim());
+
+        diplomaSubjectService.create(diplomaSubjectMapper.reverseMap(diplomaSubject));
+
+        final Diploma diploma = new Diploma(diplomaId, number, registrationNumber, additionRegistrationNumber,
+                dateOfIssue, studentMapper.map(studentService.getByFullName(student.getFamilyName(),
+                student.getGivenName())), mainField, fieldOfStudy, officialDurationOfProgramme, accessRequirements,
+                ectsCredits, classificationSystem, durationOfTraining, diplomaSubjectMapper.map(diplomaSubjectService
+                .getByName(diplomaSubject.getSubjectUK(), diplomaSubject.getSubjectEN())));
+
+        diplomaService.create(diplomaMapper.reverseMap(diploma));
+
+
+        // add educational component
+        for (int i = 0; i < educationalComponentObservableList.size(); i++) {
+            EducationalComponent educationalComponent = educationalComponentObservableList.get(i);
+            educationalComponent.setDiploma(diplomaMapper.map(diplomaService
+                    .getByNumber(diploma.getNumber())));
+            educationalComponentService.create(educationalComponentMapper.reverseMap(educationalComponent));
+        }
+    }
+
+    private ClassificationSystem getClassificationSystem() {
+        try {
+            return chkboxClassificationSystem.isSelected() ? classificationSystemMapper.map(classificationSystemService
+                    .getByName(ClassificationSystemConst.DIPLOMA_WITH_HONORS)) :
+                    classificationSystemMapper.map(classificationSystemService.getByName(ClassificationSystemConst.DIPLOMA));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private boolean validateInputs() {
@@ -408,78 +521,97 @@ public class FXMLStudentController implements Initializable {
 
         if (!Validation.validateTextField(tfGivenNameTr)) {
             tfGivenNameTr.setStyle(Validation.getTextFieldErrorStyle());
-            tfFamilyName.textProperty().addListener(e -> tfFamilyName.setStyle(null));
+            tfGivenNameTr.textProperty().addListener(e -> tfGivenNameTr.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateTextField(tfPreviousDocument)) {
             tfPreviousDocument.setStyle(Validation.getTextFieldErrorStyle());
-            tfFamilyName.textProperty().addListener(e -> tfFamilyName.setStyle(null));
+            tfPreviousDocument.textProperty().addListener(e -> tfPreviousDocument.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateTextField(tfDiplomaSubjectUk)) {
             tfDiplomaSubjectUk.setStyle(Validation.getTextFieldErrorStyle());
+            tfDiplomaSubjectUk.textProperty().addListener(e -> tfDiplomaSubjectUk.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateTextField(tfDiplomaSubjectEn)) {
             tfDiplomaSubjectEn.setStyle(Validation.getTextFieldErrorStyle());
+            tfDiplomaSubjectEn.textProperty().addListener(e -> tfDiplomaSubjectEn.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateTextField(tfNumber)) {
             tfNumber.setStyle(Validation.getTextFieldErrorStyle());
+            tfNumber.textProperty().addListener(e -> tfNumber.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateTextField(tfRegistrationNumber)) {
             tfRegistrationNumber.setStyle(Validation.getTextFieldErrorStyle());
+            tfRegistrationNumber.textProperty().addListener(e -> tfRegistrationNumber.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateTextField(tfAdditionRegistrationNumber)) {
             tfAdditionRegistrationNumber.setStyle(Validation.getTextFieldErrorStyle());
+            tfAdditionRegistrationNumber.textProperty().addListener(e -> tfAdditionRegistrationNumber.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateComboBox(cbModeOfStudy)) {
             cbModeOfStudy.setStyle(Validation.getComboBoxErrorStyle());
+            cbModeOfStudy.valueProperty().addListener(e -> cbModeOfStudy.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateComboBox(cbDurationOfStudy)) {
             cbDurationOfStudy.setStyle(Validation.getComboBoxErrorStyle());
+            cbDurationOfStudy.valueProperty().addListener(e -> cbDurationOfStudy.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateComboBox(cbMainField)) {
             cbMainField.setStyle(Validation.getComboBoxErrorStyle());
+            cbMainField.valueProperty().addListener(e -> cbMainField.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateComboBox(cbFieldOfStudy)) {
             cbFieldOfStudy.setStyle(Validation.getComboBoxErrorStyle());
+            cbFieldOfStudy.valueProperty().addListener(e -> cbFieldOfStudy.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateComboBox(cbProtocol)) {
             cbProtocol.setStyle(Validation.getComboBoxErrorStyle());
+            cbProtocol.valueProperty().addListener(e -> cbProtocol.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateComboBox(cbAccessRequirements)) {
             cbAccessRequirements.setStyle(Validation.getComboBoxErrorStyle());
+            cbAccessRequirements.valueProperty().addListener(e -> cbAccessRequirements.setStyle(null));
+            result = false;
+        }
+
+        if (!Validation.validateComboBox(cbGroup)) {
+            cbGroup.setStyle(Validation.getComboBoxErrorStyle());
+            cbGroup.valueProperty().addListener(e -> cbGroup.setStyle(null));
             result = false;
         }
 
         if (!Validation.validateDatePicker(dpDateOfBirth)) {
             dpDateOfBirth.setStyle(Validation.getDatePickerErrorStyle());
+            dpDateOfBirth.valueProperty().addListener(e -> dpDateOfBirth.setStyle(null));
             return false;
         }
 
         if (!Validation.validateDatePicker(dpDate)) {
             dpDate.setStyle(Validation.getDatePickerErrorStyle());
+            dpDate.valueProperty().addListener(e -> dpDate.setStyle(null));
             return false;
         }
 
