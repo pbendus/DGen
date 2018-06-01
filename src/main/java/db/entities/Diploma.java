@@ -193,7 +193,7 @@ public class Diploma {
   }
 
   public String getInformationOnCertification() {
-    return String.format("Магістерська робота - %s (%s) / Master’s Thesis - %s (%s)",
+    return String.format("Бакалаврська робота - %s (%s) / Bachelor's Thesis - %s (%s)",
         getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
         getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
   }
