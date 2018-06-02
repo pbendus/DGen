@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+  private static final Logger LOGGER = LogManager.getLogger();
 
     @FXML
     public Menu menuSettings;
@@ -66,15 +66,15 @@ public class FXMLMainController implements Initializable {
     private CheckBox chkboxSelectAll;
     @FXML
     private Button btnAddStudent;
-    private ObservableList<Student> students = FXCollections.observableArrayList();
+    private ObservableList<Student> studentObservableList = FXCollections.observableArrayList();
 
     private StudentMapper studentMapper;
     private StudentService studentService;
 
     private FXMLStudentController fxmlStudentController;
+    private FXMLSettingsController fxmlSettingsController;
 
     private DocWorker docWorker;
-    private FXMLSettingsController fxmlSettingsController;
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
@@ -89,10 +89,15 @@ public class FXMLMainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initializeTableView();
+        setListeners();
 
+    }
+
+    private void initializeTableView() {
         try {
             List<db.entities.Student> list = studentService.getAll();
-            students.addAll(studentMapper.map(list));
+            studentObservableList.addAll(studentMapper.map(list));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,8 +106,26 @@ public class FXMLMainController implements Initializable {
         tblColCheckbox.setCellValueFactory(new PropertyValueFactory<>("select"));
         tblColStudent.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        tblView.setItems(students);
+        tblView.setItems(studentObservableList);
+    }
 
+    private void generateDocuments() {
+        if (containsSelectedStudents()) {
+            for (Student student :
+                    studentObservableList) {
+                if (student.getSelect().isSelected()) {
+                    try {
+                        docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+                    } catch (IOException | XmlException | SQLException e) {
+                        LOGGER.error(e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private void setListeners() {
         chkboxSelectAll.setOnAction(e -> {
             if (!chkboxSelectAll.isSelected()) {
                 setChboxUnselectAll();
@@ -114,13 +137,17 @@ public class FXMLMainController implements Initializable {
         tblView.setRowFactory(param -> {
             final TableRow<Student> row = new TableRow<>();
             final ContextMenu contextMenu = new ContextMenu();
-            contextMenu.setStyle("-fx-pref-width: 150px;");
+            contextMenu.setStyle("-fx-pref-width: 200px;");
 
             MenuItem editItem = new MenuItem("Edit");
-            editItem.setOnAction(e -> System.out.println("Edit Item"));
+            editItem.setOnAction(e -> {
+                fxmlStudentController.setStudentId(row.getItem().getId());
+                openStudentModalWindow();
+            });
 
             MenuItem removeItem = new MenuItem("Delete");
             removeItem.setOnAction(e -> tblView.getItems().remove(row.getItem()));
+
             contextMenu.getItems().addAll(editItem, removeItem);
 
             // only display context menu for non-null items:
@@ -130,6 +157,12 @@ public class FXMLMainController implements Initializable {
                             .otherwise((ContextMenu) null));
             return row;
         });
+
+        btnAddStudent.setOnAction(e -> {
+            fxmlStudentController.setStudentId(0);
+            openStudentModalWindow();
+        });
+        btnGenerate.setOnAction(event -> generateDocuments());
 
         btnAddStudent.setOnAction(e -> openStudentModalWindow());
         btnGenerate.setOnAction(event -> generateDocuments());
@@ -151,24 +184,8 @@ public class FXMLMainController implements Initializable {
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.ECTS_CREDITS));
     }
 
-    private void generateDocuments() {
-        if (containsSelectedStudents()) {
-            for (Student student :
-                    students) {
-                if (student.getSelect().isSelected()) {
-                    try {
-                        docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
-                    } catch (IOException | XmlException | SQLException e) {
-                        LOGGER.error(e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
     private boolean containsSelectedStudents() {
-        return students.stream().anyMatch(student -> student.getSelect().isSelected());
+        return studentObservableList.stream().anyMatch(student -> student.getSelect().isSelected());
     }
 
     private void openStudentModalWindow() {
@@ -190,14 +207,14 @@ public class FXMLMainController implements Initializable {
 
     private void setChkboxSelectAll() {
         for (Student student :
-                students) {
+                studentObservableList) {
             student.getSelect().setSelected(true);
         }
     }
 
     private void setChboxUnselectAll() {
         for (Student student :
-                students) {
+                studentObservableList) {
             student.getSelect().setSelected(false);
         }
     }
