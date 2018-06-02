@@ -52,6 +52,7 @@ public class FXMLMainController implements Initializable {
     public MenuItem menuItemAccessRequirements;
     @FXML
     public MenuItem menuItemEctsCredits;
+
     @FXML
     public Button btnGenerate;
     @FXML
@@ -138,6 +139,13 @@ public class FXMLMainController implements Initializable {
             final TableRow<Student> row = new TableRow<>();
             final ContextMenu contextMenu = new ContextMenu();
             contextMenu.setStyle("-fx-pref-width: 200px;");
+
+            row.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2) {
+                    fxmlStudentController.setStudentId(row.getItem().getId());
+                    openStudentModalWindow();
+                }
+            });
 
             MenuItem editItem = new MenuItem("Edit");
             editItem.setOnAction(e -> {
