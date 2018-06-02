@@ -431,20 +431,7 @@ public class FXMLSettingsController implements Initializable {
     }
 
     private boolean validateProtocolInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfNameUKProtocol)) {
-            tfNameUKProtocol.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameUKProtocol.textProperty().addListener(e -> tfNameUKProtocol.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfNameENProtocol)) {
-            tfNameENProtocol.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameENProtocol.textProperty().addListener(e -> tfNameENProtocol.setStyle(null));
-            result = false;
-        }
-        return result;
+        return Validation.checkData(tfNameUKProtocol, tfNameENProtocol);
     }
 
     //-------------------------------------------------------------------------------
@@ -522,14 +509,7 @@ public class FXMLSettingsController implements Initializable {
     }
 
     private boolean validateMainFieldInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfNameMainField)) {
-            tfNameMainField.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameMainField.textProperty().addListener(e -> tfNameFieldOfStudy.setStyle(null));
-            result = false;
-        }
-        return result;
+        return Validation.checkData(tfNameMainField);
     }
 
     //-------------------------------------------------------------------------------
@@ -607,14 +587,7 @@ public class FXMLSettingsController implements Initializable {
     }
 
     private boolean validateFieldOfStudyInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfNameFieldOfStudy)) {
-            tfNameFieldOfStudy.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameFieldOfStudy.textProperty().addListener(e -> tfNameFieldOfStudy.setStyle(null));
-            result = false;
-        }
-        return result;
+        return Validation.checkData(tfNameFieldOfStudy);
     }
 
     //-------------------------------------------------------------------------------
@@ -692,14 +665,7 @@ public class FXMLSettingsController implements Initializable {
     }
 
     private boolean validateGroupInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfNameGroups)) {
-            tfNameGroups.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameGroups.textProperty().addListener(e -> tfNameGroups.setStyle(null));
-            result = false;
-        }
-        return result;
+        return Validation.checkData(tfNameGroups);
     }
 
     //-------------------------------------------------------------------------------
@@ -799,26 +765,8 @@ public class FXMLSettingsController implements Initializable {
     }
 
     private boolean validateOfficialDurationInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfNameOfficialDuration)) {
-            tfNameOfficialDuration.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameOfficialDuration.textProperty().addListener(e -> tfNameOfficialDuration.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbModeOfStudyOD)) {
-            cbModeOfStudyOD.setStyle(Validation.getComboBoxErrorStyle());
-            cbModeOfStudyOD.valueProperty().addListener(e -> cbModeOfStudyOD.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbDurationOfStudyOD)) {
-            cbDurationOfStudyOD.setStyle(Validation.getComboBoxErrorStyle());
-            cbDurationOfStudyOD.valueProperty().addListener(e -> cbDurationOfStudyOD.setStyle(null));
-            result = false;
-        }
-        return result;
+        return Validation.checkData(tfNameOfficialDuration) && Validation.checkData(cbModeOfStudyOD,
+                cbDurationOfStudyOD);
     }
 
     //-------------------------------------------------------------------------------
@@ -917,28 +865,8 @@ public class FXMLSettingsController implements Initializable {
         }
     }
 
-    private boolean validateDurationOfTrainingInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfNameDurationOfTraining)) {
-            tfNameDurationOfTraining.setStyle(Validation.getTextFieldErrorStyle());
-            tfNameDurationOfTraining.textProperty()
-                    .addListener(e -> tfNameDurationOfTraining.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbModeOfStudyDoT)) {
-            cbModeOfStudyDoT.setStyle(Validation.getComboBoxErrorStyle());
-            cbModeOfStudyDoT.valueProperty().addListener(e -> cbModeOfStudyDoT.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbDurationOfStudyDoT)) {
-            cbDurationOfStudyDoT.setStyle(Validation.getComboBoxErrorStyle());
-            cbDurationOfStudyDoT.valueProperty().addListener(e -> cbDurationOfStudyDoT.setStyle(null));
-            result = false;
-        }
-        return result;
+    private boolean validateDurationOfTrainingInputs() {        return Validation.checkData(tfNameDurationOfTraining) && Validation.checkData(cbModeOfStudyDoT,
+                cbDurationOfStudyDoT);
     }
 
     void display() throws Exception {
