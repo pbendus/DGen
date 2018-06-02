@@ -49,6 +49,10 @@ public class FXMLMainController implements Initializable {
   public MenuItem menuItemOfficialDurationOfProgramme;
   @FXML
   public MenuItem menuItemDurationOfTraining;
+  @FXML
+  public MenuItem menuItemAccessRequirements;
+  @FXML
+  public MenuItem menuItemEctsCredits;
 
   @FXML
   private TableView<Student> tblView;
@@ -149,8 +153,11 @@ public class FXMLMainController implements Initializable {
     menuItemMainField.setOnAction(
         event -> openSettingsModalWindow(FXMLSettingsController.Tab.MAIN_FIELD));
     menuItemOfficialDurationOfProgramme.setOnAction(
-        event -> openSettingsModalWindow(
-            FXMLSettingsController.Tab.OFFICIAL_DURATION_OF_PROGRAMME));
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.OFFICIAL_DURATION));
+    menuItemAccessRequirements.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.ACCESS_REQUIREMENTS));
+    menuItemEctsCredits.setOnAction(
+        event -> openSettingsModalWindow(FXMLSettingsController.Tab.ECTS_CREDITS));
   }
 
   private void generateDocuments() {

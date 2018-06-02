@@ -33,6 +33,8 @@
                   <MenuItem fx:id="menuItemGroups" mnemonicParsing="false" text="Групи" />
                   <MenuItem fx:id="menuItemOfficialDurationOfProgramme" mnemonicParsing="false" text="Офіційна тривалість програми" />
                   <MenuItem fx:id="menuItemDurationOfTraining" mnemonicParsing="false" text="Строки навчання у кожному ВНЗ " />
+                  <MenuItem fx:id="menuItemAccessRequirements" mnemonicParsing="false" text="Вимоги до вступу" />
+                  <MenuItem fx:id="menuItemEctsCredits" mnemonicParsing="false" text="Кредити ЄКТС " />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Допомога">

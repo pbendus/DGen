@@ -2,6 +2,7 @@ package ui.controllers;
 
 import db.mapper.DurationOfStudyMapper;
 import db.mapper.DurationOfTrainingMapper;
+import db.mapper.EctsCreditsMapper;
 import db.mapper.FieldOfStudyMapper;
 import db.mapper.GroupMapper;
 import db.mapper.MainFieldMapper;
@@ -10,6 +11,7 @@ import db.mapper.OfficialDurationOfProgrammeMapper;
 import db.mapper.ProtocolMapper;
 import db.services.DurationOfStudyService;
 import db.services.DurationOfTrainingService;
+import db.services.EctsCreditsService;
 import db.services.FieldOfStudyService;
 import db.services.GroupService;
 import db.services.MainFieldService;
@@ -47,6 +49,7 @@ import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.DurationOfStudy;
 import ui.models.DurationOfTraining;
+import ui.models.EctsCredits;
 import ui.models.FieldOfStudy;
 import ui.models.Group;
 import ui.models.MainField;
@@ -75,6 +78,10 @@ public class FXMLSettingsController implements Initializable {
   public javafx.scene.control.Tab tabFieldOfStudy;
   @FXML
   public javafx.scene.control.Tab tabProtocols;
+  @FXML
+  public javafx.scene.control.Tab tabEctsCredits;
+  @FXML
+  public javafx.scene.control.Tab tabAccessRequirements;
 
   @FXML
   public TextField tfNameUKProtocol;
@@ -162,6 +169,36 @@ public class FXMLSettingsController implements Initializable {
   @FXML
   public Button btnAddDurationOfTraining;
 
+  @FXML
+  public TableView<EctsCredits> tblEctsCredits;
+  @FXML
+  public TableColumn<EctsCredits, Integer> tblColIdEctsCredits;
+  @FXML
+  public TableColumn<EctsCredits, String> tblColNameEctsCredits;
+  @FXML
+  public TableColumn<EctsCredits, DurationOfStudy> tblColDurationOfStudyEctsCredits;
+  @FXML
+  public TextField tfNameEctsCredits;
+  @FXML
+  public Button btnAddEctsCredits;
+  @FXML
+  public ComboBox<DurationOfStudy> cbDurationOfStudyEctsCredits;
+
+  @FXML
+  public TableView tblAccessRequirements;
+  @FXML
+  public TableColumn tblColIdAccessRequirements;
+  @FXML
+  public TableColumn tblColNameAccessRequirements;
+  @FXML
+  public TableColumn tblColDurationOfStudyAR;
+  @FXML
+  public TextField tfNameAccessRequirements;
+  @FXML
+  public Button btnAddAccessRequirements;
+  @FXML
+  public ComboBox cbDurationOfStudyAR;
+
   private Stage stage;
 
   private ProtocolService protocolService;
@@ -188,6 +225,9 @@ public class FXMLSettingsController implements Initializable {
   private ModeOfStudyService modeOfStudyService;
   private ModeOfStudyMapper modeOfStudyMapper;
 
+  private EctsCreditsService ectsCreditsService;
+  private EctsCreditsMapper ectsCreditsMapper;
+
   private ObservableList<Protocol> protocols = FXCollections.observableArrayList();
   private ObservableList<FieldOfStudy> fieldOfStudies = FXCollections.observableArrayList();
   private ObservableList<MainField> mainFields = FXCollections.observableArrayList();
@@ -198,6 +238,7 @@ public class FXMLSettingsController implements Initializable {
   private ObservableList<DurationOfTraining> durationOfTrainings =
       FXCollections.observableArrayList();
   private ObservableList<ModeOfStudy> modeOfStudies = FXCollections.observableArrayList();
+  private ObservableList<EctsCredits> ectsCredits = FXCollections.observableArrayList();
 
   private Tab tab;
 
@@ -212,7 +253,8 @@ public class FXMLSettingsController implements Initializable {
       DurationOfStudyMapper durationOfStudyMapper,
       DurationOfTrainingService durationOfTrainingService,
       DurationOfTrainingMapper durationOfTrainingMapper,
-      ModeOfStudyService modeOfStudyService, ModeOfStudyMapper modeOfStudyMapper) {
+      ModeOfStudyService modeOfStudyService, ModeOfStudyMapper modeOfStudyMapper,
+      EctsCreditsService ectsCreditsService, EctsCreditsMapper ectsCreditsMapper) {
     this.protocolService = protocolService;
     this.protocolMapper = protocolMapper;
     this.fieldOfStudyService = fieldOfStudyService;
@@ -229,6 +271,8 @@ public class FXMLSettingsController implements Initializable {
     this.durationOfTrainingMapper = durationOfTrainingMapper;
     this.modeOfStudyService = modeOfStudyService;
     this.modeOfStudyMapper = modeOfStudyMapper;
+    this.ectsCreditsService = ectsCreditsService;
+    this.ectsCreditsMapper = ectsCreditsMapper;
   }
 
   @Override
@@ -290,8 +334,14 @@ public class FXMLSettingsController implements Initializable {
       case DURATION_OF_TRAINING:
         tabPane.getSelectionModel().select(tabDurationOfTraining);
         break;
-      case OFFICIAL_DURATION_OF_PROGRAMME:
+      case OFFICIAL_DURATION:
         tabPane.getSelectionModel().select(tabOfficialDuration);
+        break;
+      case ECTS_CREDITS:
+        tabPane.getSelectionModel().select(tabEctsCredits);
+        break;
+      case ACCESS_REQUIREMENTS:
+        tabPane.getSelectionModel().select(tabAccessRequirements);
         break;
     }
   }
@@ -305,6 +355,7 @@ public class FXMLSettingsController implements Initializable {
     durationOfStudies.clear();
     durationOfTrainings.clear();
     modeOfStudies.clear();
+    ectsCredits.clear();
   }
 
   private void fillDurationOfStudies() {
@@ -902,7 +953,8 @@ public class FXMLSettingsController implements Initializable {
 
     if (!Validation.validateTextField(tfNameDurationOfTraining)) {
       tfNameDurationOfTraining.setStyle(Validation.getTextFieldErrorStyle());
-      tfNameDurationOfTraining.textProperty().addListener(e -> tfNameDurationOfTraining.setStyle(null));
+      tfNameDurationOfTraining.textProperty()
+          .addListener(e -> tfNameDurationOfTraining.setStyle(null));
       result = false;
     }
 
@@ -951,7 +1003,7 @@ public class FXMLSettingsController implements Initializable {
   }
 
   public enum Tab {
-    PROTOCOLS, MAIN_FIELD, FIELD_OF_STUDY, GROUPS, OFFICIAL_DURATION_OF_PROGRAMME,
-    DURATION_OF_TRAINING
+    PROTOCOLS, MAIN_FIELD, FIELD_OF_STUDY, GROUPS, OFFICIAL_DURATION,
+    DURATION_OF_TRAINING, ECTS_CREDITS, ACCESS_REQUIREMENTS
   }
 }
