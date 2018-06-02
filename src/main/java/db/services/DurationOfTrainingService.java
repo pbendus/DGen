@@ -21,8 +21,4 @@ public class DurationOfTrainingService extends BaseServiceImpl<DurationOfTrainin
         values.put("duration_of_study_id", durationOfStudyId);
         return getDao().queryForFieldValues(values).get(0);
     }
-
-    public DurationOfTraining getByName(String name) throws SQLException {
-        return getDao().queryForEq("name", name).get(0);
-    }
 }

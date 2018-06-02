@@ -72,4 +72,8 @@ public class BaseServiceImpl<T> implements Service<T> {
     public Dao<T, Integer> getDao() {
         return dao;
     }
+
+    public T getByName(String name) throws SQLException {
+        return getDao().queryForEq("name", name).get(0);
+    }
 }

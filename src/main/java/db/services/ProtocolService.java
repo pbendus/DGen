@@ -5,8 +5,6 @@ import db.entities.Protocol;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class ProtocolService
@@ -16,10 +14,7 @@ public class ProtocolService
         super(dao);
     }
 
-    public Protocol getByName(String nameEN, String nameUK) throws SQLException {
-        final Map<String, Object> values = new HashMap<>();
-        values.put("name_en", nameEN);
-        values.put("name_uk", nameUK);
-        return getDao().queryForFieldValues(values).get(0);
+    public Protocol getByName(String name) throws SQLException {
+        return getDao().queryForEq("name_en", name).get(0);
     }
 }
