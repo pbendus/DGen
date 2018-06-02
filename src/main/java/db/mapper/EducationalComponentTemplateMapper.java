@@ -13,8 +13,7 @@ public class EducationalComponentTemplateMapper
 
     @Autowired
     public EducationalComponentTemplateMapper(
-            EducationalComponentTypeMapper educationalComponentTypeMapper,
-            MainFieldMapper mainFieldMapper) {
+            EducationalComponentTypeMapper educationalComponentTypeMapper) {
         this.educationalComponentTypeMapper = educationalComponentTypeMapper;
     }
 

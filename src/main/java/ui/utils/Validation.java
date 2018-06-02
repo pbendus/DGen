@@ -19,17 +19,20 @@ public class Validation {
      * @return - if data is correct then return true, else return false;
      */
     public static boolean checkData(TextField... textField) {
-        int result = 0;
+        boolean result = true;
 
         for (TextField field : textField) {
             if (field.getText().trim().length() <= 0) {
                 setStyle(field, BORDER_RED);
                 field.requestFocus();
+                result = false;
+            } else {
+                setStyle(field, null);
                 field.textProperty().addListener(e -> setStyle(field, null));
             }
         }
 
-        return result == textField.length;
+        return result;
     }
 
     /**
@@ -39,17 +42,20 @@ public class Validation {
      * @return - if data is correct then return true, else return false;
      */
     public static boolean checkData(ComboBox... comboBox) {
-        int result = 0;
+        boolean result = true;
 
         for (ComboBox box : comboBox) {
             if (box.getSelectionModel().getSelectedItem() == null) {
                 setStyle(box, BORDER_RED);
                 box.requestFocus();
+                result = false;
+            } else {
+                setStyle(box, null);
                 box.itemsProperty().addListener(e -> setStyle(box, null));
             }
         }
 
-        return result == comboBox.length;
+        return result;
     }
 
     /**
@@ -59,16 +65,19 @@ public class Validation {
      * @return - if data is correct then return true, else return false;
      */
     public static boolean checkData(DatePicker... datePickers) {
-        int result = 0;
+        boolean result = true;
 
         for (DatePicker datePicker : datePickers) {
             if (datePicker.getValue() == null) {
                 setStyle(datePicker, BORDER_RED);
                 datePicker.requestFocus();
+                result = false;
+            } else {
+                setStyle(datePicker, null);
                 datePicker.valueProperty().addListener(e -> setStyle(datePicker, null));
             }
         }
-        return result == datePickers.length;
+        return result;
     }
 
     /**

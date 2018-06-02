@@ -22,8 +22,4 @@ public class OfficialDurationOfProgrammeService
         values.put("duration_of_study_id", durationOfStudyId);
         return getDao().queryForFieldValues(values).get(0);
     }
-
-    public OfficialDurationOfProgramme getByName(String name) throws SQLException {
-        return getDao().queryForEq("name", name).get(0);
-    }
 }
