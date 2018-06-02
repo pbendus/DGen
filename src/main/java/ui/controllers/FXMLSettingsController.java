@@ -154,19 +154,15 @@ public class FXMLSettingsController implements Initializable {
     public ComboBox<DurationOfStudy> cbDurationOfStudyEctsCredits;
 
     @FXML
-    public TableView tblAccessRequirements;
+    public TableView<AccessRequirements> tblAccessRequirements;
     @FXML
-    public TableColumn tblColIdAccessRequirements;
+    public TableColumn<AccessRequirements, Integer> tblColIdAccessRequirements;
     @FXML
-    public TableColumn tblColNameAccessRequirements;
-    @FXML
-    public TableColumn tblColDurationOfStudyAR;
+    public TableColumn<AccessRequirements, String> tblColNameAccessRequirements;
     @FXML
     public TextField tfNameAccessRequirements;
     @FXML
     public Button btnAddAccessRequirements;
-    @FXML
-    public ComboBox cbDurationOfStudyAR;
 
     private Stage stage;
 
@@ -197,6 +193,9 @@ public class FXMLSettingsController implements Initializable {
     private EctsCreditsService ectsCreditsService;
     private EctsCreditsMapper ectsCreditsMapper;
 
+    private AccessRequirementsService accessRequirementsService;
+    private AccessRequirementsMapper accessRequirementsMapper;
+
     private ObservableList<Protocol> protocols = FXCollections.observableArrayList();
     private ObservableList<FieldOfStudy> fieldOfStudies = FXCollections.observableArrayList();
     private ObservableList<MainField> mainFields = FXCollections.observableArrayList();
@@ -208,6 +207,7 @@ public class FXMLSettingsController implements Initializable {
             FXCollections.observableArrayList();
     private ObservableList<ModeOfStudy> modeOfStudies = FXCollections.observableArrayList();
     private ObservableList<EctsCredits> ectsCredits = FXCollections.observableArrayList();
+    private ObservableList<AccessRequirements> accessRequirements = FXCollections.observableArrayList();
 
     private Tab tab;
 
@@ -223,7 +223,9 @@ public class FXMLSettingsController implements Initializable {
                                   DurationOfTrainingService durationOfTrainingService,
                                   DurationOfTrainingMapper durationOfTrainingMapper,
                                   ModeOfStudyService modeOfStudyService, ModeOfStudyMapper modeOfStudyMapper,
-                                  EctsCreditsService ectsCreditsService, EctsCreditsMapper ectsCreditsMapper) {
+                                  EctsCreditsService ectsCreditsService, EctsCreditsMapper ectsCreditsMapper,
+                                  AccessRequirementsService accessRequirementsService,
+                                  AccessRequirementsMapper accessRequirementsMapper) {
         this.protocolService = protocolService;
         this.protocolMapper = protocolMapper;
         this.fieldOfStudyService = fieldOfStudyService;
@@ -242,28 +244,40 @@ public class FXMLSettingsController implements Initializable {
         this.modeOfStudyMapper = modeOfStudyMapper;
         this.ectsCreditsService = ectsCreditsService;
         this.ectsCreditsMapper = ectsCreditsMapper;
+        this.accessRequirementsService = accessRequirementsService;
+        this.accessRequirementsMapper = accessRequirementsMapper;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void initialize(URL location, ResourceBundle resources) {
         selectTab();
-        clearComponents();
+        clearComponents(protocols, fieldOfStudies, mainFields, groups, officialDurationOfProgrammes,
+                officialDurationOfProgrammes, durationOfStudies, durationOfTrainings,
+                modeOfStudies, ectsCredits, accessRequirements);
         initializeTableProtocols();
         initializeTableFieldOfStudy();
         initializeTableMainField();
         initializeTableGroups();
         initializeTableOfficialDuration();
         initializeTableDurationOfTraining();
+        initializeTableEctsCredits();
+        initializeTableAccessRequirements();
 
-        fillModeOfStudies();
-        fillDurationOfStudies();
+        Helper.fillComboBoxes(durationOfStudies, durationOfStudyMapper, durationOfStudyService, cbDurationOfStudyDoT,
+                cbDurationOfStudyOD, cbDurationOfStudyEctsCredits);
+        Helper.fillComboBoxes(modeOfStudies, modeOfStudyMapper, modeOfStudyService, cbModeOfStudyDoT, cbModeOfStudyOD);
 
-        fillTableProtocols();
-        fillTableFieldOfStudy();
-        fillTableMainField();
-        fillTableGroups();
-        fillTableOfficialDuration();
-        fillTableDurationOfTraining();
+        Helper.fillTable(protocols, protocolMapper, protocolService, tblProtocols);
+        Helper.fillTable(fieldOfStudies, fieldOfStudyMapper, fieldOfStudyService, tblFieldOfStudy);
+        Helper.fillTable(mainFields, mainFieldMapper, mainFieldService, tblMainField);
+        Helper.fillTable(groups, groupMapper, groupService, tblGroups);
+        Helper.fillTable(officialDurationOfProgrammes, officialDurationOfProgrammeMapper,
+                officialDurationOfProgrammeService, tblOfficialDuration);
+        Helper.fillTable(durationOfTrainings, durationOfTrainingMapper, durationOfTrainingService,
+                tblDurationOfTraining);
+        Helper.fillTable(ectsCredits, ectsCreditsMapper, ectsCreditsService, tblEctsCredits);
+        Helper.fillTable(accessRequirements, accessRequirementsMapper, accessRequirementsService, tblAccessRequirements);
 
         btnAddProtocol.setOnAction(event -> {
             if (validateProtocolInputs()) addProtocol();
@@ -282,6 +296,12 @@ public class FXMLSettingsController implements Initializable {
         });
         btnAddDurationOfTraining.setOnAction(event -> {
             if (validateDurationOfTrainingInputs()) addDurationOfTraining();
+        });
+        btnAddEctsCredits.setOnAction(event -> {
+            if (validateEctsCreditsInputs()) addEctsCredits();
+        });
+        btnAddAccessRequirements.setOnAction(event -> {
+            if (validateAccessRequirementsInputs()) addAccessRequirements();
         });
     }
 
@@ -315,37 +335,10 @@ public class FXMLSettingsController implements Initializable {
         }
     }
 
-    private void clearComponents() {
-        protocols.clear();
-        fieldOfStudies.clear();
-        mainFields.clear();
-        groups.clear();
-        officialDurationOfProgrammes.clear();
-        durationOfStudies.clear();
-        durationOfTrainings.clear();
-        modeOfStudies.clear();
-        ectsCredits.clear();
-    }
-
-    private void fillDurationOfStudies() {
-        try {
-            durationOfStudies.addAll(durationOfStudyMapper.map(durationOfStudyService.getAll()));
-            cbDurationOfStudyDoT.getItems().addAll(durationOfStudies);
-            cbDurationOfStudyOD.getItems().addAll(durationOfStudies);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void fillModeOfStudies() {
-        try {
-            modeOfStudies.addAll(modeOfStudyMapper.map(modeOfStudyService.getAll()));
-            cbModeOfStudyDoT.getItems().addAll(modeOfStudies);
-            cbModeOfStudyOD.getItems().addAll(modeOfStudies);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
+    private void clearComponents(ObservableList... lists) {
+        for (ObservableList list :
+                lists) {
+            list.clear();
         }
     }
 
@@ -361,11 +354,11 @@ public class FXMLSettingsController implements Initializable {
         tblColNameENProtocol.setCellFactory(TextFieldTableCell.forTableColumn());
         tblColNameUKProtocol.setOnEditCommit(event -> {
             event.getRowValue().setNameUK(event.getNewValue());
-            updateProtocol(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), protocolMapper, protocolService);
         });
         tblColNameENProtocol.setOnEditCommit(event -> {
             event.getRowValue().setNameEN(event.getNewValue());
-            updateProtocol(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), protocolMapper, protocolService);
         });
 
         tblProtocols.setRowFactory(
@@ -373,7 +366,8 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<Protocol> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> removeProtocol(row.getItem()));
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            protocolService, tblProtocols));
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
@@ -385,49 +379,12 @@ public class FXMLSettingsController implements Initializable {
                 });
     }
 
-    private void fillTableProtocols() {
-        try {
-            protocols.addAll(protocolMapper.map(protocolService.getAll()));
-            tblProtocols.setItems(protocols);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     private void addProtocol() {
         final String nameUK = tfNameUKProtocol.getText().trim();
         final String nameEN = tfNameENProtocol.getText().trim();
         final Protocol protocol = new Protocol(protocols.size() + 1, nameUK, nameEN);
 
-        try {
-            if (protocolService.create(protocolMapper.reverseMap(protocol)) == 1) {
-                protocols.add(protocolMapper.map(protocolService.getByName(nameEN, nameUK)));
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void updateProtocol(Protocol protocol) {
-        try {
-            protocolService.update(protocolMapper.reverseMap(protocol));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void removeProtocol(Protocol item) {
-        try {
-            if (protocolService.delete(item.getId()) == 1) {
-                tblProtocols.getItems().remove(item);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        Helper.insertItem(protocols, protocol, nameEN, protocolMapper, protocolService);
     }
 
     private boolean validateProtocolInputs() {
@@ -444,7 +401,7 @@ public class FXMLSettingsController implements Initializable {
         tblColNameMainField.setCellFactory(TextFieldTableCell.forTableColumn());
         tblColNameMainField.setOnEditCommit(event -> {
             event.getRowValue().setName(event.getNewValue());
-            updateMainField(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), mainFieldMapper, mainFieldService);
         });
 
         tblMainField.setRowFactory(
@@ -452,7 +409,8 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<MainField> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> removeMainField(row.getItem()));
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            mainFieldService, tblMainField));
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
@@ -464,48 +422,11 @@ public class FXMLSettingsController implements Initializable {
                 });
     }
 
-    private void fillTableMainField() {
-        try {
-            mainFields.addAll(mainFieldMapper.map(mainFieldService.getAll()));
-            tblMainField.setItems(mainFields);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     private void addMainField() {
         final String name = tfNameMainField.getText().trim();
         final MainField mainField = new MainField(mainFields.size() + 1, name);
 
-        try {
-            if (mainFieldService.create(mainFieldMapper.reverseMap(mainField)) == 1) {
-                mainFields.add(mainFieldMapper.map(mainFieldService.getByName(name)));
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void updateMainField(MainField item) {
-        try {
-            mainFieldService.update(mainFieldMapper.reverseMap(item));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void removeMainField(MainField item) {
-        try {
-            if (mainFieldService.delete(item.getId()) == 1) {
-                tblMainField.getItems().remove(item);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        Helper.insertItem(mainFields, mainField, name, mainFieldMapper, mainFieldService);
     }
 
     private boolean validateMainFieldInputs() {
@@ -522,7 +443,7 @@ public class FXMLSettingsController implements Initializable {
         tblColNameFieldOfStudy.setCellFactory(TextFieldTableCell.forTableColumn());
         tblColNameFieldOfStudy.setOnEditCommit(event -> {
             event.getRowValue().setName(event.getNewValue());
-            updateFieldOfStudy(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), fieldOfStudyMapper, fieldOfStudyService);
         });
 
         tblFieldOfStudy.setRowFactory(
@@ -530,7 +451,8 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<FieldOfStudy> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> removeFieldOfStudy(row.getItem()));
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            fieldOfStudyService, tblFieldOfStudy));
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
@@ -542,48 +464,11 @@ public class FXMLSettingsController implements Initializable {
                 });
     }
 
-    private void fillTableFieldOfStudy() {
-        try {
-            fieldOfStudies.addAll(fieldOfStudyMapper.map(fieldOfStudyService.getAll()));
-            tblFieldOfStudy.setItems(fieldOfStudies);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     private void addFieldOfStudy() {
         final String name = tfNameFieldOfStudy.getText().trim();
         final FieldOfStudy fieldOfStudy = new FieldOfStudy(fieldOfStudies.size() + 1, name);
 
-        try {
-            if (fieldOfStudyService.create(fieldOfStudyMapper.reverseMap(fieldOfStudy)) == 1) {
-                fieldOfStudies.add(fieldOfStudyMapper.map(fieldOfStudyService.getByName(name)));
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void updateFieldOfStudy(FieldOfStudy item) {
-        try {
-            fieldOfStudyService.update(fieldOfStudyMapper.reverseMap(item));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void removeFieldOfStudy(FieldOfStudy item) {
-        try {
-            if (fieldOfStudyService.delete(item.getId()) == 1) {
-                tblFieldOfStudy.getItems().remove(item);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        Helper.insertItem(fieldOfStudies, fieldOfStudy, name, fieldOfStudyMapper, fieldOfStudyService);
     }
 
     private boolean validateFieldOfStudyInputs() {
@@ -600,7 +485,7 @@ public class FXMLSettingsController implements Initializable {
         tblColNameGroups.setCellFactory(TextFieldTableCell.forTableColumn());
         tblColNameGroups.setOnEditCommit(event -> {
             event.getRowValue().setName(event.getNewValue());
-            updateGroup(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), groupMapper, groupService);
         });
 
         tblGroups.setRowFactory(
@@ -608,7 +493,8 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<Group> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> removeGroup(row.getItem()));
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            groupService, tblGroups));
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
@@ -620,48 +506,11 @@ public class FXMLSettingsController implements Initializable {
                 });
     }
 
-    private void fillTableGroups() {
-        try {
-            groups.addAll(groupMapper.map(groupService.getAll()));
-            tblGroups.setItems(groups);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     private void addGroup() {
         final String name = tfNameGroups.getText().trim();
         final Group group = new Group(groups.size() + 1, name);
 
-        try {
-            if (groupService.create(groupMapper.reverseMap(group)) == 1) {
-                groups.add(groupMapper.map(groupService.getByName(name)));
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void updateGroup(Group item) {
-        try {
-            groupService.update(groupMapper.reverseMap(item));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void removeGroup(Group item) {
-        try {
-            if (groupService.delete(item.getId()) == 1) {
-                tblGroups.getItems().remove(item);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        Helper.insertItem(groups, group, name, groupMapper, groupService);
     }
 
     private boolean validateGroupInputs() {
@@ -679,20 +528,20 @@ public class FXMLSettingsController implements Initializable {
         tblColDurationOfStudyOD.setCellFactory(ComboBoxTableCell.forTableColumn(durationOfStudies));
         tblColDurationOfStudyOD.setOnEditCommit(event -> {
             event.getRowValue().setDurationOfStudy(event.getNewValue());
-            updateOfficialDuration(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), officialDurationOfProgrammeMapper, officialDurationOfProgrammeService);
         });
 
         tblColModeOfStudyOD.setCellValueFactory(param -> param.getValue().modeOfStudyProperty());
         tblColModeOfStudyOD.setCellFactory(ComboBoxTableCell.forTableColumn(modeOfStudies));
         tblColModeOfStudyOD.setOnEditCommit(event -> {
             event.getRowValue().setModeOfStudy(event.getNewValue());
-            updateOfficialDuration(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), officialDurationOfProgrammeMapper, officialDurationOfProgrammeService);
         });
 
         tblColNameOfficialDuration.setCellFactory(TextFieldTableCell.forTableColumn());
         tblColNameOfficialDuration.setOnEditCommit(event -> {
             event.getRowValue().setName(event.getNewValue());
-            updateOfficialDuration(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), officialDurationOfProgrammeMapper, officialDurationOfProgrammeService);
         });
 
         tblOfficialDuration.setRowFactory(
@@ -700,7 +549,8 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<OfficialDurationOfProgramme> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> removeOfficialDuration(row.getItem()));
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            officialDurationOfProgrammeService, tblOfficialDuration));
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
@@ -712,17 +562,6 @@ public class FXMLSettingsController implements Initializable {
                 });
     }
 
-    private void fillTableOfficialDuration() {
-        try {
-            officialDurationOfProgrammes.addAll(
-                    officialDurationOfProgrammeMapper.map(officialDurationOfProgrammeService.getAll()));
-            tblOfficialDuration.setItems(officialDurationOfProgrammes);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     private void addOfficialDuration() {
         final String name = tfNameOfficialDuration.getText().trim();
         final ModeOfStudy modeOfStudy = cbModeOfStudyOD.getSelectionModel().getSelectedItem();
@@ -732,36 +571,8 @@ public class FXMLSettingsController implements Initializable {
                 new OfficialDurationOfProgramme(officialDurationOfProgrammes.size() + 1, name, modeOfStudy,
                         durationOfStudy);
 
-        try {
-            if (officialDurationOfProgrammeService.create(
-                    officialDurationOfProgrammeMapper.reverseMap(officialDurationOfProgramme)) == 1) {
-                officialDurationOfProgrammes.add(officialDurationOfProgrammeMapper.map(
-                        officialDurationOfProgrammeService.getByName(name)));
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void updateOfficialDuration(OfficialDurationOfProgramme item) {
-        try {
-            officialDurationOfProgrammeService.update(officialDurationOfProgrammeMapper.reverseMap(item));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void removeOfficialDuration(OfficialDurationOfProgramme item) {
-        try {
-            if (officialDurationOfProgrammeService.delete(item.getId()) == 1) {
-                tblOfficialDuration.getItems().remove(item);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        Helper.insertItem(officialDurationOfProgrammes, officialDurationOfProgramme, name,
+                officialDurationOfProgrammeMapper, officialDurationOfProgrammeService);
     }
 
     private boolean validateOfficialDurationInputs() {
@@ -780,20 +591,20 @@ public class FXMLSettingsController implements Initializable {
         tblColDurationOfStudyDoT.setCellFactory(ComboBoxTableCell.forTableColumn(durationOfStudies));
         tblColDurationOfStudyDoT.setOnEditCommit(event -> {
             event.getRowValue().setDurationOfStudy(event.getNewValue());
-            updateDurationOfTraining(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), durationOfTrainingMapper, durationOfTrainingService);
         });
 
         tblColModeOfStudyDoT.setCellValueFactory(param -> param.getValue().modeOfStudyProperty());
         tblColModeOfStudyDoT.setCellFactory(ComboBoxTableCell.forTableColumn(modeOfStudies));
         tblColModeOfStudyDoT.setOnEditCommit(event -> {
             event.getRowValue().setModeOfStudy(event.getNewValue());
-            updateDurationOfTraining(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), durationOfTrainingMapper, durationOfTrainingService);
         });
 
         tblColNameDurationOfTraining.setCellFactory(TextFieldTableCell.forTableColumn());
         tblColNameDurationOfTraining.setOnEditCommit(event -> {
             event.getRowValue().setName(event.getNewValue());
-            updateDurationOfTraining(event.getRowValue());
+            Helper.updateItem(event.getRowValue(), durationOfTrainingMapper, durationOfTrainingService);
         });
 
         tblDurationOfTraining.setRowFactory(
@@ -801,7 +612,8 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<DurationOfTraining> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> removeDurationOfTraining(row.getItem()));
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            durationOfTrainingService, tblDurationOfTraining));
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
@@ -813,17 +625,6 @@ public class FXMLSettingsController implements Initializable {
                 });
     }
 
-    private void fillTableDurationOfTraining() {
-        try {
-            durationOfTrainings.addAll(
-                    durationOfTrainingMapper.map(durationOfTrainingService.getAll()));
-            tblDurationOfTraining.setItems(durationOfTrainings);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     private void addDurationOfTraining() {
         final String name = tfNameDurationOfTraining.getText().trim();
         final ModeOfStudy modeOfStudy = cbModeOfStudyDoT.getSelectionModel().getSelectedItem();
@@ -833,40 +634,107 @@ public class FXMLSettingsController implements Initializable {
                 new DurationOfTraining(durationOfTrainings.size() + 1, name, modeOfStudy,
                         durationOfStudy);
 
-        try {
-            if (durationOfTrainingService.create(
-                    durationOfTrainingMapper.reverseMap(durationOfTraining)) == 1) {
-                durationOfTrainings.add(
-                        durationOfTrainingMapper.map(durationOfTrainingService.getByName(name)));
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        Helper.insertItem(durationOfTrainings, durationOfTraining, name, durationOfTrainingMapper,
+                durationOfTrainingService);
     }
 
-    private void updateDurationOfTraining(DurationOfTraining item) {
-        try {
-            durationOfTrainingService.update(durationOfTrainingMapper.reverseMap(item));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void removeDurationOfTraining(DurationOfTraining item) {
-        try {
-            if (durationOfTrainingService.delete(item.getId()) == 1) {
-                tblDurationOfTraining.getItems().remove(item);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private boolean validateDurationOfTrainingInputs() {        return Validation.checkData(tfNameDurationOfTraining) && Validation.checkData(cbModeOfStudyDoT,
+    private boolean validateDurationOfTrainingInputs() {
+        return Validation.checkData(tfNameDurationOfTraining) && Validation.checkData(cbModeOfStudyDoT,
                 cbDurationOfStudyDoT);
+    }
+
+    //-------------------------------------------------------------------------------
+    // ECTS CREDITS
+    //-------------------------------------------------------------------------------
+    private void initializeTableEctsCredits() {
+        tblColIdEctsCredits.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tblColNameEctsCredits.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tblColDurationOfStudyEctsCredits.setCellValueFactory(
+                param -> param.getValue().durationOfStudyProperty());
+        tblColDurationOfStudyEctsCredits.setCellFactory(ComboBoxTableCell.forTableColumn(durationOfStudies));
+        tblColDurationOfStudyEctsCredits.setOnEditCommit(event -> {
+            event.getRowValue().setDurationOfStudy(event.getNewValue());
+            Helper.updateItem(event.getRowValue(), ectsCreditsMapper, ectsCreditsService);
+        });
+
+        tblColNameEctsCredits.setCellFactory(TextFieldTableCell.forTableColumn());
+        tblColNameEctsCredits.setOnEditCommit(event -> {
+            event.getRowValue().setName(event.getNewValue());
+            Helper.updateItem(event.getRowValue(), ectsCreditsMapper, ectsCreditsService);
+        });
+
+        tblEctsCredits.setRowFactory(
+                tableView -> {
+                    final TableRow<EctsCredits> row = new TableRow<>();
+                    final ContextMenu rowMenu = new ContextMenu();
+                    final MenuItem removeItem = new MenuItem("Delete");
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            ectsCreditsService, tblEctsCredits));
+                    rowMenu.getItems().addAll(removeItem);
+
+                    // only display context menu for non-null items:
+                    row.contextMenuProperty().bind(
+                            Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                    .then(rowMenu)
+                                    .otherwise((ContextMenu) null));
+                    return row;
+                });
+    }
+
+    private void addEctsCredits() {
+        final String name = tfNameEctsCredits.getText().trim();
+        final DurationOfStudy durationOfStudy = cbDurationOfStudyEctsCredits.getSelectionModel().getSelectedItem();
+        final EctsCredits ectsCredits = new EctsCredits(this.ectsCredits.size() + 1, name, durationOfStudy);
+
+        Helper.insertItem(this.ectsCredits, ectsCredits, name, ectsCreditsMapper, ectsCreditsService);
+    }
+
+    private boolean validateEctsCreditsInputs() {
+        return Validation.checkData(tfNameEctsCredits) && Validation.checkData(cbDurationOfStudyEctsCredits);
+    }
+
+    //-------------------------------------------------------------------------------
+    //  ACCESS REQUIREMENTS
+    //-------------------------------------------------------------------------------
+    private void initializeTableAccessRequirements() {
+        tblColIdAccessRequirements.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tblColNameAccessRequirements.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        tblColNameAccessRequirements.setCellFactory(TextFieldTableCell.forTableColumn());
+        tblColNameAccessRequirements.setOnEditCommit(event -> {
+            event.getRowValue().setName(event.getNewValue());
+            Helper.updateItem(event.getRowValue(), accessRequirementsMapper, accessRequirementsService);
+        });
+
+        tblAccessRequirements.setRowFactory(
+                tableView -> {
+                    final TableRow<AccessRequirements> row = new TableRow<>();
+                    final ContextMenu rowMenu = new ContextMenu();
+                    final MenuItem removeItem = new MenuItem("Delete");
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            accessRequirementsService, tblAccessRequirements));
+                    rowMenu.getItems().addAll(removeItem);
+
+                    // only display context menu for non-null items:
+                    row.contextMenuProperty().bind(
+                            Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                    .then(rowMenu)
+                                    .otherwise((ContextMenu) null));
+                    return row;
+                });
+    }
+
+    private void addAccessRequirements() {
+        final String name = tfNameAccessRequirements.getText().trim();
+        final AccessRequirements accessRequirements =
+                new AccessRequirements(this.accessRequirements.size() + 1, name);
+
+        Helper.insertItem(this.accessRequirements, accessRequirements, name, accessRequirementsMapper,
+                accessRequirementsService);
+    }
+
+    private boolean validateAccessRequirementsInputs() {
+        return Validation.checkData(tfNameAccessRequirements);
     }
 
     void display() throws Exception {
@@ -891,16 +759,78 @@ public class FXMLSettingsController implements Initializable {
         stage.showAndWait();
     }
 
+    @SuppressWarnings("unused")
     private void closeWindow() {
         stage.close();
     }
 
-    public void setTab(Tab tab) {
+    void setTab(Tab tab) {
         this.tab = tab;
     }
 
     public enum Tab {
         PROTOCOLS, MAIN_FIELD, FIELD_OF_STUDY, GROUPS, OFFICIAL_DURATION,
         DURATION_OF_TRAINING, ECTS_CREDITS, ACCESS_REQUIREMENTS
+    }
+
+    private static class Helper {
+        private static <T1, T2> void fillTable(ObservableList<T1> list, Mapper<T2, T1> mapper,
+                                               BaseServiceImpl<T2> service, TableView<T1> tableView) {
+            try {
+                list.addAll(mapper.map(service.getAll()));
+                tableView.setItems(list);
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        @SafeVarargs
+        private static <T1, T2> void fillComboBoxes(ObservableList<T1> list, Mapper<T2, T1> mapper,
+                                                    BaseServiceImpl<T2> service, ComboBox<T1>... comboBoxes) {
+            try {
+                list.addAll(mapper.map(service.getAll()));
+                for (ComboBox<T1> comboBox :
+                        comboBoxes) {
+                    comboBox.getItems().addAll(list);
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        private static <T1, T2> void insertItem(ObservableList<T1> list, T1 item, String name, Mapper<T2, T1> mapper,
+                                                BaseServiceImpl<T2> service) {
+            try {
+                if (service.create(mapper.reverseMap(item)) == 1) {
+                    list.add(mapper.map(service.getByName(name)));
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        private static <T1, T2> void updateItem(T1 item, Mapper<T2, T1> mapper,
+                                                BaseServiceImpl<T2> service) {
+            try {
+                service.update(mapper.reverseMap(item));
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        private static <T1, T2> void removeItem(int id, T1 item, BaseServiceImpl<T2> service, TableView<T1> tableView) {
+            try {
+                if (service.delete(id) == 1) {
+                    tableView.getItems().remove(item);
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }

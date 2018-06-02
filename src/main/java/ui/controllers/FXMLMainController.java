@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
 
-  private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @FXML
     public Menu menuSettings;
