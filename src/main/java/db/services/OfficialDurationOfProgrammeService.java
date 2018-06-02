@@ -1,8 +1,6 @@
 package db.services;
 
 import com.j256.ormlite.dao.Dao;
-import db.entities.DurationOfStudy;
-import db.entities.ModeOfStudy;
 import db.entities.OfficialDurationOfProgramme;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +21,9 @@ public class OfficialDurationOfProgrammeService
         values.put("mode_of_study_id", modeOfStudyId);
         values.put("duration_of_study_id", durationOfStudyId);
         return getDao().queryForFieldValues(values).get(0);
+    }
+
+    public OfficialDurationOfProgramme getByName(String name) throws SQLException {
+        return getDao().queryForEq("name", name).get(0);
     }
 }

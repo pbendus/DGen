@@ -16,7 +16,7 @@ public class Main extends Application {
     public void init() throws Exception {
         super.init();
         applicationContext = new AnnotationConfigApplicationContext(AppConfig.class, DataSourceConfig.class,
-            DocConfig.class);
+                DocConfig.class);
     }
 
     @Override

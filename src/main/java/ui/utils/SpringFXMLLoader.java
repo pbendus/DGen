@@ -1,26 +1,25 @@
 package ui.utils;
 
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.util.BuilderFactory;
+import org.springframework.context.ApplicationContext;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.util.BuilderFactory;
-
-import org.springframework.context.ApplicationContext;
-
 /**
- * Class that will load an FXML file, using a Spring Application Context to 
+ * Class that will load an FXML file, using a Spring Application Context to
  * create the controllers (and optionally the instance elements in the FXML
- * itself). 
- *
+ * itself).
+ * <p>
  * It is required that an applicationContext is provided, and also required
- * that either a location or an inputStream (but not both) are provided. It 
+ * that either a location or an inputStream (but not both) are provided. It
  * is optional that a resources and/or charset is provided.
- *
+ * <p>
  * Simple usage:
  *
  * <pre>
@@ -29,7 +28,7 @@ import org.springframework.context.ApplicationContext;
  *     .location(getClass().getResource("myApp.fxml"))
  *     .load();
  * </pre>
- *
+ * <p>
  * If access to the controller is needed, a reference must be
  * kept to the SpringFXMLLoader:
  *
@@ -47,21 +46,21 @@ import org.springframework.context.ApplicationContext;
  * @param <T> The type of the controller.
  */
 
-public class SpringFXMLLoader<S,T> {
-    private final URL location ;
-    private final InputStream inputStream ;
-    private final ApplicationContext applicationContext ;
-    private final ResourceBundle resources ;
-    private final Charset charset ;
-    private T controller ;
+public class SpringFXMLLoader<S, T> {
+    private final URL location;
+    private final InputStream inputStream;
+    private final ApplicationContext applicationContext;
+    private final ResourceBundle resources;
+    private final Charset charset;
+    private T controller;
 
-    private boolean loaded ;
+    private boolean loaded;
 
     private SpringFXMLLoader(ApplicationContext applicationContext,
                              URL location, InputStream inputStream, ResourceBundle resources, Charset charset) {
         this.applicationContext = applicationContext;
         this.location = location;
-        this.inputStream = inputStream ;
+        this.inputStream = inputStream;
         this.resources = resources;
         this.charset = charset;
     }
@@ -98,11 +97,11 @@ public class SpringFXMLLoader<S,T> {
 
                     };
                 } else {
-                    return defaultFactory.getBuilder(type) ;
+                    return defaultFactory.getBuilder(type);
                 }
             }
         });
-        S root ;
+        S root;
         if (location != null) {
             root = loader.load();
         } else if (inputStream != null) {
@@ -110,16 +109,16 @@ public class SpringFXMLLoader<S,T> {
         } else {
             throw new AssertionError("SpringFXMLLoader constructed without location or input stream");
         }
-        controller = loader.getController() ;
-        loaded = true ;
-        return root ;
+        controller = loader.getController();
+        loaded = true;
+        return root;
     }
 
     public T getController() {
-        if (! loaded) {
+        if (!loaded) {
             throw new IllegalStateException("Controller is only available after loading");
         }
-        return controller ;
+        return controller;
     }
 
     public static Builder create() {
@@ -127,44 +126,44 @@ public class SpringFXMLLoader<S,T> {
     }
 
     public static class Builder {
-        private ApplicationContext applicationContext ;
-        private URL location ;
-        private InputStream inputStream ;
-        private ResourceBundle resources ;
-        private Charset charset ;
+        private ApplicationContext applicationContext;
+        private URL location;
+        private InputStream inputStream;
+        private ResourceBundle resources;
+        private Charset charset;
 
         public Builder applicationContext(ApplicationContext applicationContext) {
-            this.applicationContext = applicationContext ;
-            return this ;
+            this.applicationContext = applicationContext;
+            return this;
         }
 
         public Builder location(URL location) {
             if (inputStream != null) {
                 throw new IllegalStateException("Cannot specify location and input stream");
             }
-            this.location = location ;
-            return this ;
+            this.location = location;
+            return this;
         }
 
         public Builder inputStream(InputStream inputStream) {
             if (location != null) {
                 throw new IllegalStateException("Cannot specify location and input stream");
             }
-            this.inputStream = inputStream ;
-            return this ;
+            this.inputStream = inputStream;
+            return this;
         }
 
         public Builder resources(ResourceBundle resources) {
-            this.resources = resources ;
-            return this ;
+            this.resources = resources;
+            return this;
         }
 
         public Builder charset(Charset charset) {
-            this.charset = charset ;
-            return this ;
+            this.charset = charset;
+            return this;
         }
 
-        public <S,T> SpringFXMLLoader<S,T> build() {
+        public <S, T> SpringFXMLLoader<S, T> build() {
             if (applicationContext == null) {
                 throw new IllegalStateException("Application context not specified");
             }
@@ -172,7 +171,7 @@ public class SpringFXMLLoader<S,T> {
                 throw new IllegalStateException("Must specify exactly one of location or inputStream");
             }
             if (charset == null) {
-                charset = Charset.defaultCharset() ;
+                charset = Charset.defaultCharset();
             }
             return new SpringFXMLLoader<S, T>(applicationContext, location, inputStream, resources, charset);
         }

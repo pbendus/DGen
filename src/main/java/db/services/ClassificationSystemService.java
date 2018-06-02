@@ -8,12 +8,12 @@ import java.sql.SQLException;
 
 @Service
 public class ClassificationSystemService extends BaseServiceImpl<ClassificationSystem> {
-  public ClassificationSystemService(
-      Dao<ClassificationSystem, Integer> dao) {
-    super(dao);
-  }
+    public ClassificationSystemService(
+            Dao<ClassificationSystem, Integer> dao) {
+        super(dao);
+    }
 
-  public ClassificationSystem getByName(String name) throws SQLException {
-    return getDao().queryForEq("name", name).get(0);
-  }
+    public ClassificationSystem getByName(String name) throws SQLException {
+        return getDao().queryForEq("name", name).get(0);
+    }
 }

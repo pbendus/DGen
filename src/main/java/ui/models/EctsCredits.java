@@ -1,10 +1,6 @@
 package ui.models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class EctsCredits {
 
@@ -19,7 +15,7 @@ public class EctsCredits {
     }
 
     public EctsCredits(int id, String name,
-        DurationOfStudy durationOfStudy) {
+                       DurationOfStudy durationOfStudy) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.durationOfStudy = new SimpleObjectProperty<>(durationOfStudy);

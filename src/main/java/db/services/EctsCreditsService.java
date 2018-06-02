@@ -9,15 +9,15 @@ import java.util.HashMap;
 
 @Service
 public class EctsCreditsService
-    extends BaseServiceImpl<EctsCredits> {
-  public EctsCreditsService(
-      Dao<EctsCredits, Integer> dao) {
-    super(dao);
-  }
+        extends BaseServiceImpl<EctsCredits> {
+    public EctsCreditsService(
+            Dao<EctsCredits, Integer> dao) {
+        super(dao);
+    }
 
-  public EctsCredits getByDurationOfStudy(int durationOfStudyId) throws SQLException {
-    HashMap<String, Object> values = new HashMap<>();
-    values.put("duration_of_study_id", durationOfStudyId);
-    return getDao().queryForFieldValues(values).get(0);
-  }
+    public EctsCredits getByDurationOfStudy(int durationOfStudyId) throws SQLException {
+        HashMap<String, Object> values = new HashMap<>();
+        values.put("duration_of_study_id", durationOfStudyId);
+        return getDao().queryForFieldValues(values).get(0);
+    }
 }

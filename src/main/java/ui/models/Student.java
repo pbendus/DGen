@@ -38,11 +38,11 @@ public class Student {
     }
 
     public Student(int id, String familyName, String givenName, String familyNameTr,
-        String givenNameTr, Date dateOfBirth, Protocol protocol,
-        PreviousDocument previousDocument,
-        ModeOfStudy modeOfStudyObject,
-        DurationOfStudy durationOfStudy,
-        Group group) {
+                   String givenNameTr, Date dateOfBirth, Protocol protocol,
+                   PreviousDocument previousDocument,
+                   ModeOfStudy modeOfStudyObject,
+                   DurationOfStudy durationOfStudy,
+                   Group group) {
         this.id = new SimpleIntegerProperty(id);
         this.familyName = new SimpleStringProperty(familyName);
         this.givenName = new SimpleStringProperty(givenName);

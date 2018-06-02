@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EducationalComponentTypeService extends BaseServiceImpl<EducationalComponentType> {
-  public EducationalComponentTypeService(
-      Dao<EducationalComponentType, Integer> dao) {
-    super(dao);
-  }
+    public EducationalComponentTypeService(
+            Dao<EducationalComponentType, Integer> dao) {
+        super(dao);
+    }
 }

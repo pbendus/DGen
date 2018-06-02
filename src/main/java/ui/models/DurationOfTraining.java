@@ -17,7 +17,7 @@ public class DurationOfTraining {
     }
 
     public DurationOfTraining(int id, String name, ModeOfStudy modeOfStudy,
-        DurationOfStudy durationOfStudy) {
+                              DurationOfStudy durationOfStudy) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.modeOfStudy = new SimpleObjectProperty<>(modeOfStudy);

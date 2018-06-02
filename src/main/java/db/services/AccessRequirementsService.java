@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccessRequirementsService extends BaseServiceImpl<AccessRequirements> {
-  public AccessRequirementsService(
-      Dao<AccessRequirements, Integer> dao) {
-    super(dao);
-  }
+    public AccessRequirementsService(
+            Dao<AccessRequirements, Integer> dao) {
+        super(dao);
+    }
 }

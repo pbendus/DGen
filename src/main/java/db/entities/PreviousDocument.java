@@ -6,33 +6,33 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "previous_document")
 public class PreviousDocument {
 
-  @DatabaseField(generatedId = true, useGetSet = true)
-  private int id;
+    @DatabaseField(generatedId = true, useGetSet = true)
+    private int id;
 
-  @DatabaseField(canBeNull = false, useGetSet = true)
-  private String name;
+    @DatabaseField(canBeNull = false, useGetSet = true)
+    private String name;
 
-  public PreviousDocument() {
-  }
+    public PreviousDocument() {
+    }
 
-  public PreviousDocument(int id, String name) {
-    this.id = id;
-    this.name = name;
-  }
+    public PreviousDocument(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-  public int getId() {
-    return id;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 }
