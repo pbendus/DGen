@@ -1,5 +1,6 @@
 package ui.controllers;
 
+import db.configuration.DataSourceConfig;
 import db.entities.ClassificationSystemConst;
 import db.mapper.*;
 import db.services.*;
@@ -17,9 +18,12 @@ import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.*;
+import ui.utils.AppConfig;
 import ui.utils.SpringFXMLLoader;
 import ui.utils.Validation;
 
@@ -220,7 +224,10 @@ public class FXMLStudentController implements Initializable {
                                  EducationalComponentMapper educationalComponentMapper,
                                  DurationOfStudyMapper durationOfStudyMapper,
                                  GroupMapper groupMapper,
-                                 EctsCreditsMapper ectsCreditsMapper, StudentMapper studentMapper, DiplomaMapper diplomaMapper, DiplomaSubjectMapper diplomaSubjectMapper) {
+                                 EctsCreditsMapper ectsCreditsMapper,
+                                 StudentMapper studentMapper,
+                                 DiplomaMapper diplomaMapper,
+                                 DiplomaSubjectMapper diplomaSubjectMapper) {
         this.studentService = studentService;
         this.protocolService = protocolService;
         this.previousDocumentService = previousDocumentService;
@@ -568,6 +575,11 @@ public class FXMLStudentController implements Initializable {
                     .getByNumber(diploma.getNumber())));
             educationalComponentService.create(educationalComponentMapper.reverseMap(educationalComponent));
         }
+
+        // refresh tableview
+/*        ApplicationContext context = new AnnotationConfigApplicationContext(DataSourceConfig.class, AppConfig.class);
+        FXMLMainController fxmlMainController = (FXMLMainController) context.getBean("fxmlMainController");
+        fxmlMainController.addStudentToList(student);*/
     }
 
     private ClassificationSystem getClassificationSystem() {
@@ -583,123 +595,11 @@ public class FXMLStudentController implements Initializable {
     }
 
     private boolean validateInputs() {
-        boolean result = true;
-
-        if (!Validation.validateTextField(tfFamilyName)) {
-            tfFamilyName.setStyle(Validation.getTextFieldErrorStyle());
-            tfFamilyName.textProperty().addListener(e -> tfFamilyName.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfFamilyNameTr)) {
-            tfFamilyNameTr.setStyle(Validation.getTextFieldErrorStyle());
-            tfFamilyNameTr.textProperty().addListener(e -> tfFamilyNameTr.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfGivenName)) {
-            tfGivenName.setStyle(Validation.getTextFieldErrorStyle());
-            tfGivenName.textProperty().addListener(e -> tfGivenName.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfGivenNameTr)) {
-            tfGivenNameTr.setStyle(Validation.getTextFieldErrorStyle());
-            tfGivenNameTr.textProperty().addListener(e -> tfGivenNameTr.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfPreviousDocument)) {
-            tfPreviousDocument.setStyle(Validation.getTextFieldErrorStyle());
-            tfPreviousDocument.textProperty().addListener(e -> tfPreviousDocument.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfDiplomaSubjectUk)) {
-            tfDiplomaSubjectUk.setStyle(Validation.getTextFieldErrorStyle());
-            tfDiplomaSubjectUk.textProperty().addListener(e -> tfDiplomaSubjectUk.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfDiplomaSubjectEn)) {
-            tfDiplomaSubjectEn.setStyle(Validation.getTextFieldErrorStyle());
-            tfDiplomaSubjectEn.textProperty().addListener(e -> tfDiplomaSubjectEn.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfNumber)) {
-            tfNumber.setStyle(Validation.getTextFieldErrorStyle());
-            tfNumber.textProperty().addListener(e -> tfNumber.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfRegistrationNumber)) {
-            tfRegistrationNumber.setStyle(Validation.getTextFieldErrorStyle());
-            tfRegistrationNumber.textProperty().addListener(e -> tfRegistrationNumber.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateTextField(tfAdditionRegistrationNumber)) {
-            tfAdditionRegistrationNumber.setStyle(Validation.getTextFieldErrorStyle());
-            tfAdditionRegistrationNumber.textProperty().addListener(e -> tfAdditionRegistrationNumber.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbModeOfStudy)) {
-            cbModeOfStudy.setStyle(Validation.getComboBoxErrorStyle());
-            cbModeOfStudy.valueProperty().addListener(e -> cbModeOfStudy.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbDurationOfStudy)) {
-            cbDurationOfStudy.setStyle(Validation.getComboBoxErrorStyle());
-            cbDurationOfStudy.valueProperty().addListener(e -> cbDurationOfStudy.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbMainField)) {
-            cbMainField.setStyle(Validation.getComboBoxErrorStyle());
-            cbMainField.valueProperty().addListener(e -> cbMainField.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbFieldOfStudy)) {
-            cbFieldOfStudy.setStyle(Validation.getComboBoxErrorStyle());
-            cbFieldOfStudy.valueProperty().addListener(e -> cbFieldOfStudy.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbProtocol)) {
-            cbProtocol.setStyle(Validation.getComboBoxErrorStyle());
-            cbProtocol.valueProperty().addListener(e -> cbProtocol.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbAccessRequirements)) {
-            cbAccessRequirements.setStyle(Validation.getComboBoxErrorStyle());
-            cbAccessRequirements.valueProperty().addListener(e -> cbAccessRequirements.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateComboBox(cbGroup)) {
-            cbGroup.setStyle(Validation.getComboBoxErrorStyle());
-            cbGroup.valueProperty().addListener(e -> cbGroup.setStyle(null));
-            result = false;
-        }
-
-        if (!Validation.validateDatePicker(dpDateOfBirth)) {
-            dpDateOfBirth.setStyle(Validation.getDatePickerErrorStyle());
-            dpDateOfBirth.valueProperty().addListener(e -> dpDateOfBirth.setStyle(null));
-            return false;
-        }
-
-        if (!Validation.validateDatePicker(dpDate)) {
-            dpDate.setStyle(Validation.getDatePickerErrorStyle());
-            dpDate.valueProperty().addListener(e -> dpDate.setStyle(null));
-            return false;
-        }
-
-        return result;
+        return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
+                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfAdditionRegistrationNumber) &&
+                Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
+                        cbAccessRequirements, cbGroup) &&
+                Validation.checkData(dpDateOfBirth, dpDate);
     }
 
     private void closeWindow() {
