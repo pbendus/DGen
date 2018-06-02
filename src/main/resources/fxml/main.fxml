@@ -30,9 +30,11 @@
                   <MenuItem fx:id="menuItemProtocols" mnemonicParsing="false" text="Протоколи" />
                   <MenuItem fx:id="menuItemFieldOfStudy" mnemonicParsing="false" text="Галузь знань" />
                   <MenuItem fx:id="menuItemMainField" mnemonicParsing="false" text="Спеціальність" />
-                  <MenuItem fx:id="menuItemAccessRequirements" mnemonicParsing="false" text="Вимоги до вступу" />
+                  <MenuItem fx:id="menuItemGroups" mnemonicParsing="false" text="Групи" />
                   <MenuItem fx:id="menuItemOfficialDurationOfProgramme" mnemonicParsing="false" text="Офіційна тривалість програми" />
                   <MenuItem fx:id="menuItemDurationOfTraining" mnemonicParsing="false" text="Строки навчання у кожному ВНЗ " />
+                  <MenuItem fx:id="menuItemAccessRequirements" mnemonicParsing="false" text="Вимоги до вступу" />
+                  <MenuItem fx:id="menuItemEctsCredits" mnemonicParsing="false" text="Кредити ЄКТС " />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Допомога">
@@ -49,9 +51,9 @@
       </Label>
       <TableView fx:id="tblView" layoutX="15.0" layoutY="87.0" prefHeight="430.0" prefWidth="870.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="87.0">
         <columns>
-          <TableColumn fx:id="tblColCheckbox" maxWidth="30.0" minWidth="15.0" prefWidth="30.0" style="-fx-alignment: CENTER;" />
-            <TableColumn fx:id="tblColId" maxWidth="45.0" minWidth="15.0" prefWidth="45.0" style="-fx-alignment: CENTER;" text="№" />
-          <TableColumn fx:id="tblColStudent" editable="false" maxWidth="780.0" prefWidth="780.0" text="ПІБ" />
+          <TableColumn fx:id="tblColCheckbox" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" style="-fx-alignment: CENTER;" />
+            <TableColumn fx:id="tblColId" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" style="-fx-alignment: CENTER;" text="№" />
+          <TableColumn fx:id="tblColStudent" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="ПІБ" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

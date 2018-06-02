@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DurationOfStudyService extends BaseServiceImpl<DurationOfStudy> {
-  public DurationOfStudyService(
-      Dao<DurationOfStudy, Integer> dao) {
-    super(dao);
-  }
+    public DurationOfStudyService(
+            Dao<DurationOfStudy, Integer> dao) {
+        super(dao);
+    }
 }

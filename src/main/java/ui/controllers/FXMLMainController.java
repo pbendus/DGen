@@ -2,15 +2,7 @@ package ui.controllers;
 
 import db.mapper.StudentMapper;
 import db.services.StudentService;
-
 import doc_utils.DocWorker;
-
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,38 +22,50 @@ import ui.Main;
 import ui.models.Student;
 import ui.utils.SpringFXMLLoader;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+  private static final Logger LOGGER = LogManager.getLogger();
 
     @FXML
     public Menu menuSettings;
 
     @FXML
     public MenuItem menuItemProtocols;
-
     @FXML
-    private TableView<Student> tblView;
-
+    public MenuItem menuItemFieldOfStudy;
     @FXML
-    private TableColumn<Student, CheckBox> tblColCheckbox;
-
+    public MenuItem menuItemMainField;
     @FXML
-    private TableColumn<Student, Integer> tblColId;
-
+    public MenuItem menuItemGroups;
     @FXML
-    private TableColumn<Student, String> tblColStudent;
-
+    public MenuItem menuItemOfficialDurationOfProgramme;
     @FXML
-    private CheckBox chkboxSelectAll;
-
+    public MenuItem menuItemDurationOfTraining;
     @FXML
-    private Button btnAddStudent;
-
+    public MenuItem menuItemAccessRequirements;
+    @FXML
+    public MenuItem menuItemEctsCredits;
     @FXML
     public Button btnGenerate;
-
+    @FXML
+    private TableView<Student> tblView;
+    @FXML
+    private TableColumn<Student, CheckBox> tblColCheckbox;
+    @FXML
+    private TableColumn<Student, Integer> tblColId;
+    @FXML
+    private TableColumn<Student, String> tblColStudent;
+    @FXML
+    private CheckBox chkboxSelectAll;
+    @FXML
+    private Button btnAddStudent;
     private ObservableList<Student> studentObservableList = FXCollections.observableArrayList();
 
     private StudentMapper studentMapper;
@@ -143,7 +147,7 @@ public class FXMLMainController implements Initializable {
 
             MenuItem removeItem = new MenuItem("Delete");
             removeItem.setOnAction(e -> tblView.getItems().remove(row.getItem()));
-            
+
             contextMenu.getItems().addAll(editItem, removeItem);
 
             // only display context menu for non-null items:
@@ -159,7 +163,25 @@ public class FXMLMainController implements Initializable {
             openStudentModalWindow();
         });
         btnGenerate.setOnAction(event -> generateDocuments());
-        menuItemProtocols.setOnAction(event -> openSettingsModalWindow());
+
+        btnAddStudent.setOnAction(e -> openStudentModalWindow());
+        btnGenerate.setOnAction(event -> generateDocuments());
+        menuItemProtocols.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.PROTOCOLS));
+        menuItemGroups.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.GROUPS));
+        menuItemDurationOfTraining.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.DURATION_OF_TRAINING));
+        menuItemFieldOfStudy.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.FIELD_OF_STUDY));
+        menuItemMainField.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.MAIN_FIELD));
+        menuItemOfficialDurationOfProgramme.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.OFFICIAL_DURATION));
+        menuItemAccessRequirements.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.ACCESS_REQUIREMENTS));
+        menuItemEctsCredits.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.ECTS_CREDITS));
     }
 
     private boolean containsSelectedStudents() {
@@ -174,8 +196,9 @@ public class FXMLMainController implements Initializable {
         }
     }
 
-    private void openSettingsModalWindow() {
+    private void openSettingsModalWindow(FXMLSettingsController.Tab tab) {
         try {
+            fxmlSettingsController.setTab(tab);
             fxmlSettingsController.display();
         } catch (Exception e) {
             e.printStackTrace();

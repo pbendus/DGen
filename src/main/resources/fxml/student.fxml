@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLStudentController">
+<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLStudentController">
    <children>
       <Accordion fx:id="accordion" prefHeight="335.0" prefWidth="600.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <panes>
@@ -67,12 +67,15 @@
                      <children>
                         <TableView fx:id="tvGrades" layoutX="23.6" layoutY="24.6" prefHeight="450.0" prefWidth="869.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                           <columns>
-                            <TableColumn fx:id="tcNumber" maxWidth="45.0" minWidth="15.0" prefWidth="45.0" text="№" />
-                            <TableColumn fx:id="tcType" maxWidth="203.0000228881836" minWidth="50.0" prefWidth="201.0000228881836" text="Тип" />
-                              <TableColumn fx:id="tcName" maxWidth="515.0" minWidth="285.0" prefWidth="425.0" text="Назва дисципліни" />
-                              <TableColumn fx:id="tcCredit" maxWidth="308.0000305175781" minWidth="47.0" prefWidth="84.0" text="Кредити" />
-                              <TableColumn fx:id="tcGrade" maxWidth="367.8000305175781" minWidth="70.0" prefWidth="82.0" text="Бали" />
+                            <TableColumn fx:id="tcNumber" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="№" />
+                            <TableColumn fx:id="tcType" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="Тип" />
+                              <TableColumn fx:id="tcName" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="Назва дисципліни" />
+                              <TableColumn fx:id="tcCredit" maxWidth="84.0" minWidth="84.0" prefWidth="84.0" text="Кредити" />
+                              <TableColumn fx:id="tcGrade" maxWidth="84.0" minWidth="84.0" prefWidth="84.0" text="Бали" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </children>
                   </AnchorPane>

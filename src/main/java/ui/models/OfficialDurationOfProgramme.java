@@ -1,11 +1,6 @@
 package ui.models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class OfficialDurationOfProgramme {
 
@@ -22,8 +17,8 @@ public class OfficialDurationOfProgramme {
     }
 
     public OfficialDurationOfProgramme(int id, String name,
-        ModeOfStudy modeOfStudy,
-        DurationOfStudy durationOfStudy) {
+                                       ModeOfStudy modeOfStudy,
+                                       DurationOfStudy durationOfStudy) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.modeOfStudy = new SimpleObjectProperty<>(modeOfStudy);

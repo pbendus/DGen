@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ModeOfStudyService extends BaseServiceImpl<ModeOfStudy> {
-  public ModeOfStudyService(
-      Dao<ModeOfStudy, Integer> dao) {
-    super(dao);
-  }
+    public ModeOfStudyService(
+            Dao<ModeOfStudy, Integer> dao) {
+        super(dao);
+    }
 }
