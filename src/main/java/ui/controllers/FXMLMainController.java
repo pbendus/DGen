@@ -4,6 +4,7 @@ import db.mapper.StudentMapper;
 import db.services.StudentService;
 
 import doc_utils.DocWorker;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,10 +33,10 @@ import ui.utils.SpringFXMLLoader;
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable {
 
-  private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
-  @FXML
-  public Menu menuSettings;
+    @FXML
+    public Menu menuSettings;
 
   @FXML
   public MenuItem menuItemProtocols;
@@ -140,7 +141,11 @@ public class FXMLMainController implements Initializable {
       return row;
     });
 
-    btnAddStudent.setOnAction(e -> openStudentModalWindow());
+    btnAddStudent.setOnAction(e -> {
+      fxmlStudentController.setStudentId(0);
+      openStudentModalWindow();
+    });
+
     btnGenerate.setOnAction(event -> generateDocuments());
     menuItemProtocols.setOnAction(
         event -> openSettingsModalWindow(FXMLSettingsController.Tab.PROTOCOLS));

@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Objects;
+
 public class ClassificationSystem {
 
     private IntegerProperty id;
@@ -57,5 +59,21 @@ public class ClassificationSystem {
 
     public void setCriteria(String criteria) {
         this.criteria.set(criteria);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClassificationSystem that = (ClassificationSystem) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(criteria, that.criteria);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, criteria);
     }
 }

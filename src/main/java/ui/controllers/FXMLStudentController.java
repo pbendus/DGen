@@ -26,10 +26,17 @@ import ui.utils.Validation;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Controller("fxmlStudentController")
 public class FXMLStudentController implements Initializable {
+
+    @FXML
+    private Accordion accordion;
+
+    @FXML
+    private TitledPane tpGeneralInfo;
 
     @FXML
     private TableView<EducationalComponent> tvGrades;
@@ -123,7 +130,7 @@ public class FXMLStudentController implements Initializable {
 
     private Stage stage;
 
-    private Integer studentId;
+    private int studentId;
 
     private StudentService studentService;
     private ProtocolService protocolService;
@@ -167,11 +174,8 @@ public class FXMLStudentController implements Initializable {
     private ObservableList<Protocol> protocolObservableList = FXCollections.observableArrayList();
     private ObservableList<MainField> mainFieldObservableList = FXCollections.observableArrayList();
     private ObservableList<FieldOfStudy> fieldOfStudyObservableList = FXCollections.observableArrayList();
-    private ObservableList<OfficialDurationOfProgramme> officialDurationOfProgrammeObservableList = FXCollections
-            .observableArrayList();
     private ObservableList<AccessRequirements> accessRequirementsObservableList = FXCollections.observableArrayList();
     private ObservableList<ModeOfStudy> modeOfStudyObservableList = FXCollections.observableArrayList();
-    private ObservableList<DurationOfTraining> durationOfTrainingObservableList = FXCollections.observableArrayList();
     private ObservableList<EducationalComponentType> educationalComponentTypeObservableList = FXCollections
             .observableArrayList();
     private ObservableList<EducationalComponentTemplate> educationalComponentTemplateObservableList = FXCollections
@@ -259,12 +263,18 @@ public class FXMLStudentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        accordion.setExpandedPane(tpGeneralInfo);
         clearObservableLists();
         initializeObservableLists();
         initializeComboBoxes();
-        initializeTableView();
         setListenersOnButtons();
         setListenersOnInputs();
+
+        if (studentId != 0) {
+            setStudentInformation();
+        } else {
+            initializeTemplateTableView();
+        }
     }
 
     private void initializeComboBoxes() {
@@ -277,7 +287,73 @@ public class FXMLStudentController implements Initializable {
         cbGroup.getItems().addAll(groupObservableList);
     }
 
-    private void initializeTableView() {
+    private void setStudentInformation() {
+        Student student = null;
+        Diploma diploma = null;
+
+        try {
+            student = studentMapper.map(studentService.getById(studentId));
+            diploma = diplomaMapper.map(diplomaService.getByStudentId(studentId));
+            educationalComponentObservableList.addAll(educationalComponentMapper.map(educationalComponentService
+                    .getAllByDiplomaId(diploma.getId())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        LocalDate localDateOfBirth = student.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDate = diploma.getDateOfIssue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // set text fields
+        tfFamilyName.setText(student.getFamilyName());
+        tfGivenName.setText(student.getGivenName());
+        tfFamilyNameTr.setText(student.getFamilyNameTr());
+        tfGivenNameTr.setText(student.getGivenNameTr());
+        tfPreviousDocument.setText(student.getPreviousDocument().getName());
+        tfDiplomaSubjectUk.setText(diploma.getDiplomaSubject().getSubjectUK());
+        tfDiplomaSubjectEn.setText(diploma.getDiplomaSubject().getSubjectEN());
+        tfNumber.setText(diploma.getNumber());
+        tfRegistrationNumber.setText(diploma.getRegistrationNumber());
+        tfAdditionRegistrationNumber.setText(diploma.getAdditionRegistrationNumber());
+        taDurationOfTraining.setText(diploma.getDurationOfTraining().getName());
+
+        // set date pickers
+        dpDateOfBirth.setValue(localDateOfBirth);
+        dpDate.setValue(localDate);
+
+        // set comboboxes
+        cbModeOfStudy.getSelectionModel().select(student.getModeOfStudy());
+        cbDurationOfStudy.getSelectionModel().select(student.getDurationOfStudy());
+        cbMainField.getSelectionModel().select(diploma.getMainField());
+        cbFieldOfStudy.getSelectionModel().select(diploma.getFieldOfStudy());
+        cbGroup.getSelectionModel().select(student.getGroup());
+        cbProtocol.getSelectionModel().select(student.getProtocol());
+        cbAccessRequirements.getSelectionModel().select(diploma.getAccessRequirements());
+
+        // set checkbox
+        if (diploma.getClassificationSystem().getName().equals(ClassificationSystemConst.DIPLOMA_WITH_HONORS)) {
+            chkboxClassificationSystem.setSelected(true);
+        }
+
+        tcNumber.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tcType.setCellValueFactory(new PropertyValueFactory<>("educationalComponentType"));
+        tcName.setCellValueFactory(new PropertyValueFactory<>("courseTitle"));
+        tcCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
+        tcGrade.setCellValueFactory(new PropertyValueFactory<>("nationalScore"));
+
+        tcNumber.prefWidthProperty().bind(tvGrades.widthProperty().divide(5));
+        tcType.prefWidthProperty().bind(tvGrades.widthProperty().divide(2));
+        tcName.prefWidthProperty().bind(tvGrades.widthProperty().divide(2));
+        tcCredit.prefWidthProperty().bind(tvGrades.widthProperty().divide(12));
+        tcGrade.prefWidthProperty().bind(tvGrades.widthProperty().divide(12));
+
+        tvGrades.setItems(educationalComponentObservableList);
+
+        tvGrades.setEditable(true);
+        tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+    }
+
+    private void initializeTemplateTableView() {
 
         for (EducationalComponentTemplate educationalComponentTemplate :
                 educationalComponentTemplateObservableList) {
@@ -293,6 +369,12 @@ public class FXMLStudentController implements Initializable {
         tcName.setCellValueFactory(new PropertyValueFactory<>("courseTitle"));
         tcCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
         tcGrade.setCellValueFactory(new PropertyValueFactory<>("nationalScore"));
+
+        tcNumber.prefWidthProperty().bind(tvGrades.widthProperty().divide(5));
+        tcType.prefWidthProperty().bind(tvGrades.widthProperty().divide(2));
+        tcName.prefWidthProperty().bind(tvGrades.widthProperty().divide(2));
+        tcCredit.prefWidthProperty().bind(tvGrades.widthProperty().divide(12));
+        tcGrade.prefWidthProperty().bind(tvGrades.widthProperty().divide(12));
 
         tvGrades.setItems(educationalComponentObservableList);
 
@@ -333,7 +415,9 @@ public class FXMLStudentController implements Initializable {
     }
 
     private void setListenersOnButtons() {
-        btnCancel.setOnMouseClicked(e -> closeWindow());
+        btnCancel.setOnMouseClicked(e -> {
+            closeWindow();
+        });
         btnSave.setOnMouseClicked(e -> {
             if (validateInputs()) {
                 try {
@@ -644,7 +728,7 @@ public class FXMLStudentController implements Initializable {
         stage.showAndWait();
     }
 
-    public void setStudentId(Integer id) {
+    public void setStudentId(int id) {
         this.studentId = id;
     }
 }
