@@ -1,7 +1,9 @@
 package ui.utils;
 
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 public class Validation {
 
@@ -12,14 +14,15 @@ public class Validation {
 
     /**
      * Method checks data in ui components and sets style;
+     *
      * @param textField - components which will be checked;
      * @return - if data is correct then return true, else return false;
      */
-    public static boolean checkData(TextField... textField){
+    public static boolean checkData(TextField... textField) {
         int result = 0;
 
         for (TextField field : textField) {
-            if (field.getText().trim().length() <= 0){
+            if (field.getText().trim().length() <= 0) {
                 setStyle(field, BORDER_RED);
                 field.requestFocus();
                 field.textProperty().addListener(e -> setStyle(field, null));
@@ -31,14 +34,15 @@ public class Validation {
 
     /**
      * Method checks data in ui components and sets style;
+     *
      * @param comboBox - components which will be checked;
      * @return - if data is correct then return true, else return false;
      */
-    public static boolean checkData(ComboBox... comboBox){
+    public static boolean checkData(ComboBox... comboBox) {
         int result = 0;
 
         for (ComboBox box : comboBox) {
-            if (box.getSelectionModel().getSelectedItem() == null){
+            if (box.getSelectionModel().getSelectedItem() == null) {
                 setStyle(box, BORDER_RED);
                 box.requestFocus();
                 box.itemsProperty().addListener(e -> setStyle(box, null));
@@ -50,14 +54,15 @@ public class Validation {
 
     /**
      * Method checks data in ui components and sets style;
+     *
      * @param datePickers - components which will be checked;
      * @return - if data is correct then return true, else return false;
      */
-    public static boolean checkData(DatePicker... datePickers){
+    public static boolean checkData(DatePicker... datePickers) {
         int result = 0;
 
         for (DatePicker datePicker : datePickers) {
-            if (datePicker.getValue() == null){
+            if (datePicker.getValue() == null) {
                 setStyle(datePicker, BORDER_RED);
                 datePicker.requestFocus();
                 datePicker.valueProperty().addListener(e -> setStyle(datePicker, null));
@@ -68,10 +73,11 @@ public class Validation {
 
     /**
      * Method sets style in component node;
-     * @param node - components which will be set style;
+     *
+     * @param node  - components which will be set style;
      * @param style - style which will be used;
      */
-    private static void setStyle(Node node, String style){
+    private static void setStyle(Node node, String style) {
         node.setStyle(style);
     }
 }
