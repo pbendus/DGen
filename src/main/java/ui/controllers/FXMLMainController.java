@@ -135,6 +135,13 @@ public class FXMLMainController implements Initializable {
             final ContextMenu contextMenu = new ContextMenu();
             contextMenu.setStyle("-fx-pref-width: 200px;");
 
+            row.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2) {
+                    fxmlStudentController.setStudentId(row.getItem().getId());
+                    openStudentModalWindow();
+                }
+            });
+
             MenuItem editItem = new MenuItem("Edit");
             editItem.setOnAction(e -> {
                 fxmlStudentController.setStudentId(row.getItem().getId());
@@ -143,7 +150,7 @@ public class FXMLMainController implements Initializable {
 
             MenuItem removeItem = new MenuItem("Delete");
             removeItem.setOnAction(e -> tblView.getItems().remove(row.getItem()));
-            
+
             contextMenu.getItems().addAll(editItem, removeItem);
 
             // only display context menu for non-null items:

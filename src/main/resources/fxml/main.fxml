@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLMainController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLMainController">
    <children>
       <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -47,7 +47,7 @@
             <Font name="Verdana Bold" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="tblView" layoutX="15.0" layoutY="87.0" prefHeight="430.0" prefWidth="870.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="87.0">
+      <TableView fx:id="tblView" layoutX="15.0" layoutY="87.0" prefHeight="430.0" prefWidth="870.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="90.0">
         <columns>
           <TableColumn fx:id="tblColCheckbox" maxWidth="30.0" minWidth="15.0" prefWidth="30.0" style="-fx-alignment: CENTER;" />
             <TableColumn fx:id="tblColId" maxWidth="45.0" minWidth="15.0" prefWidth="45.0" style="-fx-alignment: CENTER;" text="№" />
@@ -57,8 +57,8 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <CheckBox fx:id="chkboxSelectAll" layoutX="15.0" layoutY="538.0" mnemonicParsing="false" text="Вибрати всі" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" />
-      <Button fx:id="btnAddStudent" layoutX="141.0" layoutY="501.0" mnemonicParsing="false" text="Додати студента" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="140.0" />
-      <Button fx:id="btnGenerate" defaultButton="true" layoutX="834.0" layoutY="501.0" mnemonicParsing="false" text="Згенерувати додатки" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="15.0" />
+      <CheckBox fx:id="chkboxSelectAll" layoutX="15.0" layoutY="538.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Вибрати всі" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" />
+      <Button fx:id="btnAddStudent" layoutX="141.0" layoutY="501.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Додати студента" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="150.0" />
+      <Button fx:id="btnGenerate" defaultButton="true" layoutX="834.0" layoutY="501.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Згенерувати додатки" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>
