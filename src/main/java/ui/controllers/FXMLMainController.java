@@ -52,6 +52,7 @@ public class FXMLMainController implements Initializable {
     public MenuItem menuItemAccessRequirements;
     @FXML
     public MenuItem menuItemEctsCredits;
+
     @FXML
     public Button btnGenerate;
     @FXML
