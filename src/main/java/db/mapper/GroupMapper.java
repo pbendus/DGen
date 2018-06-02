@@ -6,23 +6,25 @@ import ui.models.Group;
 
 @Service
 public class GroupMapper
-    extends Mapper<db.entities.Group, Group> {
+        extends Mapper<db.entities.Group, Group> {
 
-  @Autowired
-  public GroupMapper() {
-  }
+    @Autowired
+    public GroupMapper() {
+    }
 
-  @Override public Group map(db.entities.Group value) {
-    final Group group = new Group();
-    group.setId(value.getId());
-    group.setName(value.getName());
-    return group;
-  }
+    @Override
+    public Group map(db.entities.Group value) {
+        final Group group = new Group();
+        group.setId(value.getId());
+        group.setName(value.getName());
+        return group;
+    }
 
-  @Override public db.entities.Group reverseMap(Group value) {
-    final db.entities.Group group = new db.entities.Group();
-    group.setId(value.getId());
-    group.setName(value.getName());
-    return group;
-  }
+    @Override
+    public db.entities.Group reverseMap(Group value) {
+        final db.entities.Group group = new db.entities.Group();
+        group.setId(value.getId());
+        group.setName(value.getName());
+        return group;
+    }
 }

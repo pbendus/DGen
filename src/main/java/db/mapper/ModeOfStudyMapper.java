@@ -6,23 +6,25 @@ import ui.models.ModeOfStudy;
 
 @Service
 public class ModeOfStudyMapper
-    extends Mapper<db.entities.ModeOfStudy, ModeOfStudy> {
+        extends Mapper<db.entities.ModeOfStudy, ModeOfStudy> {
 
-  @Autowired
-  public ModeOfStudyMapper() {
-  }
+    @Autowired
+    public ModeOfStudyMapper() {
+    }
 
-  @Override public ModeOfStudy map(db.entities.ModeOfStudy value) {
-    final ModeOfStudy modeOfStudy = new ModeOfStudy();
-    modeOfStudy.setId(value.getId());
-    modeOfStudy.setName(value.getName());
-    return modeOfStudy;
-  }
+    @Override
+    public ModeOfStudy map(db.entities.ModeOfStudy value) {
+        final ModeOfStudy modeOfStudy = new ModeOfStudy();
+        modeOfStudy.setId(value.getId());
+        modeOfStudy.setName(value.getName());
+        return modeOfStudy;
+    }
 
-  @Override public db.entities.ModeOfStudy reverseMap(ModeOfStudy value) {
-    final db.entities.ModeOfStudy modeOfStudy = new db.entities.ModeOfStudy();
-    modeOfStudy.setId(value.getId());
-    modeOfStudy.setName(value.getName());
-    return modeOfStudy;
-  }
+    @Override
+    public db.entities.ModeOfStudy reverseMap(ModeOfStudy value) {
+        final db.entities.ModeOfStudy modeOfStudy = new db.entities.ModeOfStudy();
+        modeOfStudy.setId(value.getId());
+        modeOfStudy.setName(value.getName());
+        return modeOfStudy;
+    }
 }
