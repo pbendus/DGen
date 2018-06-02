@@ -1,6 +1,5 @@
 package ui.controllers;
 
-import db.configuration.DataSourceConfig;
 import db.entities.ClassificationSystemConst;
 import db.mapper.*;
 import db.services.*;
@@ -18,12 +17,10 @@ import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.*;
-import ui.utils.AppConfig;
+import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 import ui.utils.Validation;
 
@@ -31,7 +28,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 @Controller("fxmlStudentController")
 public class FXMLStudentController implements Initializable {
@@ -427,12 +426,22 @@ public class FXMLStudentController implements Initializable {
         });
         btnSave.setOnMouseClicked(e -> {
             if (validateInputs()) {
-                try {
-                    addStudent();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
+                if (studentId == 0) {
+                    try {
+                        addStudent();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    try {
+                        editStudent();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 closeWindow();
+            } else {
+                AlertBox.showErrorDialog("Помилка валідації", "Ви не ввели всі потрібні дані");
             }
         });
     }
@@ -508,10 +517,12 @@ public class FXMLStudentController implements Initializable {
 
     private void addStudent() throws SQLException {
 
-        // add student
-        LocalDate lc = dpDateOfBirth.getValue();
         Calendar c = Calendar.getInstance();
-        c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+        // add student
+        if (dpDateOfBirth != null) {
+            LocalDate lc = dpDateOfBirth.getValue();
+            c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+        }
         final int studentId = studentService.getAll().size() + 1;
         final String familyName = tfFamilyName.getText().trim();
         final String givenName = tfGivenName.getText().trim();
@@ -534,14 +545,15 @@ public class FXMLStudentController implements Initializable {
         studentService.create(studentMapper.reverseMap(student));
 
         // add diploma
-        LocalDate locDate = dpDate.getValue();
-        Calendar cal = Calendar.getInstance();
-        cal.set(locDate.getYear(), locDate.getMonthValue(), locDate.getDayOfMonth());
+        if (dpDate != null) {
+            LocalDate locDate = dpDate.getValue();
+            c.set(locDate.getYear(), locDate.getMonthValue(), locDate.getDayOfMonth());
+        }
         final int diplomaId = diplomaService.getAll().size() + 1;
         final String number = tfNumber.getText().trim();
         final String registrationNumber = tfRegistrationNumber.getText().trim();
         final String additionRegistrationNumber = tfAdditionRegistrationNumber.getText().trim();
-        final Date dateOfIssue = cal.getTime();
+        final Date dateOfIssue = c.getTime();
         final MainField mainField = cbMainField.getSelectionModel().getSelectedItem();
         final FieldOfStudy fieldOfStudy = cbFieldOfStudy.getSelectionModel().getSelectedItem();
         final OfficialDurationOfProgramme officialDurationOfProgramme = officialDurationOfProgrammeMapper
@@ -575,11 +587,60 @@ public class FXMLStudentController implements Initializable {
                     .getByNumber(diploma.getNumber())));
             educationalComponentService.create(educationalComponentMapper.reverseMap(educationalComponent));
         }
+    }
 
-        // refresh tableview
-/*        ApplicationContext context = new AnnotationConfigApplicationContext(DataSourceConfig.class, AppConfig.class);
-        FXMLMainController fxmlMainController = (FXMLMainController) context.getBean("fxmlMainController");
-        fxmlMainController.addStudentToList(student);*/
+    private void editStudent() throws SQLException {
+        // edit student
+        Student student = studentMapper.map(studentService.getById(studentId));
+
+        LocalDate lc = dpDateOfBirth.getValue();
+        Calendar c = Calendar.getInstance();
+        c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+        student.setFamilyName(tfFamilyName.getText().trim());
+        student.setGivenName(tfGivenName.getText().trim());
+        student.setFamilyNameTr(tfFamilyNameTr.getText().trim());
+        student.setGivenNameTr(tfGivenNameTr.getText().trim());
+        student.setDateOfBirth(c.getTime());
+        student.setProtocol(cbProtocol.getSelectionModel().getSelectedItem());
+        student.getPreviousDocument().setName(tfPreviousDocument.getText().trim());
+        student.setModeOfStudyObject(cbModeOfStudy.getSelectionModel().getSelectedItem());
+        student.setDurationOfStudy(cbDurationOfStudy.getSelectionModel().getSelectedItem());
+        student.setGroup(cbGroup.getSelectionModel().getSelectedItem());
+
+        studentService.update(studentMapper.reverseMap(student));
+
+        // edit diploma
+        Diploma diploma = diplomaMapper.map(diplomaService.getByStudentId(studentId));
+
+        LocalDate locDate = dpDate.getValue();
+        Calendar cal = Calendar.getInstance();
+        cal.set(locDate.getYear(), locDate.getMonthValue(), locDate.getDayOfMonth());
+        diploma.setNumber(tfNumber.getText().trim());
+        diploma.setRegistrationNumber(tfRegistrationNumber.getText().trim());
+        diploma.setAdditionRegistrationNumber(tfAdditionRegistrationNumber.getText().trim());
+        diploma.setDateOfIssue(cal.getTime());
+        diploma.setMainField(cbMainField.getSelectionModel().getSelectedItem());
+        diploma.setFieldOfStudy(cbFieldOfStudy.getSelectionModel().getSelectedItem());
+        diploma.setOfficialDurationOfProgramme(officialDurationOfProgrammeMapper.map(officialDurationOfProgrammeService
+                .getByModeAndDurationOfStudy(cbModeOfStudy.getSelectionModel().getSelectedItem().getId(),
+                        cbDurationOfStudy.getSelectionModel().getSelectedItem().getId())));
+        diploma.setAccessRequirements(cbAccessRequirements.getSelectionModel().getSelectedItem());
+        diploma.setEctsCredits(ectsCreditsMapper.map(ectsCreditsService.getByDurationOfStudy(cbDurationOfStudy
+                .getSelectionModel().getSelectedItem().getId())));
+        diploma.setClassificationSystem(getClassificationSystem());
+        diploma.setDurationOfTraining(durationOfTrainingMapper.map(durationOfTrainingService
+                .getByModeAndDurationOfStudy(cbModeOfStudy.getSelectionModel().getSelectedItem().getId(),
+                        cbDurationOfStudy.getSelectionModel().getSelectedItem().getId())));
+        diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectUk.getText().trim());
+        diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectEn.getText().trim());
+
+        diplomaService.update(diplomaMapper.reverseMap(diploma));
+
+        // edit educational component
+        for (int i = 0; i < educationalComponentObservableList.size(); i++) {
+            EducationalComponent educationalComponent = educationalComponentObservableList.get(i);
+            educationalComponentService.update(educationalComponentMapper.reverseMap(educationalComponent));
+        }
     }
 
     private ClassificationSystem getClassificationSystem() {
@@ -596,9 +657,9 @@ public class FXMLStudentController implements Initializable {
 
     private boolean validateInputs() {
         return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
-                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfAdditionRegistrationNumber) &&
+                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfAdditionRegistrationNumber) ||
                 Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
-                        cbAccessRequirements, cbGroup) &&
+                        cbAccessRequirements, cbGroup) ||
                 Validation.checkData(dpDateOfBirth, dpDate);
     }
 
@@ -621,8 +682,8 @@ public class FXMLStudentController implements Initializable {
         stage.setTitle("Додати студента");
 
         //setting up min width & height parameters for window
-        stage.setMinWidth(600);
-        stage.setMinHeight(450);
+        stage.setMinWidth(900);
+        stage.setMinHeight(600);
 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();

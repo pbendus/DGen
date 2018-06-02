@@ -1,7 +1,9 @@
 package ui.utils;
 
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 public class Validation {
 
@@ -26,7 +28,7 @@ public class Validation {
             }
         }
 
-        return result == textField.length;
+        return result != textField.length;
     }
 
     /**
@@ -35,17 +37,19 @@ public class Validation {
      * @return - if data is correct then return true, else return false;
      */
     public static boolean checkData(ComboBox... comboBox){
-        int result = 0;
+
+        boolean result = true;
 
         for (ComboBox box : comboBox) {
             if (box.getSelectionModel().getSelectedItem() == null){
                 setStyle(box, BORDER_RED);
                 box.requestFocus();
                 box.itemsProperty().addListener(e -> setStyle(box, null));
+                result = false;
             }
         }
 
-        return result == comboBox.length;
+        return false;
     }
 
     /**
@@ -54,16 +58,17 @@ public class Validation {
      * @return - if data is correct then return true, else return false;
      */
     public static boolean checkData(DatePicker... datePickers){
-        int result = 0;
+        boolean result = true;
 
         for (DatePicker datePicker : datePickers) {
             if (datePicker.getValue() == null){
                 setStyle(datePicker, BORDER_RED);
                 datePicker.requestFocus();
                 datePicker.valueProperty().addListener(e -> setStyle(datePicker, null));
+                result = false;
             }
         }
-        return result == datePickers.length;
+        return result;
     }
 
     /**
