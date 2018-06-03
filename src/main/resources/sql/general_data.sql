@@ -117,3 +117,56 @@ insert into "group" (name) values ('ПІт-16-4');
 insert into "group" (name) values ('ПІ-14-1');
 insert into "group" (name) values ('ПІз-14-1');
 insert into "group" (name) values ('ПІт-15-2');
+
+insert into variables (variable, description) values
+  ('diploma', 'Диплом'),
+  ('reg', 'Реєстраційний №'),
+  ('add_reg', 'Реєстраційний № додатка до диплому '),
+  ('date_of_issue', 'Дата видачі'),
+  ('date_of_issue_add', 'Дата видачі(додатково)'),
+  ('family_name', 'Прізвище'),
+  ('given_name', 'Ім’я та по батькові'),
+  ('given_name_tr', 'Прізвище(транслітерація)'),
+  ('family_name_tr', 'Ім’я та по батькові(транслітерація)'),
+  ('date_of_birth', 'Дата народження '),
+  ('main_field', 'Напрям підготовки/Спеціальність'),
+  ('field_of_study', 'Галузь знань'),
+  ('official_duration_of_programme', 'Офіційна тривалість програми'),
+  ('access_requirements', 'Вимоги до вступу '),
+  ('mode_of_study', 'Форма навчання '),
+  ('credits_gained', 'Всього кредитів ЄКТС'),
+  ('classification_system', 'Класифікація присвоєної кваліфікації'),
+  ('classification_system_description', 'Критерія'),
+  ('duration_of_training', 'Строки навчання у кожному ЗВО '),
+  ('information_on_certification', 'Інформація про атестацію '),
+  ('previous_document', 'Попередній документ'),
+  ('date', 'Дата'),
+  ('ects_credits', 'Кредит ЄКТС'),
+
+  ('component_n', '№ Дисципліни'),
+  ('component_title', 'Назва Дисципліни'),
+  ('component_credits', 'Кредити Дисципліни'),
+  ('component_score', 'Бали за національною шкалою Дисципліни'),
+  ('component_rating_point', 'Рейтинг ЄКТС Дисципліни'),
+  ('component_national_grade', 'Оцінка за національною шкалою Дисципліни'),
+
+  ('research_n', '№ Курсової роботи'),
+  ('research_title', 'Назва Курсової роботи'),
+  ('research_credits', 'Кредити Курсової роботи'),
+  ('research_score', 'Бали за національною шкалою Курсової роботи'),
+  ('research_rating_point', 'Рейтинг ЄКТС Курсової роботи'),
+  ('research_national_grade', 'Оцінка за національною шкалою Курсової роботи'),
+
+  ('internship_n', '№ Практики'),
+  ('internship_title', 'Назва Практики'),
+  ('internship_credits', 'Кредити Практики'),
+  ('internship_score', 'Бали за національною шкалою Практики'),
+  ('internship_rating_point', 'Рейтинг ЄКТС Практики'),
+  ('internship_national_grade', 'Оцінка за національною шкалою Практики'),
+
+  ('attestation_n', '№ Державного екзамену'),
+  ('attestation_title', 'Назва Державного екзамену'),
+  ('attestation_credits', 'Кредити Державного екзамену'),
+  ('attestation_score', 'Бали за національною шкалою Державного екзамену'),
+  ('attestation_rating_point', 'Рейтинг ЄКТС Державного екзамену'),
+  ('attestation_national_grade', 'Оцінка за національною шкалою Державного екзамену');

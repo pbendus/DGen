@@ -36,8 +36,8 @@ CREATE TABLE official_duration_of_programme (
 ---------------------------------------------------------------------------------
 -- Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations
 CREATE TABLE access_requirements (
-  id                   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name                 VARCHAR(255) NOT NULL
+  id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE diploma_subject (
@@ -207,3 +207,13 @@ CREATE TABLE educational_component (
   FOREIGN KEY (national_grade_id) REFERENCES national_grade (id),
   FOREIGN KEY (diploma_id) REFERENCES diploma (id)
 );
+
+---------------------------------------------------------------------------------
+-- All grades
+CREATE TABLE variables (
+  id          INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
+  variable    VARCHAR(255) NOT NULL UNIQUE,
+  description VARCHAR(255) NOT NULL
+);
+
+
