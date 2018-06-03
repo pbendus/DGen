@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.Student;
+import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 
 import java.io.File;
@@ -174,6 +175,9 @@ public class FXMLMainController implements Initializable {
                     }
                 }
             }
+
+            AlertBox.showInfoDialog("Операцію виконано успішно", "Було згенеровано додатки до ДБР " +
+                    studentObservableList.size() + " студентів");
         }
     }
 
@@ -205,7 +209,9 @@ public class FXMLMainController implements Initializable {
             });
 
             MenuItem removeItem = new MenuItem("Delete");
-            removeItem.setOnAction(e -> tblView.getItems().remove(row.getItem()));
+            removeItem.setOnAction(e -> {
+                tblView.getItems().remove(row.getItem());
+            });
 
             contextMenu.getItems().addAll(editItem, removeItem);
 
@@ -221,7 +227,23 @@ public class FXMLMainController implements Initializable {
             fxmlStudentController.setStudentId(0);
             openStudentModalWindow();
         });
-        btnGenerate.setOnAction(event -> generateDocuments());
+        btnGenerate.setOnMouseClicked(event -> {
+            boolean select = false;
+
+            for (Student student :
+                    studentObservableList) {
+                if (student.getSelect().isSelected()) {
+                    select = true;
+                }
+            }
+
+            if (select) {
+                generateDocuments();
+            } else {
+                AlertBox.showErrorDialog("Не вибрано жодного студента",
+                        "Щоб згенерувати додатки, виберіть студентів зі списку");
+            }
+        });
 
         btnAddStudent.setOnAction(e -> openStudentModalWindow());
         btnGenerate.setOnAction(event -> generateDocuments());
@@ -293,8 +315,8 @@ public class FXMLMainController implements Initializable {
         primaryStage.setTitle("Генерація додатків до дипломів");
 
         //setting up min width & height parameters for window
-        primaryStage.setMinWidth(600);
-        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(600);
 
         primaryStage.setMaximized(true);
         primaryStage.show();
