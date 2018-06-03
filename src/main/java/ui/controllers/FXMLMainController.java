@@ -2,6 +2,7 @@ package ui.controllers;
 
 import db.mapper.StudentMapper;
 import db.services.StudentService;
+import doc_utils.AppProperties;
 import doc_utils.DocWorker;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +24,7 @@ import ui.Main;
 import ui.models.Student;
 import ui.utils.SpringFXMLLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -52,6 +55,14 @@ public class FXMLMainController implements Initializable {
     public MenuItem menuItemAccessRequirements;
     @FXML
     public MenuItem menuItemEctsCredits;
+    @FXML
+    public MenuItem miChooseDB;
+    @FXML
+    public MenuItem miChooseTemplate;
+    @FXML
+    public MenuItem miChooseVariablePattern;
+    @FXML
+    public MenuItem miExit;
 
     @FXML
     public Button btnGenerate;
@@ -76,23 +87,63 @@ public class FXMLMainController implements Initializable {
     private FXMLSettingsController fxmlSettingsController;
 
     private DocWorker docWorker;
+    private Stage primaryStage;
+    private AppProperties appProperties;
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
                               FXMLStudentController fxmlStudentController, DocWorker docWorker,
-                              FXMLSettingsController fxmlSettingsController) {
+                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
         this.fxmlStudentController = fxmlStudentController;
         this.docWorker = docWorker;
         this.fxmlSettingsController = fxmlSettingsController;
+        this.appProperties = appProperties;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTableView();
         setListeners();
+        setOnMenuItemAction();
+    }
 
+    private void setOnMenuItemAction() {
+        miChooseDB.setOnAction(event -> chooseDB());
+        miChooseTemplate.setOnAction(event -> chooseTemplate());
+        miChooseVariablePattern.setOnAction(event -> chooseVariablePattern());
+        miExit.setOnAction(event -> System.exit(0));
+    }
+
+    private void chooseVariablePattern() {
+
+    }
+
+    private void chooseTemplate() {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Виберіть Шаблон");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("*.docx", "*.docx"));
+        final File file = fileChooser.showOpenDialog(primaryStage);
+
+        if (file != null) {
+            appProperties.changeInputFile(file.getPath());
+        }
+    }
+
+    private void chooseDB() {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Виберіть БД");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("*.db", "*.db"));
+        final File file = fileChooser.showOpenDialog(primaryStage);
+
+        if (file != null) {
+            appProperties.changeDB(file.getPath());
+        }
     }
 
     private void initializeTableView() {
@@ -235,6 +286,7 @@ public class FXMLMainController implements Initializable {
                 .load();
 
         Scene scene = new Scene(root);
+        this.primaryStage = primaryStage;
 
         primaryStage.setScene(scene);
 
