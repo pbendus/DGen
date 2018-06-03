@@ -16,6 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
@@ -134,6 +136,8 @@ public class FXMLStudentController implements Initializable {
     private Stage stage;
 
     private int studentId;
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private StudentService studentService;
     private ProtocolService protocolService;
@@ -305,7 +309,9 @@ public class FXMLStudentController implements Initializable {
             educationalComponentObservableList.addAll(educationalComponentMapper.map(educationalComponentService
                     .getAllByDiplomaId(diploma.getId())));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Choosing template exception",
+                    "Could not find file path", e);
         }
 
         LocalDate localDateOfBirth = student.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -418,7 +424,9 @@ public class FXMLStudentController implements Initializable {
                     .map(educationalComponentTemplateService.getAll()));
             groupObservableList.addAll(groupMapper.map(groupService.getAll()));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Initializing observable lists exception",
+                    "Could not get specific observable list from database", e);
         }
     }
 
@@ -431,19 +439,28 @@ public class FXMLStudentController implements Initializable {
                 if (studentId == 0) {
                     try {
                         addStudent();
+                        AlertBox.showInformationDialog("Операцію виконано успішно",
+                                "Інформацію про студента було успішно додано в БД");
                     } catch (SQLException e1) {
-                        e1.printStackTrace();
+                        LOGGER.error(e1.getMessage());
+                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                                "Не вдалося додати студента в БД", e1);
                     }
                 } else {
                     try {
                         editStudent();
+                        AlertBox.showInformationDialog("Операцію виконано успішно editing",
+                                "Інформація про студента була успішно оновлена");
                     } catch (SQLException e1) {
-                        e1.printStackTrace();
+                        LOGGER.error(e1.getMessage());
+                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                                "Не вдалося оновити інформацію про студента", e1);
                     }
                 }
                 closeWindow();
             } else {
-                AlertBox.showErrorDialog("Помилка валідації", "Ви не ввели всі потрібні дані");
+                AlertBox.showErrorDialog("Помилка валідації",
+                        "Введіть усі необхідні дані про студента");
             }
         });
     }
@@ -470,7 +487,9 @@ public class FXMLStudentController implements Initializable {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося отримати дані про вимоги до вступу з БД", e);
             }
         });
 
@@ -502,7 +521,9 @@ public class FXMLStudentController implements Initializable {
                 taDurationOfTraining.setText(durationOfTrainingMapper.map(durationOfTrainingService
                         .getByModeAndDurationOfStudy(modeOfStudy.getId(), durationOfStudy.getId())).getName());
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося отримати дані про тривалість навчання з БД", e);
             }
         }
     }
@@ -523,7 +544,7 @@ public class FXMLStudentController implements Initializable {
         // add student
         if (dpDateOfBirth != null) {
             LocalDate lc = dpDateOfBirth.getValue();
-            c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+            c.set(lc.getYear(), lc.getMonthValue() - 1, lc.getDayOfMonth());
         }
         final int studentId = studentService.getAll().size() + 1;
         final String familyName = tfFamilyName.getText().trim();
@@ -549,7 +570,7 @@ public class FXMLStudentController implements Initializable {
         // add diploma
         if (dpDate != null) {
             LocalDate locDate = dpDate.getValue();
-            c.set(locDate.getYear(), locDate.getMonthValue(), locDate.getDayOfMonth());
+            c.set(locDate.getYear(), locDate.getMonthValue() - 1, locDate.getDayOfMonth());
         }
         final int diplomaId = diplomaService.getAll().size() + 1;
         final String number = tfNumber.getText().trim();
@@ -599,7 +620,7 @@ public class FXMLStudentController implements Initializable {
 
         LocalDate lc = dpDateOfBirth.getValue();
         Calendar c = Calendar.getInstance();
-        c.set(lc.getYear(), lc.getMonthValue(), lc.getDayOfMonth());
+        c.set(lc.getYear(), lc.getMonthValue() - 1, lc.getDayOfMonth());
         student.setFamilyName(tfFamilyName.getText().trim());
         student.setGivenName(tfGivenName.getText().trim());
         student.setFamilyNameTr(tfFamilyNameTr.getText().trim());
@@ -618,7 +639,7 @@ public class FXMLStudentController implements Initializable {
 
         LocalDate locDate = dpDate.getValue();
         Calendar cal = Calendar.getInstance();
-        cal.set(locDate.getYear(), locDate.getMonthValue(), locDate.getDayOfMonth());
+        cal.set(locDate.getYear(), locDate.getMonthValue() - 1, locDate.getDayOfMonth());
         diploma.setNumber(tfNumber.getText().trim());
         diploma.setRegistrationNumber(tfRegistrationNumber.getText().trim());
         diploma.setAdditionRegistrationNumber(tfAdditionRegistrationNumber.getText().trim());
@@ -655,7 +676,8 @@ public class FXMLStudentController implements Initializable {
                     .getByName(ClassificationSystemConst.DIPLOMA_WITH_HONORS)) :
                     classificationSystemMapper.map(classificationSystemService.getByName(ClassificationSystemConst.DIPLOMA));
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося отримати інформацію про присвоєну класифікацію", e);
         }
 
         return null;

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.*;
+import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 import ui.utils.Validation;
 
@@ -781,7 +782,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView.setItems(list);
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося отримати дані про сервіси з БД", e);
             }
         }
 
@@ -796,7 +798,8 @@ public class FXMLSettingsController implements Initializable {
                 }
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося отримати дані про сервіси з БД", e);
             }
         }
 
@@ -808,7 +811,8 @@ public class FXMLSettingsController implements Initializable {
                 }
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося додати дані про сервіс у БД", e);
             }
         }
 
@@ -818,7 +822,8 @@ public class FXMLSettingsController implements Initializable {
                 service.update(mapper.reverseMap(item));
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося оновити дані про сервіс", e);
             }
         }
 
@@ -829,7 +834,8 @@ public class FXMLSettingsController implements Initializable {
                 }
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося видалити дані про сервіс", e);
             }
         }
     }
