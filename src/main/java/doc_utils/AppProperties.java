@@ -12,78 +12,63 @@ public class AppProperties {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
-    public void changeDB(String newDB) {
+    public void changeDB(String newDB) throws IOException {
         final Properties propertiesNew = new Properties();
         final Properties propertiesOld = new Properties();
         OutputStream output;
         InputStream input;
 
-        try {
-            input = new FileInputStream("src/main/resources/database.properties");
+        input = new FileInputStream("src/main/resources/database.properties");
 
-            propertiesOld.load(input);
+        propertiesOld.load(input);
 
-            final String connectionValue = propertiesOld.getProperty("db.checkConnectionsEveryMillis");
-            input.close();
+        final String connectionValue = propertiesOld.getProperty("db.checkConnectionsEveryMillis");
+        input.close();
 
-            output = new FileOutputStream("src/main/resources/database.properties");
-            propertiesNew.setProperty("db.databaseUrl", "jdbc:sqlite:" + newDB);
-            propertiesNew.setProperty("db.checkConnectionsEveryMillis", connectionValue);
-            propertiesNew.store(output, null);
+        output = new FileOutputStream("src/main/resources/database.properties");
+        propertiesNew.setProperty("db.databaseUrl", "jdbc:sqlite:" + newDB);
+        propertiesNew.setProperty("db.checkConnectionsEveryMillis", connectionValue);
+        propertiesNew.store(output, null);
 
-            LOGGER.info("db.databaseUrl has been changed");
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        LOGGER.info("db.databaseUrl has been changed");
     }
 
-    public void changeInputFile(String newInputFile) {
+    public void changeInputFile(String newInputFile) throws IOException {
         final Properties propertiesNew = new Properties();
         final Properties propertiesOld = new Properties();
         OutputStream output;
         InputStream input;
 
-        try {
-            input = new FileInputStream("src/main/resources/doc.properties");
-            propertiesOld.load(input);
+        input = new FileInputStream("src/main/resources/doc.properties");
+        propertiesOld.load(input);
 
-            final String pattern = propertiesOld.getProperty("doc.pattern");
-            input.close();
-            output = new FileOutputStream("src/main/resources/doc.properties");
-            propertiesNew.setProperty("doc.pattern", pattern);
-            propertiesNew.setProperty("doc.inputFilePath", newInputFile);
-            propertiesNew.store(output, null);
+        final String pattern = propertiesOld.getProperty("doc.pattern");
+        input.close();
+        output = new FileOutputStream("src/main/resources/doc.properties");
+        propertiesNew.setProperty("doc.pattern", pattern);
+        propertiesNew.setProperty("doc.inputFilePath", newInputFile);
+        propertiesNew.store(output, null);
 
-            LOGGER.info("doc.inputFilePath has been changed");
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        LOGGER.info("doc.inputFilePath has been changed");
     }
 
-    public void changePattern(String patternNew) {
+    public void changePattern(String patternNew) throws IOException {
         final Properties propertiesNew = new Properties();
         final Properties propertiesOld = new Properties();
         OutputStream output;
         InputStream input;
 
-        try {
-            input = new FileInputStream("src/main/resources/doc.properties");
+        input = new FileInputStream("src/main/resources/doc.properties");
 
-            propertiesOld.load(input);
-            final String inputFilePath = propertiesOld.getProperty("doc.inputFilePath");
-            input.close();
+        propertiesOld.load(input);
+        final String inputFilePath = propertiesOld.getProperty("doc.inputFilePath");
+        input.close();
 
-            output = new FileOutputStream("src/main/resources/doc.properties");
-            propertiesNew.setProperty("doc.pattern", patternNew);
-            propertiesNew.setProperty("doc.inputFilePath", inputFilePath);
-            propertiesNew.store(output, null);
+        output = new FileOutputStream("src/main/resources/doc.properties");
+        propertiesNew.setProperty("doc.pattern", patternNew);
+        propertiesNew.setProperty("doc.inputFilePath", inputFilePath);
+        propertiesNew.store(output, null);
 
-            LOGGER.info("doc.pattern has been changed");
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+        LOGGER.info("doc.pattern has been changed");
     }
 }

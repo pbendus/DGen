@@ -1,7 +1,9 @@
 package ui.controllers;
 
+import db.entities.Diploma;
 import db.mapper.StudentMapper;
-import db.services.StudentService;
+import db.services.*;
+import doc_utils.AppProperties;
 import doc_utils.DocWorker;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -12,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +26,7 @@ import ui.models.Student;
 import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,7 +34,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller("fxmlMainController")
-public class FXMLMainController implements Initializable {
+public class FXMLMainController implements Initializable, FXMLStudentController.StudentCallback {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -53,6 +57,14 @@ public class FXMLMainController implements Initializable {
     public MenuItem menuItemAccessRequirements;
     @FXML
     public MenuItem menuItemEctsCredits;
+    @FXML
+    public MenuItem miChooseDB;
+    @FXML
+    public MenuItem miChooseTemplate;
+    @FXML
+    public MenuItem miChooseVariablePattern;
+    @FXML
+    public MenuItem miExit;
 
     @FXML
     public Button btnGenerate;
@@ -73,27 +85,89 @@ public class FXMLMainController implements Initializable {
     private StudentMapper studentMapper;
     private StudentService studentService;
 
+    private DiplomaService diplomaService;
+    private DiplomaSubjectService diplomaSubjectService;
+    private PreviousDocumentService previousDocumentService;
+    private EducationalComponentService educationalComponentService;
+
     private FXMLStudentController fxmlStudentController;
     private FXMLSettingsController fxmlSettingsController;
 
     private DocWorker docWorker;
+    private Stage primaryStage;
+    private AppProperties appProperties;
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
+                              DiplomaService diplomaService, DiplomaSubjectService diplomaSubjectService,
+                              PreviousDocumentService previousDocumentService,
+                              EducationalComponentService educationalComponentService,
                               FXMLStudentController fxmlStudentController, DocWorker docWorker,
-                              FXMLSettingsController fxmlSettingsController) {
+                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
+        this.diplomaService = diplomaService;
+        this.diplomaSubjectService = diplomaSubjectService;
+        this.previousDocumentService = previousDocumentService;
+        this.educationalComponentService = educationalComponentService;
         this.fxmlStudentController = fxmlStudentController;
         this.docWorker = docWorker;
         this.fxmlSettingsController = fxmlSettingsController;
+        this.appProperties = appProperties;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTableView();
         setListeners();
+        setOnMenuItemAction();
+    }
 
+    private void setOnMenuItemAction() {
+        miChooseDB.setOnAction(event -> chooseDB());
+        miChooseTemplate.setOnAction(event -> chooseTemplate());
+        miChooseVariablePattern.setOnAction(event -> chooseVariablePattern());
+        miExit.setOnAction(event -> System.exit(0));
+    }
+
+    private void chooseVariablePattern() {
+
+    }
+
+    private void chooseTemplate() {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Виберіть Шаблон");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("*.docx", "*.docx"));
+        final File file = fileChooser.showOpenDialog(primaryStage);
+
+        if (file != null) {
+            try {
+                appProperties.changeInputFile(file.getPath());
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void chooseDB() {
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Виберіть БД");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("*.db", "*.db"));
+        final File file = fileChooser.showOpenDialog(primaryStage);
+
+        if (file != null) {
+            try {
+                appProperties.changeDB(file.getPath());
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initializeTableView() {
@@ -158,9 +232,7 @@ public class FXMLMainController implements Initializable {
             });
 
             MenuItem removeItem = new MenuItem("Delete");
-            removeItem.setOnAction(e -> {
-                tblView.getItems().remove(row.getItem());
-            });
+            removeItem.setOnAction(e -> deleteStudent(row.getItem()));
 
             contextMenu.getItems().addAll(editItem, removeItem);
 
@@ -194,7 +266,10 @@ public class FXMLMainController implements Initializable {
             }
         });
 
-        btnAddStudent.setOnAction(e -> openStudentModalWindow());
+        btnAddStudent.setOnAction(e -> {
+            fxmlStudentController.setStudentId(0);
+            openStudentModalWindow();
+        });
         btnGenerate.setOnAction(event -> generateDocuments());
         menuItemProtocols.setOnAction(
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.PROTOCOLS));
@@ -214,12 +289,36 @@ public class FXMLMainController implements Initializable {
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.ECTS_CREDITS));
     }
 
+    private void deleteStudent(Student student) {
+        try {
+            Diploma diploma = diplomaService.getByStudentId(student.getId());
+            if (diplomaSubjectService.delete(diploma.getDiplomaSubject().getId()) == 1 &&
+                    previousDocumentService.delete(student.getPreviousDocument().getId()) == 1 &&
+                    studentService.delete(student.getId()) == 1 &&
+                    diplomaService.delete(diploma.getId()) == 1) {
+                boolean result = true;
+                for (db.entities.EducationalComponent component :
+                        educationalComponentService.getAllByDiplomaId(diploma.getId())) {
+                    if (educationalComponentService.delete(component.getId()) != 1) {
+                        result = false;
+                    }
+                }
+                if (result) {
+                    tblView.getItems().remove(student);
+                }
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     private boolean containsSelectedStudents() {
         return studentObservableList.stream().anyMatch(student -> student.getSelect().isSelected());
     }
 
     private void openStudentModalWindow() {
         try {
+            fxmlStudentController.setStudentCallback(this);
             fxmlStudentController.display();
         } catch (Exception e) {
             e.printStackTrace();
@@ -257,6 +356,7 @@ public class FXMLMainController implements Initializable {
                 .load();
 
         Scene scene = new Scene(root);
+        this.primaryStage = primaryStage;
 
         primaryStage.setScene(scene);
 
@@ -268,5 +368,24 @@ public class FXMLMainController implements Initializable {
 
         primaryStage.setMaximized(true);
         primaryStage.show();
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        try {
+            studentObservableList.add(studentMapper.map(
+                    studentService.getByFullName(student.getFamilyName(), student.getGivenName())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        studentObservableList.forEach(student1 -> {
+            if (student.getId() == student1.getId()) {
+                studentObservableList.set(studentObservableList.indexOf(student1), student);
+            }
+        });
     }
 }
