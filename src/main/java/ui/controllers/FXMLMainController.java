@@ -147,7 +147,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 appProperties.changeInputFile(file.getPath());
             } catch (IOException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося знайти файл за вказаним шляхом", e);
             }
         }
     }
@@ -165,7 +166,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 appProperties.changeDB(file.getPath());
             } catch (IOException e) {
                 LOGGER.error(e.getMessage());
-                e.printStackTrace();
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося знайти файл за вказаним шляхом", e);
             }
         }
     }
@@ -175,7 +177,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             List<db.entities.Student> list = studentService.getAll();
             studentObservableList.addAll(studentMapper.map(list));
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося отримати інформацію про студентів з БД", e);
         }
 
         tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -186,7 +189,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     }
 
     private void generateDocuments() {
-        if (containsSelectedStudents()) {
+        if (containsSelectedStudents() && AlertBox.showConfirmationDialog("Підвердіть операцію",
+                "Ви справді бажаєте згенерувати додатки для вибраного(-их) студента(-ів)?")) {
             for (Student student :
                     studentObservableList) {
                 if (student.getSelect().isSelected()) {
@@ -194,13 +198,14 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                         docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
                     } catch (IOException | XmlException | SQLException e) {
                         LOGGER.error(e.getMessage());
-                        e.printStackTrace();
+                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                                "Не вдалося згенерувати інформацію для вибараного студента(-ів)", e);
                     }
                 }
             }
 
-            AlertBox.showInfoDialog("Операцію виконано успішно", "Було згенеровано додатки до ДБР " +
-                    studentObservableList.size() + " студентів");
+            AlertBox.showInformationDialog("Операцію виконано успішно",
+                    "Було згенеровано додатки до ДБР " + studentObservableList.size() + " студентів");
         }
     }
 
@@ -232,7 +237,11 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             });
 
             MenuItem removeItem = new MenuItem("Delete");
-            removeItem.setOnAction(e -> deleteStudent(row.getItem()));
+            removeItem.setOnAction(e -> {
+                if (AlertBox.showConfirmationDialog("Підтвердіть операцію",
+                        "Ви дійсно бажаєте видалити вибраного студента?"))
+                    deleteStudent(row.getItem());
+            });
 
             contextMenu.getItems().addAll(editItem, removeItem);
 
@@ -321,7 +330,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlStudentController.setStudentCallback(this);
             fxmlStudentController.display();
         } catch (Exception e) {
-            e.printStackTrace();
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося відкрити модальне вікно студента", e);
         }
     }
 
@@ -330,7 +340,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlSettingsController.setTab(tab);
             fxmlSettingsController.display();
         } catch (Exception e) {
-            e.printStackTrace();
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося відкрити модальне вікно студента", e);
         }
     }
 
@@ -376,7 +387,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             studentObservableList.add(studentMapper.map(
                     studentService.getByFullName(student.getFamilyName(), student.getGivenName())));
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося додати студента у БД", e);
         }
     }
 
