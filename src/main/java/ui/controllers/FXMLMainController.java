@@ -143,7 +143,12 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         final File file = fileChooser.showOpenDialog(primaryStage);
 
         if (file != null) {
-            appProperties.changeInputFile(file.getPath());
+            try {
+                appProperties.changeInputFile(file.getPath());
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -156,7 +161,12 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         final File file = fileChooser.showOpenDialog(primaryStage);
 
         if (file != null) {
-            appProperties.changeDB(file.getPath());
+            try {
+                appProperties.changeDB(file.getPath());
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
