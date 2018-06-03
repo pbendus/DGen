@@ -189,6 +189,8 @@ public class FXMLStudentController implements Initializable {
             .observableArrayList();
     private ObservableList<Group> groupObservableList = FXCollections.observableArrayList();
 
+    private StudentCallback studentCallback;
+
     @Autowired
     public FXMLStudentController(StudentService studentService,
                                  ProtocolService protocolService,
@@ -587,6 +589,8 @@ public class FXMLStudentController implements Initializable {
                     .getByNumber(diploma.getNumber())));
             educationalComponentService.create(educationalComponentMapper.reverseMap(educationalComponent));
         }
+
+        studentCallback.addStudent(student);
     }
 
     private void editStudent() throws SQLException {
@@ -641,6 +645,8 @@ public class FXMLStudentController implements Initializable {
             EducationalComponent educationalComponent = educationalComponentObservableList.get(i);
             educationalComponentService.update(educationalComponentMapper.reverseMap(educationalComponent));
         }
+
+        studentCallback.updateStudent(student);
     }
 
     private ClassificationSystem getClassificationSystem() {
@@ -689,7 +695,17 @@ public class FXMLStudentController implements Initializable {
         stage.showAndWait();
     }
 
-    public void setStudentId(int id) {
+    void setStudentId(int id) {
         this.studentId = id;
+    }
+
+    void setStudentCallback(StudentCallback studentCallback) {
+        this.studentCallback = studentCallback;
+    }
+
+    public interface StudentCallback {
+        void addStudent(Student student);
+
+        void updateStudent(Student student);
     }
 }

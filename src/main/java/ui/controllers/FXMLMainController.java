@@ -1,7 +1,8 @@
 package ui.controllers;
 
+import db.entities.Diploma;
 import db.mapper.StudentMapper;
-import db.services.StudentService;
+import db.services.*;
 import doc_utils.AppProperties;
 import doc_utils.DocWorker;
 import javafx.beans.binding.Bindings;
@@ -33,7 +34,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller("fxmlMainController")
-public class FXMLMainController implements Initializable {
+public class FXMLMainController implements Initializable, FXMLStudentController.StudentCallback {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -84,6 +85,11 @@ public class FXMLMainController implements Initializable {
     private StudentMapper studentMapper;
     private StudentService studentService;
 
+    private DiplomaService diplomaService;
+    private DiplomaSubjectService diplomaSubjectService;
+    private PreviousDocumentService previousDocumentService;
+    private EducationalComponentService educationalComponentService;
+
     private FXMLStudentController fxmlStudentController;
     private FXMLSettingsController fxmlSettingsController;
 
@@ -93,10 +99,17 @@ public class FXMLMainController implements Initializable {
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
+                              DiplomaService diplomaService, DiplomaSubjectService diplomaSubjectService,
+                              PreviousDocumentService previousDocumentService,
+                              EducationalComponentService educationalComponentService,
                               FXMLStudentController fxmlStudentController, DocWorker docWorker,
                               FXMLSettingsController fxmlSettingsController, AppProperties appProperties) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
+        this.diplomaService = diplomaService;
+        this.diplomaSubjectService = diplomaSubjectService;
+        this.previousDocumentService = previousDocumentService;
+        this.educationalComponentService = educationalComponentService;
         this.fxmlStudentController = fxmlStudentController;
         this.docWorker = docWorker;
         this.fxmlSettingsController = fxmlSettingsController;
@@ -209,9 +222,7 @@ public class FXMLMainController implements Initializable {
             });
 
             MenuItem removeItem = new MenuItem("Delete");
-            removeItem.setOnAction(e -> {
-                tblView.getItems().remove(row.getItem());
-            });
+            removeItem.setOnAction(e -> deleteStudent(row.getItem()));
 
             contextMenu.getItems().addAll(editItem, removeItem);
 
@@ -245,7 +256,10 @@ public class FXMLMainController implements Initializable {
             }
         });
 
-        btnAddStudent.setOnAction(e -> openStudentModalWindow());
+        btnAddStudent.setOnAction(e -> {
+            fxmlStudentController.setStudentId(0);
+            openStudentModalWindow();
+        });
         btnGenerate.setOnAction(event -> generateDocuments());
         menuItemProtocols.setOnAction(
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.PROTOCOLS));
@@ -265,12 +279,36 @@ public class FXMLMainController implements Initializable {
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.ECTS_CREDITS));
     }
 
+    private void deleteStudent(Student student) {
+        try {
+            Diploma diploma = diplomaService.getByStudentId(student.getId());
+            if (diplomaSubjectService.delete(diploma.getDiplomaSubject().getId()) == 1 &&
+                    previousDocumentService.delete(student.getPreviousDocument().getId()) == 1 &&
+                    studentService.delete(student.getId()) == 1 &&
+                    diplomaService.delete(diploma.getId()) == 1) {
+                boolean result = true;
+                for (db.entities.EducationalComponent component :
+                        educationalComponentService.getAllByDiplomaId(diploma.getId())) {
+                    if (educationalComponentService.delete(component.getId()) != 1) {
+                        result = false;
+                    }
+                }
+                if (result) {
+                    tblView.getItems().remove(student);
+                }
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     private boolean containsSelectedStudents() {
         return studentObservableList.stream().anyMatch(student -> student.getSelect().isSelected());
     }
 
     private void openStudentModalWindow() {
         try {
+            fxmlStudentController.setStudentCallback(this);
             fxmlStudentController.display();
         } catch (Exception e) {
             e.printStackTrace();
@@ -320,5 +358,24 @@ public class FXMLMainController implements Initializable {
 
         primaryStage.setMaximized(true);
         primaryStage.show();
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        try {
+            studentObservableList.add(studentMapper.map(
+                    studentService.getByFullName(student.getFamilyName(), student.getGivenName())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        studentObservableList.forEach(student1 -> {
+            if (student.getId() == student1.getId()) {
+                studentObservableList.set(studentObservableList.indexOf(student1), student);
+            }
+        });
     }
 }
