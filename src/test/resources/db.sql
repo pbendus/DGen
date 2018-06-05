@@ -4,27 +4,27 @@
 -- Information technologies (translate)
 CREATE TABLE field_of_study (
   id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Software Engineering
 CREATE TABLE main_field (
   id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 
 ---------------------------------------------------------------------------------
 --  1 year 4 months of full-time study (90 ECTS credits)
 CREATE TABLE official_duration_of_programme (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 
 ---------------------------------------------------------------------------------
 -- Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations
 CREATE TABLE access_requirements (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE diploma_subject (
@@ -35,20 +35,20 @@ CREATE TABLE diploma_subject (
 
 CREATE TABLE previous_document (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name TEXT    NOT NULL
+  nameUk TEXT    NOT NULL
 );
 
 ---------------------------------------------------------------------------------
 -- Full time
 CREATE TABLE mode_of_study (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 ---------------------------------------------------------------------------------
 -- Overall classification of the qualification
 CREATE TABLE classification_system (
   id       INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name    VARCHAR(255) NOT NULL UNIQUE,
+  nameUk    VARCHAR(255) NOT NULL UNIQUE,
   criteria VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE classification_system (
 --  INFORMATION ABOUT ACADEMIC AND PROFESSIONAL RIGHTS
 CREATE TABLE professional_status (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name TEXT    NOT NULL UNIQUE
+  nameUk TEXT    NOT NULL UNIQUE
 );
 
 ---------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ CREATE TABLE protocol (
 -- DURATION OF TRAINING
 CREATE TABLE duration_of_training (
   id               INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name            VARCHAR(255) NOT NULL,
+  nameUk            VARCHAR(255) NOT NULL,
   mode_of_study_id INTEGER      NOT NULL
 );
 
@@ -133,19 +133,19 @@ CREATE TABLE diploma (
 -- A, B, C, D, E, FX, F
 CREATE TABLE rating_point (
   id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name CHAR(2) NOT NULL UNIQUE
+  nameUk CHAR(2) NOT NULL UNIQUE
 );
 
 --
 CREATE TABLE national_grade (
   id    INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Courses, Research Projects, Internship, State attestation
 CREATE TABLE educational_component_type (
   id   INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL UNIQUE
+  nameUk VARCHAR(255) NOT NULL UNIQUE
 );
 ---------------------------------------------------------------------------------
 -- All grades

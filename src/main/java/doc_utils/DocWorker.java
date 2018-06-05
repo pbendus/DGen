@@ -455,7 +455,7 @@ public class DocWorker {
                 break;
             case PREVIOUS_DOCUMENT:
                 changeParagraph(docVariable.getParagraph(),
-                        diploma.getStudent().getPreviousDocument().getName(), true);
+                        diploma.getStudent().getPreviousDocument().getNameUk(), true);
                 break;
             case ECTS_CREDITS:
                 changeParagraph(docVariable.getParagraph(),

@@ -49,7 +49,7 @@
       </MenuBar>
       <Label fx:id="lblHeader" layoutX="15.0" layoutY="40.0" text="Студенти" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="40.0">
          <font>
-            <Font name="Verdana Bold" size="24.0" />
+             <Font nameUk="Verdana Bold" size="24.0"/>
          </font>
       </Label>
       <TableView fx:id="tblView" layoutX="15.0" layoutY="87.0" prefHeight="430.0" prefWidth="870.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="90.0">

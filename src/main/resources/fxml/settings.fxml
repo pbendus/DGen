@@ -23,12 +23,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця протоколів" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="12.0" layoutY="234.0" text="Додати протокол" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="12.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameUKProtocol" layoutX="11.0" layoutY="262.0" prefHeight="30.0" prefWidth="220.0" promptText="Назва українською" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="11.0" />
@@ -55,12 +55,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця галузь знань" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" prefHeight="20.0" prefWidth="206.0" text="Додати галузь знань" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameFieldOfStudy" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="123.0" />
@@ -84,12 +84,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця спеціальність" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" prefHeight="20.0" prefWidth="206.0" text="Додати спеціальність" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameMainField" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="123.0" />
@@ -113,12 +113,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця групи" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" prefHeight="20.0" prefWidth="206.0" text="Додати групу" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameGroups" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="469.0" promptText="Назва " AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="123.0" />
@@ -144,12 +144,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Таблиця офіційна тривалість програми" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" text="Додати  тривалість програми" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameOfficialDuration" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="130.0" promptText="Тривалість програми " AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0" />
@@ -177,12 +177,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Строки навчання у кожному ВНЗ " AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" text="Додати строки навчання" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameDurationOfTraining" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="130.0" promptText="Строки навчання" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0" />
@@ -209,12 +209,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Кредити ЄКТС " AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" text="Додати кредит ЄКТС" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <TextField fx:id="tfNameEctsCredits" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="275.0" promptText="Назва" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="317.0" />
@@ -239,12 +239,12 @@
                         </TableView>
                         <Label layoutX="9.0" layoutY="10.0" text="Вимоги до вступу" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                         <Label layoutX="9.0" layoutY="241.0" text="Додати вимоги до вступу" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                               <Font nameUk="System Bold" size="14.0"/>
                            </font>
                         </Label>
                          <TextField fx:id="tfNameAccessRequirements" layoutX="8.0" layoutY="269.0" prefHeight="30.0"

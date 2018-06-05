@@ -8,16 +8,18 @@ import javafx.beans.property.StringProperty;
 public class PreviousDocument {
 
     private IntegerProperty id;
-    private StringProperty name;
+    private StringProperty nameUk;
+    private StringProperty nameEn;
 
     public PreviousDocument() {
         this.id = new SimpleIntegerProperty();
-        this.name = new SimpleStringProperty();
+        this.nameUk = new SimpleStringProperty();
     }
 
-    public PreviousDocument(int id, String name) {
+    public PreviousDocument(int id, String nameUk, String nameEn) {
         this.id = new SimpleIntegerProperty(id);
-        this.name = new SimpleStringProperty(name);
+        this.nameUk = new SimpleStringProperty(nameUk);
+        this.nameEn = new SimpleStringProperty(nameEn);
     }
 
     public int getId() {
@@ -32,20 +34,32 @@ public class PreviousDocument {
         this.id.set(id);
     }
 
-    public String getName() {
-        return name.get();
+    public String getNameUk() {
+        return nameUk.get();
     }
 
-    public StringProperty nameProperty() {
-        return name;
+    public void setNameUk(String nameUk) {
+        this.nameUk.set(nameUk);
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    public StringProperty nameUkProperty() {
+        return nameUk;
+    }
+
+    public String getNameEn() {
+        return nameEn.get();
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn.set(nameEn);
+    }
+
+    public StringProperty nameEnProperty() {
+        return nameEn;
     }
 
     @Override
     public String toString() {
-        return name.get();
+        return nameUk.get();
     }
 }
