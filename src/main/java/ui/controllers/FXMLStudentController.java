@@ -624,6 +624,7 @@ public class FXMLStudentController implements Initializable {
         student.setDateOfBirth(c.getTime());
         student.setProtocol(cbProtocol.getSelectionModel().getSelectedItem());
         student.getPreviousDocument().setName(tfPreviousDocument.getText().trim());
+        previousDocumentService.update(previousDocumentMapper.reverseMap(student.getPreviousDocument()));
         student.setModeOfStudyObject(cbModeOfStudy.getSelectionModel().getSelectedItem());
         student.setDurationOfStudy(cbDurationOfStudy.getSelectionModel().getSelectedItem());
         student.setGroup(cbGroup.getSelectionModel().getSelectedItem());
@@ -654,6 +655,7 @@ public class FXMLStudentController implements Initializable {
                         cbDurationOfStudy.getSelectionModel().getSelectedItem().getId())));
         diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectUk.getText().trim());
         diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectEn.getText().trim());
+        diplomaSubjectService.update(diplomaSubjectMapper.reverseMap(diploma.getDiplomaSubject()));
 
         diplomaService.update(diplomaMapper.reverseMap(diploma));
 
