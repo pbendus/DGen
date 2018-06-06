@@ -19,3 +19,4 @@ DROP TABLE IF EXISTS national_grade;
 DROP TABLE IF EXISTS educational_component_type;
 DROP TABLE IF EXISTS educational_component_template;
 DROP TABLE IF EXISTS educational_component;
+DROP TABLE IF EXISTS variables;

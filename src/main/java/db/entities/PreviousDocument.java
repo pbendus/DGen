@@ -12,12 +12,16 @@ public class PreviousDocument {
     @DatabaseField(canBeNull = false, useGetSet = true)
     private String name;
 
+    @DatabaseField(canBeNull = false, useGetSet = true, columnName = "name_en")
+    private String nameEN;
+
     public PreviousDocument() {
     }
 
-    public PreviousDocument(int id, String name) {
+    public PreviousDocument(int id, String name, String nameEN) {
         this.id = id;
         this.name = name;
+        this.nameEN = nameEN;
     }
 
     public int getId() {
@@ -34,5 +38,13 @@ public class PreviousDocument {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNameEN() {
+        return nameEN;
+    }
+
+    public void setNameEN(String nameEN) {
+        this.nameEN = nameEN;
     }
 }

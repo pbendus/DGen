@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -451,7 +452,7 @@ public class DocWorker {
                         true);
                 break;
             case INFORMATION_ON_CERTIFICATION:
-                changeParagraph(docVariable.getParagraph(), diploma.getInformationOnCertification(), false);
+                changeParagraph(docVariable.getParagraph(), diploma.getInformationOnCertification(), true);
                 break;
             case PREVIOUS_DOCUMENT:
                 changeParagraph(docVariable.getParagraph(),
@@ -485,5 +486,11 @@ public class DocWorker {
 
         LOGGER.info(String.format("Paragraph{%s} has been changed, value(%s)", paragraph, value));
         //Todo split value("/") and add new line with second value
+    }
+
+    public void openFile(String file) throws IOException {
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().open(new File(file));
+        }
     }
 }

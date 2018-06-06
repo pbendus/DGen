@@ -6,10 +6,10 @@ INSERT INTO diploma_subject (subject_uk, subject_en)
 VALUES ('«Розробка WEB-базованого програмного забезпечення для покращення роботи готельного бізнесу»',
         '«Development of WEB-based software for improvement of hotel business»');
 -----------------------------------------------------------------------------------------------------
-INSERT INTO previous_document (name)
-VALUES ('Диплом бакалавра / Bachelor’s Diploma B16 № 197185');
-INSERT INTO previous_document (name)
-VALUES ('Диплом бакалавра / Bachelor’s Diploma B17 № 197185');
+INSERT INTO previous_document (name, name_en)
+VALUES ('Диплом бакалавра', 'Bachelor’s Diploma B16 № 197185');
+INSERT INTO previous_document (name, name_en)
+VALUES ('Диплом бакалавра', ' Bachelor’s Diploma B17 № 197185');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO protocol (name_uk, name_en)
 VALUES ('(протокол №2 від 20/12/2017)', '(protocol №2 dated 20/12/2017)');

@@ -17,6 +17,7 @@ public class PreviousDocumentMapper
         final PreviousDocument previousDocument = new PreviousDocument();
         previousDocument.setId(value.getId());
         previousDocument.setName(value.getName());
+        previousDocument.setNameEN(value.getNameEN());
         return previousDocument;
     }
 
@@ -25,6 +26,7 @@ public class PreviousDocumentMapper
         final db.entities.PreviousDocument previousDocument = new db.entities.PreviousDocument();
         previousDocument.setId(value.getId());
         previousDocument.setName(value.getName());
+        previousDocument.setNameEN(value.getNameEN());
         return previousDocument;
     }
 }

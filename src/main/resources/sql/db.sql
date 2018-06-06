@@ -47,8 +47,9 @@ CREATE TABLE diploma_subject (
 );
 
 CREATE TABLE previous_document (
-  id   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name TEXT    NOT NULL
+  id      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name    TEXT    NOT NULL,
+  name_en TEXT    NOT NULL
 );
 
 ---------------------------------------------------------------------------------
@@ -109,7 +110,7 @@ CREATE TABLE student (
   family_name_tr       VARCHAR(255) NOT NULL,
   given_name_tr        VARCHAR(255) NOT NULL,
   date_of_birth        DATE         NOT NULL,
-  protocol_id          INTEGER      NOT NULL,
+  protocol_id          INTEGER      NULL,
   previous_document_id INTEGER      NOT NULL,
   mode_of_study_id     INTEGER      NOT NULL,
   duration_of_study_id INTEGER      NOT NULL,
@@ -135,9 +136,9 @@ CREATE TABLE ects_credits (
 -- Diploma
 CREATE TABLE diploma (
   id                                INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  number                            VARCHAR(255) NOT NULL UNIQUE,
-  registration_number               VARCHAR(255) NOT NULL,
-  addition_registration_number      VARCHAR(255) NOT NULL,
+  number                            VARCHAR(255) NULL UNIQUE,
+  registration_number               VARCHAR(255) NULL,
+  addition_registration_number      VARCHAR(255) NULL,
   ects_credits_id                   VARCHAR(255) NOT NULL,
   date_of_issue                     DATE         NOT NULL,
   student_id                        INTEGER      NOT NULL UNIQUE,
