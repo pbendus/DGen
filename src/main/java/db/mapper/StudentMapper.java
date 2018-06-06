@@ -34,7 +34,7 @@ public class StudentMapper
         student.setGivenName(value.getGivenName());
         student.setGivenNameTr(value.getGivenNameTr());
         student.setDateOfBirth(value.getDateOfBirth());
-        student.setProtocol(protocolMapper.map(value.getProtocol()));
+        student.setProtocol(value.getProtocol() == null ? null : protocolMapper.map(value.getProtocol()));
         student.setPreviousDocument(previousDocumentMapper.map(value.getPreviousDocument()));
         student.setModeOfStudyObject(modeOfStudyMapper.map(value.getModeOfStudy()));
         student.setDurationOfStudy(durationOfStudyMapper.map(value.getDurationOfStudy()));
@@ -51,7 +51,7 @@ public class StudentMapper
         student.setGivenName(value.getGivenName());
         student.setGivenNameTr(value.getGivenNameTr());
         student.setDateOfBirth(value.getDateOfBirth());
-        student.setProtocol(protocolMapper.reverseMap(value.getProtocol()));
+        student.setProtocol(value.getProtocol() == null ? null : protocolMapper.reverseMap(value.getProtocol()));
         student.setPreviousDocument(previousDocumentMapper.reverseMap(value.getPreviousDocument()));
         student.setModeOfStudy(modeOfStudyMapper.reverseMap(value.getModeOfStudy()));
         student.setDurationOfStudy(durationOfStudyMapper.reverseMap(value.getDurationOfStudy()));

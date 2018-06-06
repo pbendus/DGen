@@ -9,15 +9,18 @@ public class PreviousDocument {
 
     private IntegerProperty id;
     private StringProperty name;
+    private StringProperty nameEN;
 
     public PreviousDocument() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
+        this.nameEN = new SimpleStringProperty();
     }
 
-    public PreviousDocument(int id, String name) {
+    public PreviousDocument(int id, String name, String nameEN) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
+        this.nameEN = new SimpleStringProperty(nameEN);
     }
 
     public int getId() {
@@ -47,5 +50,17 @@ public class PreviousDocument {
     @Override
     public String toString() {
         return name.get();
+    }
+
+    public String getNameEN() {
+        return nameEN.get();
+    }
+
+    public void setNameEN(String nameEN) {
+        this.nameEN.set(nameEN);
+    }
+
+    public StringProperty nameENProperty() {
+        return nameEN;
     }
 }

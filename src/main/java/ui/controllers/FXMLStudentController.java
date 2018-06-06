@@ -89,6 +89,9 @@ public class FXMLStudentController implements Initializable {
     private TextField tfPreviousDocument;
 
     @FXML
+    private TextField tfPreviousDocumentEn;
+
+    @FXML
     private TextArea taDurationOfTraining;
 
     @FXML
@@ -320,6 +323,7 @@ public class FXMLStudentController implements Initializable {
         tfFamilyNameTr.setText(student.getFamilyNameTr());
         tfGivenNameTr.setText(student.getGivenNameTr());
         tfPreviousDocument.setText(student.getPreviousDocument().getName());
+        tfPreviousDocumentEn.setText(student.getPreviousDocument().getNameEN());
         tfDiplomaSubjectUk.setText(diploma.getDiplomaSubject().getSubjectUK());
         tfDiplomaSubjectEn.setText(diploma.getDiplomaSubject().getSubjectEN());
         tfNumber.setText(diploma.getNumber());
@@ -427,9 +431,7 @@ public class FXMLStudentController implements Initializable {
     }
 
     private void setListenersOnButtons() {
-        btnCancel.setOnMouseClicked(e -> {
-            closeWindow();
-        });
+        btnCancel.setOnMouseClicked(e -> closeWindow());
         btnSave.setOnMouseClicked(e -> {
             if (validateInputs()) {
                 if (studentId == 0) {
@@ -550,7 +552,7 @@ public class FXMLStudentController implements Initializable {
         final Date dateOfBirth = c.getTime();
         final Protocol protocol = cbProtocol.getSelectionModel().getSelectedItem();
         final PreviousDocument previousDocument = new PreviousDocument(previousDocumentService.getAll().size() + 1,
-                tfPreviousDocument.getText().trim());
+                tfPreviousDocument.getText().trim(), tfPreviousDocumentEn.getText().trim());
         final ModeOfStudy modeOfStudy = cbModeOfStudy.getSelectionModel().getSelectedItem();
         final DurationOfStudy durationOfStudy = cbDurationOfStudy.getSelectionModel().getSelectedItem();
         final Group group = cbGroup.getSelectionModel().getSelectedItem();
@@ -624,6 +626,7 @@ public class FXMLStudentController implements Initializable {
         student.setDateOfBirth(c.getTime());
         student.setProtocol(cbProtocol.getSelectionModel().getSelectedItem());
         student.getPreviousDocument().setName(tfPreviousDocument.getText().trim());
+        student.getPreviousDocument().setNameEN(tfPreviousDocumentEn.getText().trim());
         previousDocumentService.update(previousDocumentMapper.reverseMap(student.getPreviousDocument()));
         student.setModeOfStudyObject(cbModeOfStudy.getSelectionModel().getSelectedItem());
         student.setDurationOfStudy(cbDurationOfStudy.getSelectionModel().getSelectedItem());
@@ -683,9 +686,9 @@ public class FXMLStudentController implements Initializable {
 
     private boolean validateInputs() {
         return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
-                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfRegistrationNumber) ||
+                tfPreviousDocumentEn, tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber) &&
                 Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
-                        cbAccessRequirements, cbGroup) ||
+                        cbAccessRequirements, cbGroup) &&
                 Validation.checkData(dpDateOfBirth, dpDate);
     }
 

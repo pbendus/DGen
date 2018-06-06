@@ -3,7 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLSettingsController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+            fx:controller="ui.controllers.FXMLSettingsController">
    <children>
       <TabPane fx:id="tabPane" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -154,8 +156,12 @@
                         </Label>
                         <TextField fx:id="tfNameOfficialDuration" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="130.0" promptText="Тривалість програми " AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0" />
                         <Button fx:id="btnAddOfficialDuration" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <ComboBox fx:id="cbModeOfStudyOD" layoutX="157.0" layoutY="272.0" prefWidth="150.0" promptText="mode_of_study" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="293.0" />
-                        <ComboBox fx:id="cbDurationOfStudyOD" layoutX="327.0" layoutY="272.0" prefWidth="150.0" promptText="duration_of_study" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="123.0" />
+                         <ComboBox fx:id="cbModeOfStudyOD" layoutX="157.0" layoutY="272.0" prefWidth="150.0"
+                                   promptText="Форма навчання" AnchorPane.bottomAnchor="14.0"
+                                   AnchorPane.rightAnchor="293.0"/>
+                         <ComboBox fx:id="cbDurationOfStudyOD" layoutX="327.0" layoutY="272.0" prefWidth="150.0"
+                                   promptText="Тип навчання" AnchorPane.bottomAnchor="14.0"
+                                   AnchorPane.rightAnchor="123.0"/>
                      </children>
                   </AnchorPane>
                </content>
@@ -187,8 +193,12 @@
                         </Label>
                         <TextField fx:id="tfNameDurationOfTraining" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="130.0" promptText="Строки навчання" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0" />
                         <Button fx:id="btnAddDurationOfTraining" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <ComboBox fx:id="cbModeOfStudyDoT" layoutX="157.0" layoutY="272.0" prefWidth="150.0" promptText="mode_of_study" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="293.0" />
-                        <ComboBox fx:id="cbDurationOfStudyDoT" layoutX="327.0" layoutY="272.0" prefWidth="150.0" promptText="duration_of_study" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="123.0" />
+                         <ComboBox fx:id="cbModeOfStudyDoT" layoutX="157.0" layoutY="272.0" prefWidth="150.0"
+                                   promptText="Форма навчання" AnchorPane.bottomAnchor="14.0"
+                                   AnchorPane.rightAnchor="293.0"/>
+                         <ComboBox fx:id="cbDurationOfStudyDoT" layoutX="327.0" layoutY="272.0" prefWidth="150.0"
+                                   promptText="Тип навчання" AnchorPane.bottomAnchor="14.0"
+                                   AnchorPane.rightAnchor="123.0"/>
                      </children>
                   </AnchorPane>
                </content>
@@ -219,7 +229,9 @@
                         </Label>
                         <TextField fx:id="tfNameEctsCredits" layoutX="8.0" layoutY="269.0" prefHeight="30.0" prefWidth="275.0" promptText="Назва" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="317.0" />
                         <Button fx:id="btnAddEctsCredits" defaultButton="true" layoutX="491.0" layoutY="269.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <ComboBox fx:id="cbDurationOfStudyEctsCredits" layoutX="327.0" layoutY="272.0" prefHeight="25.0" prefWidth="182.0" promptText="duration_of_study" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="123.0" />
+                         <ComboBox fx:id="cbDurationOfStudyEctsCredits" layoutX="327.0" layoutY="272.0"
+                                   prefHeight="25.0" prefWidth="182.0" promptText="Тип навчання"
+                                   AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="123.0"/>
                      </children>
                   </AnchorPane>
                </content>

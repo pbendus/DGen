@@ -58,3 +58,7 @@ INSERT INTO educational_component_template(educational_component_type_id, course
 INSERT INTO educational_component_template(educational_component_type_id, course_title, credits) VALUES (3, 'Виробнича практика  / Field Internship',9);
 INSERT INTO educational_component_template(educational_component_type_id, course_title, credits) VALUES (3, 'Переддипломна практика / Pre-Diploma Internship',6);
 INSERT INTO educational_component_template(educational_component_type_id, course_title, credits) VALUES (4, 'Дипломна робота бакалавра / Bachelor’s Diploma Work',9);
+INSERT INTO educational_component_template (educational_component_type_id, course_title, credits)
+VALUES (1, 'Військова підготовка / Military Training', 16);
+INSERT INTO educational_component_template (educational_component_type_id, course_title, credits)
+VALUES (2, 'Військова підготовка / Military Training', 3);

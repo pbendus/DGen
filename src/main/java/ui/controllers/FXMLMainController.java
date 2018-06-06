@@ -189,13 +189,18 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     }
 
     private void generateDocuments() {
+        long size = studentObservableList.stream().filter(student -> student.getSelect().isSelected()).count();
         if (containsSelectedStudents() && AlertBox.showConfirmationDialog("Підвердіть операцію",
                 "Ви справді бажаєте згенерувати додатки для вибраного(-их) студента(-ів)?")) {
             for (Student student :
                     studentObservableList) {
                 if (student.getSelect().isSelected()) {
                     try {
-                        docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+                        final String fileName = docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+
+                        if (size == 1) {
+                            docWorker.openFile(fileName);
+                        }
                     } catch (IOException | XmlException | SQLException e) {
                         LOGGER.error(e.getMessage());
                         AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
@@ -264,6 +269,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                     studentObservableList) {
                 if (student.getSelect().isSelected()) {
                     select = true;
+                    break;
                 }
             }
 

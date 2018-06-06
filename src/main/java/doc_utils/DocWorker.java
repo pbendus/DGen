@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -94,18 +95,21 @@ public class DocWorker {
         return docVariables;
     }
 
-    public void saveDocument(String fileName, int studentId) throws IOException, SQLException {
+    public String saveDocument(String fileName, int studentId) throws IOException, SQLException {
         final String groupName = studentService.getGroupByStudentId(studentId).getName() + "/";
         final String directoryName = DIRECTORY_PATH.concat(groupName);
         final File directory = new File(directoryName);
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        document.write(new FileOutputStream(directoryName + fileName.trim() + DOCX));
+        final String path = directoryName + fileName.trim() + DOCX;
+        document.write(new FileOutputStream(path));
         LOGGER.info(String.format("Document %s has been created", fileName));
+
+        return path;
     }
 
-    public void generateDocument(int studentId, String documentName)
+    public String generateDocument(int studentId, String documentName)
             throws IOException, XmlException, SQLException {
         document = getInputDocument();
 
@@ -125,7 +129,7 @@ public class DocWorker {
         addStateAttestations(
                 educationalComponentService.getAllStateAttestationsByDiplomaId(diploma.getId()), variables);
 
-        saveDocument(documentName, studentId);
+        return saveDocument(documentName, studentId);
     }
 
     private void addCourses(List<EducationalComponent> components,
@@ -451,11 +455,12 @@ public class DocWorker {
                         true);
                 break;
             case INFORMATION_ON_CERTIFICATION:
-                changeParagraph(docVariable.getParagraph(), diploma.getInformationOnCertification(), false);
+                changeParagraph(docVariable.getParagraph(), diploma.getInformationOnCertification(), true);
                 break;
             case PREVIOUS_DOCUMENT:
                 changeParagraph(docVariable.getParagraph(),
-                        diploma.getStudent().getPreviousDocument().getName(), true);
+                        diploma.getStudent().getPreviousDocument().getName() + " / " +
+                                diploma.getStudent().getPreviousDocument().getNameEN(), true);
                 break;
             case ECTS_CREDITS:
                 changeParagraph(docVariable.getParagraph(),
@@ -485,5 +490,11 @@ public class DocWorker {
 
         LOGGER.info(String.format("Paragraph{%s} has been changed, value(%s)", paragraph, value));
         //Todo split value("/") and add new line with second value
+    }
+
+    public void openFile(String file) throws IOException {
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().open(new File(file));
+        }
     }
 }
