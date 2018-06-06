@@ -579,7 +579,7 @@ public class FXMLStudentController implements Initializable {
         final int diplomaId = diplomaService.getAll().size() + 1;
         final String number = tfNumber.getText().trim();
         final String registrationNumber = tfRegistrationNumber.getText().trim();
-        final String additionRegistrationNumber = tfAdditionRegistrationNumber.getText().trim();
+        final String additionRegistrationNumber = tfRegistrationNumber.getText().trim();
         final Date dateOfIssue = c.getTime();
         final MainField mainField = cbMainField.getSelectionModel().getSelectedItem();
         final FieldOfStudy fieldOfStudy = cbFieldOfStudy.getSelectionModel().getSelectedItem();
@@ -633,6 +633,7 @@ public class FXMLStudentController implements Initializable {
         student.setProtocol(cbProtocol.getSelectionModel().getSelectedItem());
         student.getPreviousDocument().setName(tfPreviousDocument.getText().trim());
         student.getPreviousDocument().setNameEN(tfPreviousDocumentEn.getText().trim());
+        previousDocumentService.update(previousDocumentMapper.reverseMap(student.getPreviousDocument()));
         student.setModeOfStudyObject(cbModeOfStudy.getSelectionModel().getSelectedItem());
         student.setDurationOfStudy(cbDurationOfStudy.getSelectionModel().getSelectedItem());
         student.setGroup(cbGroup.getSelectionModel().getSelectedItem());
@@ -647,7 +648,7 @@ public class FXMLStudentController implements Initializable {
         cal.set(locDate.getYear(), locDate.getMonthValue() - 1, locDate.getDayOfMonth());
         diploma.setNumber(tfNumber.getText().trim());
         diploma.setRegistrationNumber(tfRegistrationNumber.getText().trim());
-        diploma.setAdditionRegistrationNumber(tfAdditionRegistrationNumber.getText().trim());
+        diploma.setAdditionRegistrationNumber(tfRegistrationNumber.getText().trim());
         diploma.setDateOfIssue(cal.getTime());
         diploma.setMainField(cbMainField.getSelectionModel().getSelectedItem());
         diploma.setFieldOfStudy(cbFieldOfStudy.getSelectionModel().getSelectedItem());
@@ -663,6 +664,7 @@ public class FXMLStudentController implements Initializable {
                         cbDurationOfStudy.getSelectionModel().getSelectedItem().getId())));
         diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectUk.getText().trim());
         diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectEn.getText().trim());
+        diplomaSubjectService.update(diplomaSubjectMapper.reverseMap(diploma.getDiplomaSubject()));
 
         diplomaService.update(diplomaMapper.reverseMap(diploma));
 
@@ -692,6 +694,7 @@ public class FXMLStudentController implements Initializable {
         return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
                 tfPreviousDocumentEn, tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber,
                 tfAdditionRegistrationNumber) ||
+                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfRegistrationNumber) ||
                 Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
                         cbAccessRequirements, cbGroup) ||
                 Validation.checkData(dpDateOfBirth, dpDate);
