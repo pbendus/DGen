@@ -136,9 +136,9 @@ CREATE TABLE ects_credits (
 -- Diploma
 CREATE TABLE diploma (
   id                                INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
-  number                            VARCHAR(255) NULL UNIQUE,
-  registration_number               VARCHAR(255) NULL,
-  addition_registration_number      VARCHAR(255) NULL,
+  number                            VARCHAR(255) NOT NULL UNIQUE,
+  registration_number               VARCHAR(255) NOT NULL,
+  addition_registration_number      VARCHAR(255) NOT NULL,
   ects_credits_id                   VARCHAR(255) NOT NULL,
   date_of_issue                     DATE         NOT NULL,
   student_id                        INTEGER      NOT NULL UNIQUE,

@@ -2,7 +2,8 @@ INSERT INTO field_of_study (name)
 VALUES ('12 - Інформаційні технології / 12 - Information technologies');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO main_field (name)
-VALUES ('121 - Інженерія програмного забезпечення / 121 - Software engineering');
+VALUES ('121 - Інженерія програмного забезпечення / 121 - Software engineering'),
+  ('6.050103 - Програмна інженерія');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO duration_of_study (value) VALUES ('Для школярів(4 роки)');
 INSERT INTO duration_of_study (value) VALUES ('Для скороченого терміну(3 роки)');
@@ -88,11 +89,11 @@ VALUES ('Диплом з відзнакою/ Diploma with Honors',
         'не менше як 75 відсотків відмінних оцінок з усіх навчальних дисциплін та практичної підготовки, з оцінками "добре" з інших дисциплін та з оцінками "відмінно" за результатами державної атестації / I 75% of ’’excellent” grades for academic courses (disciplines) and internships, 25% of “good” grades in other academic courses (disciplines), only “excellent” grades for State certification.');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO ects_credits (duration_of_study_id, name)
+VALUES (1, '1 кредит ЄКТС – 36 годин / 1 ECTS credits – 36 study hours');
+INSERT INTO ects_credits (duration_of_study_id, name)
 VALUES (2, '1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
 INSERT INTO ects_credits (duration_of_study_id, name)
 VALUES (3, '1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
-INSERT INTO ects_credits (duration_of_study_id, name)
-VALUES (1, '1 кредит ЄКТС – 36 годин / 1 ECTS credits – 36 study hours');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('A', 90, 100);
 INSERT INTO rating_point (name, min_national_score, max_national_score) VALUES ('B', 82, 89);
