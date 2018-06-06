@@ -92,9 +92,6 @@ public class FXMLStudentController implements Initializable {
     private TextField tfPreviousDocumentEn;
 
     @FXML
-    private TextField tfAdditionRegistrationNumber;
-
-    @FXML
     private TextArea taDurationOfTraining;
 
     @FXML
@@ -331,7 +328,6 @@ public class FXMLStudentController implements Initializable {
         tfDiplomaSubjectEn.setText(diploma.getDiplomaSubject().getSubjectEN());
         tfNumber.setText(diploma.getNumber());
         tfRegistrationNumber.setText(diploma.getRegistrationNumber());
-        tfAdditionRegistrationNumber.setText(diploma.getAdditionRegistrationNumber());
         taDurationOfTraining.setText(diploma.getDurationOfTraining().getName());
 
         // set date pickers
@@ -435,9 +431,7 @@ public class FXMLStudentController implements Initializable {
     }
 
     private void setListenersOnButtons() {
-        btnCancel.setOnMouseClicked(e -> {
-            closeWindow();
-        });
+        btnCancel.setOnMouseClicked(e -> closeWindow());
         btnSave.setOnMouseClicked(e -> {
             if (validateInputs()) {
                 if (studentId == 0) {
@@ -692,11 +686,9 @@ public class FXMLStudentController implements Initializable {
 
     private boolean validateInputs() {
         return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
-                tfPreviousDocumentEn, tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber,
-                tfAdditionRegistrationNumber) ||
-                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfRegistrationNumber) ||
+                tfPreviousDocumentEn, tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber) &&
                 Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
-                        cbAccessRequirements, cbGroup) ||
+                        cbAccessRequirements, cbGroup) &&
                 Validation.checkData(dpDateOfBirth, dpDate);
     }
 
