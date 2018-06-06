@@ -95,18 +95,21 @@ public class DocWorker {
         return docVariables;
     }
 
-    public void saveDocument(String fileName, int studentId) throws IOException, SQLException {
+    public String saveDocument(String fileName, int studentId) throws IOException, SQLException {
         final String groupName = studentService.getGroupByStudentId(studentId).getName() + "/";
         final String directoryName = DIRECTORY_PATH.concat(groupName);
         final File directory = new File(directoryName);
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        document.write(new FileOutputStream(directoryName + fileName.trim() + DOCX));
+        final String path = directoryName + fileName.trim() + DOCX;
+        document.write(new FileOutputStream(path));
         LOGGER.info(String.format("Document %s has been created", fileName));
+
+        return path;
     }
 
-    public void generateDocument(int studentId, String documentName)
+    public String generateDocument(int studentId, String documentName)
             throws IOException, XmlException, SQLException {
         document = getInputDocument();
 
@@ -126,7 +129,7 @@ public class DocWorker {
         addStateAttestations(
                 educationalComponentService.getAllStateAttestationsByDiplomaId(diploma.getId()), variables);
 
-        saveDocument(documentName, studentId);
+        return saveDocument(documentName, studentId);
     }
 
     private void addCourses(List<EducationalComponent> components,
@@ -456,7 +459,8 @@ public class DocWorker {
                 break;
             case PREVIOUS_DOCUMENT:
                 changeParagraph(docVariable.getParagraph(),
-                        diploma.getStudent().getPreviousDocument().getName(), true);
+                        diploma.getStudent().getPreviousDocument().getName() + " / " +
+                                diploma.getStudent().getPreviousDocument().getNameEN(), true);
                 break;
             case ECTS_CREDITS:
                 changeParagraph(docVariable.getParagraph(),
