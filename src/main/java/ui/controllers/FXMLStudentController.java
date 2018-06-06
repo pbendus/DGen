@@ -89,9 +89,6 @@ public class FXMLStudentController implements Initializable {
     private TextField tfPreviousDocument;
 
     @FXML
-    private TextField tfAdditionRegistrationNumber;
-
-    @FXML
     private TextArea taDurationOfTraining;
 
     @FXML
@@ -327,7 +324,6 @@ public class FXMLStudentController implements Initializable {
         tfDiplomaSubjectEn.setText(diploma.getDiplomaSubject().getSubjectEN());
         tfNumber.setText(diploma.getNumber());
         tfRegistrationNumber.setText(diploma.getRegistrationNumber());
-        tfAdditionRegistrationNumber.setText(diploma.getAdditionRegistrationNumber());
         taDurationOfTraining.setText(diploma.getDurationOfTraining().getName());
 
         // set date pickers
@@ -575,7 +571,7 @@ public class FXMLStudentController implements Initializable {
         final int diplomaId = diplomaService.getAll().size() + 1;
         final String number = tfNumber.getText().trim();
         final String registrationNumber = tfRegistrationNumber.getText().trim();
-        final String additionRegistrationNumber = tfAdditionRegistrationNumber.getText().trim();
+        final String additionRegistrationNumber = tfRegistrationNumber.getText().trim();
         final Date dateOfIssue = c.getTime();
         final MainField mainField = cbMainField.getSelectionModel().getSelectedItem();
         final FieldOfStudy fieldOfStudy = cbFieldOfStudy.getSelectionModel().getSelectedItem();
@@ -642,7 +638,7 @@ public class FXMLStudentController implements Initializable {
         cal.set(locDate.getYear(), locDate.getMonthValue() - 1, locDate.getDayOfMonth());
         diploma.setNumber(tfNumber.getText().trim());
         diploma.setRegistrationNumber(tfRegistrationNumber.getText().trim());
-        diploma.setAdditionRegistrationNumber(tfAdditionRegistrationNumber.getText().trim());
+        diploma.setAdditionRegistrationNumber(tfRegistrationNumber.getText().trim());
         diploma.setDateOfIssue(cal.getTime());
         diploma.setMainField(cbMainField.getSelectionModel().getSelectedItem());
         diploma.setFieldOfStudy(cbFieldOfStudy.getSelectionModel().getSelectedItem());
@@ -685,7 +681,7 @@ public class FXMLStudentController implements Initializable {
 
     private boolean validateInputs() {
         return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
-                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfAdditionRegistrationNumber) ||
+                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber, tfRegistrationNumber) ||
                 Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
                         cbAccessRequirements, cbGroup) ||
                 Validation.checkData(dpDateOfBirth, dpDate);
