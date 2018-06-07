@@ -151,16 +151,6 @@ public class EducationalComponent {
 
     @Override
     public String toString() {
-        return "EducationalComponent{" +
-                "id=" + id +
-                ", nationalScore=" + nationalScore +
-                ", credits=" + credits +
-                ", courseTitle=" + courseTitle +
-                ", educationalComponentType=" + educationalComponentType +
-                ", educationalComponentTemplate=" + educationalComponentTemplate +
-                ", ratingPoint=" + ratingPoint +
-                ", nationalGrade=" + nationalGrade +
-                ", diploma=" + diploma +
-                '}';
+        return String.valueOf(getNationalScore());
     }
 }

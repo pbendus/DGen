@@ -65,6 +65,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     public MenuItem miChooseVariablePattern;
     @FXML
     public MenuItem miExit;
+    @FXML
+    public MenuItem miEducationalComponents;
 
     @FXML
     public Button btnGenerate;
@@ -96,6 +98,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     private DocWorker docWorker;
     private Stage primaryStage;
     private AppProperties appProperties;
+    private FXMLEducationalComponentsController fxmlEducationalComponentController;
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
@@ -103,7 +106,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                               PreviousDocumentService previousDocumentService,
                               EducationalComponentService educationalComponentService,
                               FXMLStudentController fxmlStudentController, DocWorker docWorker,
-                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties) {
+                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
         this.diplomaService = diplomaService;
@@ -114,6 +117,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         this.docWorker = docWorker;
         this.fxmlSettingsController = fxmlSettingsController;
         this.appProperties = appProperties;
+        this.fxmlEducationalComponentController = fxmlEducationalComponentController;
     }
 
     @Override
@@ -127,6 +131,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         miChooseDB.setOnAction(event -> chooseDB());
         miChooseTemplate.setOnAction(event -> chooseTemplate());
         miChooseVariablePattern.setOnAction(event -> chooseVariablePattern());
+        miEducationalComponents.setOnAction(event -> openEducationalComponentsWindow());
         miExit.setOnAction(event -> System.exit(0));
     }
 
@@ -201,7 +206,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                         if (size == 1) {
                             docWorker.openFile(fileName);
                         }
-                    } catch (IOException | XmlException | SQLException e) {
+                    } catch (IOException | XmlException | SQLException | NullPointerException e) {
                         LOGGER.error(e.getMessage());
                         AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                                 "Не вдалося згенерувати інформацію для вибараного студента(-ів)", e);
@@ -348,6 +353,16 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         } catch (Exception e) {
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося відкрити модальне вікно студента", e);
+        }
+    }
+
+    private void openEducationalComponentsWindow() {
+        try {
+            fxmlEducationalComponentController.display();
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося відкрити модальне вікно результати навчання", e);
         }
     }
 

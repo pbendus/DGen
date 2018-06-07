@@ -1,13 +1,6 @@
 package ui.models;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class EducationalComponentTemplate {
     private IntegerProperty id;
@@ -23,7 +16,7 @@ public class EducationalComponentTemplate {
     }
 
     public EducationalComponentTemplate(int id, double credit, String courseTitle,
-                                        EducationalComponentType educationalComponentType, MainField mainField) {
+                                        EducationalComponentType educationalComponentType) {
         this.id = new SimpleIntegerProperty(id);
         this.credits = new SimpleDoubleProperty(credit);
         this.courseTitle = new SimpleStringProperty(courseTitle);
@@ -82,5 +75,9 @@ public class EducationalComponentTemplate {
     @Override
     public String toString() {
         return courseTitle.get();
+    }
+
+    public String getCourseTitleSplit() {
+        return getCourseTitle().split("/")[0];
     }
 }

@@ -25,7 +25,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Редагувати">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                <MenuItem fx:id="miEducationalComponents" mnemonicParsing="false" text="Результати навчання"/>
             </items>
           </Menu>
             <Menu fx:id="menuSettings" mnemonicParsing="false" text="Налаштування">
