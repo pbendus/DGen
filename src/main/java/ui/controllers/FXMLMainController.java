@@ -22,6 +22,8 @@ import org.apache.xmlbeans.XmlException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
+import ui.models.Group;
+import ui.models.Group;
 import ui.models.Student;
 import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
@@ -82,6 +84,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     private TableColumn<Student, Integer> tblColId;
     @FXML
     private TableColumn<Student, String> tblColStudent;
+    @FXML
+    private TableColumn<Student, Group> tblColGroup;
     @FXML
     private CheckBox chkboxSelectAll;
     @FXML
@@ -208,6 +212,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tblColCheckbox.setCellValueFactory(new PropertyValueFactory<>("select"));
         tblColStudent.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        tblColGroup.setCellValueFactory(new PropertyValueFactory<>("group"));
 
         tblView.setItems(studentObservableList);
     }
