@@ -78,6 +78,7 @@ public class EducationalComponentTemplate {
     }
 
     public String getCourseTitleSplit() {
-        return getCourseTitle().split("/")[0];
+        return getCourseTitle().split("/")[0] + "(" +
+                getEducationalComponentType().getName().split("/")[0] + ")";
     }
 }
