@@ -67,6 +67,10 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     public MenuItem miExit;
     @FXML
     public MenuItem miEducationalComponents;
+    @FXML
+    public MenuItem menuItemEducationalTemplate;
+    @FXML
+    public MenuItem miClearTables;
 
     @FXML
     public Button btnGenerate;
@@ -99,6 +103,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     private Stage primaryStage;
     private AppProperties appProperties;
     private FXMLEducationalComponentsController fxmlEducationalComponentController;
+    private TableCleanerService tableCleanerService;
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
@@ -106,7 +111,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                               PreviousDocumentService previousDocumentService,
                               EducationalComponentService educationalComponentService,
                               FXMLStudentController fxmlStudentController, DocWorker docWorker,
-                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController) {
+                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController, TableCleanerService tableCleanerService) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
         this.diplomaService = diplomaService;
@@ -118,6 +123,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         this.fxmlSettingsController = fxmlSettingsController;
         this.appProperties = appProperties;
         this.fxmlEducationalComponentController = fxmlEducationalComponentController;
+        this.tableCleanerService = tableCleanerService;
     }
 
     @Override
@@ -132,6 +138,18 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         miChooseTemplate.setOnAction(event -> chooseTemplate());
         miChooseVariablePattern.setOnAction(event -> chooseVariablePattern());
         miEducationalComponents.setOnAction(event -> openEducationalComponentsWindow());
+        miClearTables.setOnAction(event -> {
+            if (AlertBox.showConfirmationDialog("Підтвердіть операцію",
+                    "Ви дійсно бажаєте очистити всі дані(крім статичних даних)?")) {
+                try {
+                    tableCleanerService.clearAllExeptStaticData();
+                } catch (SQLException e) {
+                    LOGGER.error(e.getMessage());
+                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                            "Не вдалося очистити дані", e);
+                }
+            }
+        });
         miExit.setOnAction(event -> System.exit(0));
     }
 
@@ -182,6 +200,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             List<db.entities.Student> list = studentService.getAll();
             studentObservableList.addAll(studentMapper.map(list));
         } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося отримати інформацію про студентів з БД", e);
         }
@@ -307,6 +326,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.ACCESS_REQUIREMENTS));
         menuItemEctsCredits.setOnAction(
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.ECTS_CREDITS));
+        menuItemEducationalTemplate.setOnAction(
+                event -> openSettingsModalWindow(FXMLSettingsController.Tab.EDUCATIONAL_TEMPLATE));
     }
 
     private void deleteStudent(Student student) {
@@ -327,8 +348,10 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                     tblView.getItems().remove(student);
                 }
             }
-        } catch (SQLException e1) {
-            e1.printStackTrace();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося видалити студента", e);
         }
     }
 
@@ -341,6 +364,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlStudentController.setStudentCallback(this);
             fxmlStudentController.display();
         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося відкрити модальне вікно студента", e);
         }
@@ -351,6 +375,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlSettingsController.setTab(tab);
             fxmlSettingsController.display();
         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося відкрити модальне вікно студента", e);
         }
@@ -360,7 +385,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         try {
             fxmlEducationalComponentController.display();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося відкрити модальне вікно результати навчання", e);
         }
@@ -408,6 +433,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             studentObservableList.add(studentMapper.map(
                     studentService.getByFullName(student.getFamilyName(), student.getGivenName())));
         } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося додати студента у БД", e);
         }

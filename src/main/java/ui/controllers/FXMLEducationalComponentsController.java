@@ -17,11 +17,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.EducationalComponentWithData;
 import ui.models.TemplateWithEducationalComponents;
+import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 
 import java.net.URL;
@@ -31,6 +34,8 @@ import java.util.ResourceBundle;
 
 @Controller("fxmlEducationalComponentsController")
 public class FXMLEducationalComponentsController implements Initializable {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @FXML
     public TabPane tabPane;
@@ -87,13 +92,17 @@ public class FXMLEducationalComponentsController implements Initializable {
                         educationalComponentService.update(
                                 educationalComponentMapper.reverseMap(event.getRowValue().getEducationalComponent()));
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        LOGGER.error(e.getMessage());
+                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                                "Не вдалося обновити дані", e);
                     }
                 });
                 tabPane.getTabs().add(new Tab(template.getEducationalComponentTemplate().getCourseTitleSplit(), content));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося завантажити дані", e);
         }
     }
 

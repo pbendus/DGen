@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,8 @@ public class FXMLSettingsController implements Initializable {
     public javafx.scene.control.Tab tabEctsCredits;
     @FXML
     public javafx.scene.control.Tab tabAccessRequirements;
+    @FXML
+    public javafx.scene.control.Tab tabEducationalTemplate;
 
     @FXML
     public TextField tfNameUKProtocol;
@@ -165,6 +168,25 @@ public class FXMLSettingsController implements Initializable {
     @FXML
     public Button btnAddAccessRequirements;
 
+    @FXML
+    public TableView<EducationalComponentTemplate> tblEducationalTemplate;
+    @FXML
+    public TableColumn<EducationalComponentTemplate, Integer> tblColIdEducationalTemplate;
+    @FXML
+    public TableColumn<EducationalComponentTemplate, String> tblColNameEducationalTemplate;
+    @FXML
+    public TableColumn<EducationalComponentTemplate, EducationalComponentType> tblColTypeEducationalTemplate;
+    @FXML
+    public TableColumn<EducationalComponentTemplate, Double> tblColCreditsEducationalTemplate;
+    @FXML
+    public TextField tfNameEducationalTemplate;
+    @FXML
+    public Button btnAddEducationalTemplate;
+    @FXML
+    public ComboBox<EducationalComponentType> cbTypeEducationalTemplate;
+    @FXML
+    public TextField tfCreditsEducationalTemplate;
+
     private Stage stage;
 
     private ProtocolService protocolService;
@@ -197,6 +219,12 @@ public class FXMLSettingsController implements Initializable {
     private AccessRequirementsService accessRequirementsService;
     private AccessRequirementsMapper accessRequirementsMapper;
 
+    private EducationalComponentTemplateService educationalComponentTemplateService;
+    private EducationalComponentTemplateMapper educationalComponentTemplateMapper;
+
+    private EducationalComponentTypeService educationalComponentTypeService;
+    private EducationalComponentTypeMapper educationalComponentTypeMapper;
+
     private ObservableList<Protocol> protocols = FXCollections.observableArrayList();
     private ObservableList<FieldOfStudy> fieldOfStudies = FXCollections.observableArrayList();
     private ObservableList<MainField> mainFields = FXCollections.observableArrayList();
@@ -209,6 +237,8 @@ public class FXMLSettingsController implements Initializable {
     private ObservableList<ModeOfStudy> modeOfStudies = FXCollections.observableArrayList();
     private ObservableList<EctsCredits> ectsCredits = FXCollections.observableArrayList();
     private ObservableList<AccessRequirements> accessRequirements = FXCollections.observableArrayList();
+    private ObservableList<EducationalComponentTemplate> educationalComponentTemplates = FXCollections.observableArrayList();
+    private ObservableList<EducationalComponentType> educationalComponentTypes = FXCollections.observableArrayList();
 
     private Tab tab;
 
@@ -226,7 +256,11 @@ public class FXMLSettingsController implements Initializable {
                                   ModeOfStudyService modeOfStudyService, ModeOfStudyMapper modeOfStudyMapper,
                                   EctsCreditsService ectsCreditsService, EctsCreditsMapper ectsCreditsMapper,
                                   AccessRequirementsService accessRequirementsService,
-                                  AccessRequirementsMapper accessRequirementsMapper) {
+                                  AccessRequirementsMapper accessRequirementsMapper,
+                                  EducationalComponentTemplateService educationalComponentTemplateService,
+                                  EducationalComponentTemplateMapper educationalComponentTemplateMapper,
+                                  EducationalComponentTypeService educationalComponentTypeService,
+                                  EducationalComponentTypeMapper educationalComponentTypeMapper) {
         this.protocolService = protocolService;
         this.protocolMapper = protocolMapper;
         this.fieldOfStudyService = fieldOfStudyService;
@@ -247,6 +281,10 @@ public class FXMLSettingsController implements Initializable {
         this.ectsCreditsMapper = ectsCreditsMapper;
         this.accessRequirementsService = accessRequirementsService;
         this.accessRequirementsMapper = accessRequirementsMapper;
+        this.educationalComponentTemplateService = educationalComponentTemplateService;
+        this.educationalComponentTemplateMapper = educationalComponentTemplateMapper;
+        this.educationalComponentTypeService = educationalComponentTypeService;
+        this.educationalComponentTypeMapper = educationalComponentTypeMapper;
     }
 
     @Override
@@ -255,7 +293,7 @@ public class FXMLSettingsController implements Initializable {
         selectTab();
         clearComponents(protocols, fieldOfStudies, mainFields, groups, officialDurationOfProgrammes,
                 officialDurationOfProgrammes, durationOfStudies, durationOfTrainings,
-                modeOfStudies, ectsCredits, accessRequirements);
+                modeOfStudies, ectsCredits, accessRequirements, educationalComponentTemplates, educationalComponentTypes);
         initializeTableProtocols();
         initializeTableFieldOfStudy();
         initializeTableMainField();
@@ -264,10 +302,13 @@ public class FXMLSettingsController implements Initializable {
         initializeTableDurationOfTraining();
         initializeTableEctsCredits();
         initializeTableAccessRequirements();
+        initializeTableEducationalTemplate();
 
         Helper.fillComboBoxes(durationOfStudies, durationOfStudyMapper, durationOfStudyService, cbDurationOfStudyDoT,
                 cbDurationOfStudyOD, cbDurationOfStudyEctsCredits);
         Helper.fillComboBoxes(modeOfStudies, modeOfStudyMapper, modeOfStudyService, cbModeOfStudyDoT, cbModeOfStudyOD);
+        Helper.fillComboBoxes(educationalComponentTypes, educationalComponentTypeMapper, educationalComponentTypeService,
+                cbTypeEducationalTemplate);
 
         Helper.fillTable(protocols, protocolMapper, protocolService, tblProtocols);
         Helper.fillTable(fieldOfStudies, fieldOfStudyMapper, fieldOfStudyService, tblFieldOfStudy);
@@ -279,6 +320,8 @@ public class FXMLSettingsController implements Initializable {
                 tblDurationOfTraining);
         Helper.fillTable(ectsCredits, ectsCreditsMapper, ectsCreditsService, tblEctsCredits);
         Helper.fillTable(accessRequirements, accessRequirementsMapper, accessRequirementsService, tblAccessRequirements);
+        Helper.fillTable(educationalComponentTemplates, educationalComponentTemplateMapper,
+                educationalComponentTemplateService, tblEducationalTemplate);
 
         btnAddProtocol.setOnAction(event -> {
             if (validateProtocolInputs()) addProtocol();
@@ -303,6 +346,9 @@ public class FXMLSettingsController implements Initializable {
         });
         btnAddAccessRequirements.setOnAction(event -> {
             if (validateAccessRequirementsInputs()) addAccessRequirements();
+        });
+        btnAddEducationalTemplate.setOnAction(event -> {
+            if (validateEducationalTemplateInputs()) addEducationalTemplate();
         });
     }
 
@@ -332,6 +378,9 @@ public class FXMLSettingsController implements Initializable {
                 break;
             case ACCESS_REQUIREMENTS:
                 tabPane.getSelectionModel().select(tabAccessRequirements);
+                break;
+            case EDUCATIONAL_TEMPLATE:
+                tabPane.getSelectionModel().select(tabEducationalTemplate);
                 break;
         }
     }
@@ -738,6 +787,73 @@ public class FXMLSettingsController implements Initializable {
         return Validation.checkData(tfNameAccessRequirements);
     }
 
+    //-------------------------------------------------------------------------------
+    //  EDUCATIONAL TEMPLATE
+    //-------------------------------------------------------------------------------
+
+    private void addEducationalTemplate() {
+        final String courseTitle = tfNameEducationalTemplate.getText().trim();
+        final double credits = Double.parseDouble(tfCreditsEducationalTemplate.getText().trim());
+        final EducationalComponentType educationalComponentType =
+                cbTypeEducationalTemplate.getSelectionModel().getSelectedItem();
+        final EducationalComponentTemplate educationalComponentTemplate =
+                new EducationalComponentTemplate(this.educationalComponentTemplates.size() + 1, credits, courseTitle,
+                        educationalComponentType);
+        Helper.insertItem(this.educationalComponentTemplates, educationalComponentTemplate, courseTitle,
+                educationalComponentTemplateMapper, educationalComponentTemplateService);
+    }
+
+    private boolean validateEducationalTemplateInputs() {
+        return Validation.checkData(tfNameEducationalTemplate, tfCreditsEducationalTemplate) &&
+                Validation.checkData(cbTypeEducationalTemplate);
+    }
+
+    private void initializeTableEducationalTemplate() {
+        tblColIdEducationalTemplate.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tblColNameEducationalTemplate.setCellValueFactory(new PropertyValueFactory<>("courseTitle"));
+        tblColCreditsEducationalTemplate.setCellValueFactory(new PropertyValueFactory<>("credits"));
+        tblColTypeEducationalTemplate.setCellValueFactory(
+                param -> param.getValue().educationalComponentTypeProperty());
+
+        tblColTypeEducationalTemplate.setCellFactory(ComboBoxTableCell.forTableColumn(educationalComponentTypes));
+        tblColTypeEducationalTemplate.setOnEditCommit(event -> {
+            event.getRowValue().setEducationalComponentType(event.getNewValue());
+            Helper.updateItem(event.getRowValue(), educationalComponentTemplateMapper,
+                    educationalComponentTemplateService);
+        });
+
+        tblColNameEducationalTemplate.setCellFactory(TextFieldTableCell.forTableColumn());
+        tblColNameEducationalTemplate.setOnEditCommit(event -> {
+            event.getRowValue().setCourseTitle(event.getNewValue());
+            Helper.updateItem(event.getRowValue(), educationalComponentTemplateMapper,
+                    educationalComponentTemplateService);
+        });
+
+        tblColCreditsEducationalTemplate.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        tblColCreditsEducationalTemplate.setOnEditCommit(event -> {
+            event.getRowValue().setCredits(event.getNewValue());
+            Helper.updateItem(event.getRowValue(), educationalComponentTemplateMapper,
+                    educationalComponentTemplateService);
+        });
+
+        tblEducationalTemplate.setRowFactory(
+                tableView -> {
+                    final TableRow<EducationalComponentTemplate> row = new TableRow<>();
+                    final ContextMenu rowMenu = new ContextMenu();
+                    final MenuItem removeItem = new MenuItem("Delete");
+                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
+                            educationalComponentTemplateService, tblEducationalTemplate));
+                    rowMenu.getItems().addAll(removeItem);
+
+                    // only display context menu for non-null items:
+                    row.contextMenuProperty().bind(
+                            Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                    .then(rowMenu)
+                                    .otherwise((ContextMenu) null));
+                    return row;
+                });
+    }
+
     void display() throws Exception {
         final Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
@@ -771,7 +887,7 @@ public class FXMLSettingsController implements Initializable {
 
     public enum Tab {
         PROTOCOLS, MAIN_FIELD, FIELD_OF_STUDY, GROUPS, OFFICIAL_DURATION,
-        DURATION_OF_TRAINING, ECTS_CREDITS, ACCESS_REQUIREMENTS
+        DURATION_OF_TRAINING, ECTS_CREDITS, ACCESS_REQUIREMENTS, EDUCATIONAL_TEMPLATE;
     }
 
     private static class Helper {
