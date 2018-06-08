@@ -677,6 +677,7 @@ public class FXMLStudentController implements Initializable {
                     .getByName(ClassificationSystemConst.DIPLOMA_WITH_HONORS)) :
                     classificationSystemMapper.map(classificationSystemService.getByName(ClassificationSystemConst.DIPLOMA));
         } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося отримати інформацію про присвоєну класифікацію", e);
         }

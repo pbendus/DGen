@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1"
             fx:controller="ui.controllers.FXMLSettingsController">
    <children>
       <TabPane fx:id="tabPane" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -266,6 +266,57 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab fx:id="tabEducationalTemplate" text="Шаблон диспиплін">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
+                        <children>
+                            <TableView fx:id="tblEducationalTemplate" editable="true" layoutX="8.0" layoutY="31.0"
+                                       prefHeight="200.0" prefWidth="585.0" AnchorPane.bottomAnchor="81.0"
+                                       AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.0"
+                                       AnchorPane.topAnchor="31.0">
+                                <columns>
+                                    <TableColumn fx:id="tblColIdEducationalTemplate" maxWidth="35.0" minWidth="35.0"
+                                                 prefWidth="-1.0" text="№"/>
+                                    <TableColumn fx:id="tblColNameEducationalTemplate" maxWidth="1.7976931348623157E308"
+                                                 minWidth="180.0" prefWidth="-1.0" text="Назва"/>
+                                    <TableColumn fx:id="tblColTypeEducationalTemplate" maxWidth="1.7976931348623157E308"
+                                                 minWidth="130.0" prefWidth="-1.0" text="Тип"/>
+                                    <TableColumn fx:id="tblColCreditsEducationalTemplate"
+                                                 maxWidth="1.7976931348623157E308" minWidth="180.0" prefWidth="-1.0"
+                                                 text="Кредити"/>
+                                </columns>
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                </columnResizePolicy>
+                            </TableView>
+                            <Label layoutX="9.0" layoutY="10.0" text="Шаблон дисциплін" AnchorPane.leftAnchor="9.0"
+                                   AnchorPane.topAnchor="10.0">
+                                <font>
+                                    <Font name="System Bold" size="14.0"/>
+                                </font>
+                            </Label>
+                            <Label layoutX="9.0" layoutY="241.0" text="Додати  тривалість програми"
+                                   AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
+                                <font>
+                                    <Font name="System Bold" size="14.0"/>
+                                </font>
+                            </Label>
+                            <TextField fx:id="tfNameEducationalTemplate" layoutX="8.0" layoutY="269.0" prefHeight="30.0"
+                                       prefWidth="130.0" promptText="Назва" AnchorPane.bottomAnchor="14.0"
+                                       AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="462.0"/>
+                            <Button fx:id="btnAddEducationalTemplate" defaultButton="true" layoutX="491.0"
+                                    layoutY="262.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0"
+                                    text="Додати" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0"/>
+                            <ComboBox fx:id="cbTypeEducationalTemplate" layoutX="157.0" layoutY="272.0"
+                                      prefWidth="150.0" promptText="Тип" AnchorPane.bottomAnchor="14.0"
+                                      AnchorPane.rightAnchor="293.0"/>
+                            <TextField fx:id="tfCreditsEducationalTemplate" layoutX="333.0" layoutY="262.0"
+                                       prefHeight="30.0" prefWidth="130.0" promptText="Кредити"
+                                       AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="137.0"/>
+                        </children>
+                    </AnchorPane>
+                </content>
             </Tab>
         </tabs>
       </TabPane>

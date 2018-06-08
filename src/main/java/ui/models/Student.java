@@ -212,4 +212,9 @@ public class Student {
     public void setGroup(Group group) {
         this.group.set(group);
     }
+
+    @Override
+    public String toString() {
+        return fullName.get();
+    }
 }

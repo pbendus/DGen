@@ -23,7 +23,13 @@
                 </MenuItem>
             </items>
           </Menu>
-            <Menu fx:id="menuSettings" mnemonicParsing="false" text="Редагувати">
+          <Menu mnemonicParsing="false" text="Редагувати">
+            <items>
+                <MenuItem fx:id="miEducationalComponents" mnemonicParsing="false" text="Результати навчання"/>
+                <MenuItem fx:id="miClearTables" mnemonicParsing="false" text="Очистити всі дані(крім статичних даних)"/>
+            </items>
+          </Menu>
+            <Menu fx:id="menuSettings" mnemonicParsing="false" text="Налаштування">
                <items>
                   <MenuItem fx:id="menuItemProtocols" mnemonicParsing="false" text="Протоколи" />
                   <MenuItem fx:id="menuItemFieldOfStudy" mnemonicParsing="false" text="Галузь знань" />
@@ -33,12 +39,8 @@
                   <MenuItem fx:id="menuItemDurationOfTraining" mnemonicParsing="false" text="Строки навчання у кожному ВНЗ " />
                   <MenuItem fx:id="menuItemAccessRequirements" mnemonicParsing="false" text="Вимоги до вступу" />
                   <MenuItem fx:id="menuItemEctsCredits" mnemonicParsing="false" text="Кредити ЄКТС " />
+                   <MenuItem fx:id="menuItemEducationalTemplate" mnemonicParsing="false" text="Шаблон дисциплін"/>
                </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Налаштування">
-                <items>
-                    <MenuItem fx:id="menuItemClearDB" mnemonicParsing="false" text="Очистити БД"/>
-                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Допомога">
             <items>
