@@ -70,5 +70,11 @@
       <CheckBox fx:id="chkboxSelectAll" layoutX="15.0" layoutY="538.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Вибрати всі" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" />
       <Button fx:id="btnAddStudent" layoutX="141.0" layoutY="501.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Додати студента" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="150.0" />
       <Button fx:id="btnGenerate" defaultButton="true" layoutX="834.0" layoutY="501.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Згенерувати додатки" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0" />
+       <ComboBox fx:id="cbGroup" layoutX="170.0" layoutY="40.0" prefHeight="30.0" prefWidth="150.0"
+                 promptText="Вибрати групу" AnchorPane.rightAnchor="180.0"/>
+       <Button fx:id="btnFilter" layoutX="340.0" layoutY="40.0" mnemonicParsing="false" prefHeight="30.0"
+               prefWidth="100.0" text="Фільтрувати" AnchorPane.rightAnchor="60.0"/>
+       <Button fx:id="btnClearFilter" layoutX="461.0" layoutY="40.0" mnemonicParsing="false" prefHeight="30.0"
+               prefWidth="30.0" text="X" AnchorPane.rightAnchor="20.0"/>
    </children>
 </AnchorPane>

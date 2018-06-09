@@ -1,6 +1,7 @@
 package ui.controllers;
 
 import db.entities.Diploma;
+import db.mapper.GroupMapper;
 import db.mapper.StudentMapper;
 import db.services.*;
 import doc_utils.AppProperties;
@@ -22,7 +23,6 @@ import org.apache.xmlbeans.XmlException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
-import ui.models.Group;
 import ui.models.Group;
 import ui.models.Student;
 import ui.utils.AlertBox;
@@ -87,13 +87,21 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     @FXML
     private TableColumn<Student, Group> tblColGroup;
     @FXML
+    private ComboBox<Group> cbGroup;
+    @FXML
     private CheckBox chkboxSelectAll;
     @FXML
     private Button btnAddStudent;
+    @FXML
+    private Button btnFilter;
+    @FXML
+    private Button btnClearFilter;
     private ObservableList<Student> studentObservableList = FXCollections.observableArrayList();
-
     private StudentMapper studentMapper;
     private StudentService studentService;
+
+    private GroupService groupService;
+    private GroupMapper groupMapper;
 
     private DiplomaService diplomaService;
     private DiplomaSubjectService diplomaSubjectService;
@@ -114,6 +122,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                               DiplomaService diplomaService, DiplomaSubjectService diplomaSubjectService,
                               PreviousDocumentService previousDocumentService,
                               EducationalComponentService educationalComponentService,
+                              GroupService groupService, GroupMapper groupMapper,
                               FXMLStudentController fxmlStudentController, DocWorker docWorker,
                               FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController, TableCleanerService tableCleanerService) {
         this.studentMapper = studentMapper;
@@ -122,6 +131,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         this.diplomaSubjectService = diplomaSubjectService;
         this.previousDocumentService = previousDocumentService;
         this.educationalComponentService = educationalComponentService;
+        this.groupService = groupService;
+        this.groupMapper = groupMapper;
         this.fxmlStudentController = fxmlStudentController;
         this.docWorker = docWorker;
         this.fxmlSettingsController = fxmlSettingsController;
@@ -135,6 +146,30 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         initializeTableView();
         setListeners();
         setOnMenuItemAction();
+        setComboBox();
+    }
+
+    private void initializeStudentList() {
+        studentObservableList.clear();
+
+        try {
+            List<db.entities.Student> list = studentService.getAll();
+            studentObservableList.addAll(studentMapper.map(list));
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося отримати інформацію про студентів з БД", e);
+        }
+    }
+
+    private void setComboBox() {
+        try {
+            cbGroup.getItems().addAll(groupMapper.map(groupService.getAll()));
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося заповнити дані про групи", e);
+        }
     }
 
     private void setOnMenuItemAction() {
@@ -200,14 +235,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     }
 
     private void initializeTableView() {
-        try {
-            List<db.entities.Student> list = studentService.getAll();
-            studentObservableList.addAll(studentMapper.map(list));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                    "Не вдалося отримати інформацію про студентів з БД", e);
-        }
+        initializeStudentList();
 
         tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tblColCheckbox.setCellValueFactory(new PropertyValueFactory<>("select"));
@@ -239,7 +267,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             }
 
             AlertBox.showInformationDialog("Операцію виконано успішно",
-                    "Було згенеровано додатки до ДБР " + studentObservableList.size() + " студентів");
+                    "Було згенеровано додатки до ДБР " + size + " студентів");
         }
     }
 
@@ -309,6 +337,36 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                         "Щоб згенерувати додатки, виберіть студентів зі списку");
             }
         });
+
+        btnFilter.setOnMouseClicked(event -> {
+            Group selectedGroup = cbGroup.getSelectionModel().getSelectedItem();
+
+            if (selectedGroup == null) {
+                AlertBox.showWarningDialog("Жодної групи не вибрано",
+                        "Виберіть групу для фільтрації студентів");
+            } else {
+                initializeStudentList();
+
+                ObservableList<Student> observableList = FXCollections.observableArrayList();
+                for (Student student :
+                        studentObservableList) {
+                    observableList.addAll(student);
+                }
+
+                studentObservableList.clear();
+
+                for (Student student :
+                        observableList) {
+                    if (student.getGroup().getName().equals(selectedGroup.getName())) {
+                        studentObservableList.add(student);
+                    }
+                }
+
+                tblView.setItems(studentObservableList);
+            }
+        });
+
+        btnClearFilter.setOnMouseClicked(event -> initializeStudentList());
 
         btnAddStudent.setOnAction(e -> {
             fxmlStudentController.setStudentId(0);
