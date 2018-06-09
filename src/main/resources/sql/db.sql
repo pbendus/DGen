@@ -211,7 +211,7 @@ CREATE TABLE educational_component (
 
 ---------------------------------------------------------------------------------
 -- All grades
-CREATE TABLE variables (
+CREATE TABLE variable (
   id          INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
   variable    VARCHAR(255) NOT NULL UNIQUE,
   description VARCHAR(255) NOT NULL

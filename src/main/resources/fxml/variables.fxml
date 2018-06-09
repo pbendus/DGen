@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141"
+            fx:controller="ui.controllers.FXMLVariablesController">
+    <children>
+        <TableView fx:id="tvVariables" editable="true" prefHeight="194.0" prefWidth="585.0"
+                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+                   AnchorPane.topAnchor="20.0">
+            <columns>
+                <TableColumn fx:id="tcNumber" maxWidth="35.0" minWidth="35.0" prefWidth="-1.0" text="№"/>
+                <TableColumn fx:id="tcName" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0"
+                             text="Назва змінної"/>
+                <TableColumn fx:id="tcValue" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0"
+                             text="Значення змінної"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </children>
+</AnchorPane>

@@ -119,7 +119,7 @@ insert into "group" (name) values ('ПІ-14-1');
 insert into "group" (name) values ('ПІз-14-1');
 insert into "group" (name) values ('ПІт-15-2');
 
-insert into variables (variable, description) values
+insert into variable (variable, description) values
   ('diploma', 'Диплом'),
   ('reg', 'Реєстраційний №'),
   ('add_reg', 'Реєстраційний № додатка до диплому '),
