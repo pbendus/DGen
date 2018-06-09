@@ -39,97 +39,66 @@ public class FXMLStudentController implements Initializable {
 
     @FXML
     private Accordion accordion;
-
     @FXML
     private TitledPane tpGeneralInfo;
-
     @FXML
     private TableView<EducationalComponent> tvGrades;
-
     @FXML
     private TableColumn<EducationalComponent, Integer> tcNumber;
-
     @FXML
     private TableColumn<EducationalComponent, String> tcType;
-
     @FXML
     private TableColumn<EducationalComponent, String> tcName;
-
     @FXML
     private TableColumn<EducationalComponent, Double> tcCredit;
-
     @FXML
     private TableColumn<EducationalComponent, Integer> tcGrade;
-
     @FXML
     private TextField tfFamilyName;
-
     @FXML
     private TextField tfFamilyNameTr;
-
     @FXML
     private TextField tfGivenName;
-
     @FXML
     private TextField tfGivenNameTr;
-
     @FXML
     private TextField tfDiplomaSubjectUk;
-
     @FXML
     private TextField tfDiplomaSubjectEn;
-
     @FXML
     private TextField tfNumber;
-
     @FXML
     private TextField tfRegistrationNumber;
-
     @FXML
     private TextField tfPreviousDocument;
-
     @FXML
     private TextField tfPreviousDocumentEn;
-
     @FXML
     private TextArea taDurationOfTraining;
-
     @FXML
     private TextArea taInformationOnCertification;
-
     @FXML
     private DatePicker dpDateOfBirth;
-
     @FXML
     private DatePicker dpDate;
-
     @FXML
     private ComboBox<MainField> cbMainField;
-
     @FXML
     private ComboBox<FieldOfStudy> cbFieldOfStudy;
-
     @FXML
     private ComboBox<AccessRequirements> cbAccessRequirements;
-
     @FXML
     private ComboBox<ModeOfStudy> cbModeOfStudy;
-
     @FXML
     private ComboBox<Protocol> cbProtocol;
-
     @FXML
     private ComboBox<DurationOfStudy> cbDurationOfStudy;
-
     @FXML
     private ComboBox<Group> cbGroup;
-
     @FXML
     private CheckBox chkboxClassificationSystem;
-
     @FXML
     private Button btnSave;
-
     @FXML
     private Button btnCancel;
 
