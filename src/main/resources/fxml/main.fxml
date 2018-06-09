@@ -44,7 +44,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Допомога">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+                <MenuItem fx:id="miVariablesList" mnemonicParsing="false" text="Список змінних"/>
             </items>
           </Menu>
         </menus>

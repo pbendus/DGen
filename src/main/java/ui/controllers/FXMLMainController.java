@@ -73,6 +73,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     public MenuItem menuItemEducationalTemplate;
     @FXML
     public MenuItem miClearTables;
+    @FXML
+    public MenuItem miVariablesList;
 
     @FXML
     public Button btnGenerate;
@@ -110,6 +112,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
 
     private FXMLStudentController fxmlStudentController;
     private FXMLSettingsController fxmlSettingsController;
+    private FXMLVariablesController fxmlVariablesController;
 
     private DocWorker docWorker;
     private Stage primaryStage;
@@ -123,7 +126,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                               PreviousDocumentService previousDocumentService,
                               EducationalComponentService educationalComponentService,
                               GroupService groupService, GroupMapper groupMapper,
-                              FXMLStudentController fxmlStudentController, DocWorker docWorker,
+                              FXMLStudentController fxmlStudentController, FXMLVariablesController fxmlVariablesController, DocWorker docWorker,
                               FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController, TableCleanerService tableCleanerService) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
@@ -134,6 +137,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         this.groupService = groupService;
         this.groupMapper = groupMapper;
         this.fxmlStudentController = fxmlStudentController;
+        this.fxmlVariablesController = fxmlVariablesController;
         this.docWorker = docWorker;
         this.fxmlSettingsController = fxmlSettingsController;
         this.appProperties = appProperties;
@@ -187,6 +191,15 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                     AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                             "Не вдалося очистити дані", e);
                 }
+            }
+        });
+        miVariablesList.setOnAction(event -> {
+            try {
+                fxmlVariablesController.display();
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося відкрити вікно зі список змінних", e);
             }
         });
         miExit.setOnAction(event -> System.exit(0));
