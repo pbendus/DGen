@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
 import ui.models.Group;
-import ui.models.Group;
 import ui.models.Student;
 import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;

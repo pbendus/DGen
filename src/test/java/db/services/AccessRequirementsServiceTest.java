@@ -5,7 +5,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import db.configuration.DataSourceConfig;
 import db.entities.AccessRequirements;
-import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,7 +57,8 @@ public class AccessRequirementsServiceTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testUpdate() throws SQLException {
+      assertEquals(1, accessRequirementsService.update(accessRequirements));
   }
 
   @Test
