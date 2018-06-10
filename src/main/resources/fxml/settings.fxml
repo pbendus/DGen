@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1"
+            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
             fx:controller="ui.controllers.FXMLSettingsController">
    <children>
       <TabPane fx:id="tabPane" prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -296,7 +296,7 @@
                                     <Font name="System Bold" size="14.0"/>
                                 </font>
                             </Label>
-                            <Label layoutX="9.0" layoutY="241.0" text="Додати  тривалість програми"
+                            <Label layoutX="9.0" layoutY="241.0" text="Додати  новий шаблон"
                                    AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="9.0">
                                 <font>
                                     <Font name="System Bold" size="14.0"/>
@@ -308,9 +308,9 @@
                             <Button fx:id="btnAddEducationalTemplate" defaultButton="true" layoutX="491.0"
                                     layoutY="262.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0"
                                     text="Додати" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0"/>
-                            <ComboBox fx:id="cbTypeEducationalTemplate" layoutX="157.0" layoutY="272.0"
-                                      prefWidth="150.0" promptText="Тип" AnchorPane.bottomAnchor="14.0"
-                                      AnchorPane.rightAnchor="293.0"/>
+                            <ComboBox fx:id="cbTypeEducationalTemplate" layoutX="161.0" layoutY="265.0"
+                                      prefWidth="150.0" promptText="Тип" AnchorPane.bottomAnchor="16.0"
+                                      AnchorPane.rightAnchor="289.0"/>
                             <TextField fx:id="tfCreditsEducationalTemplate" layoutX="333.0" layoutY="262.0"
                                        prefHeight="30.0" prefWidth="130.0" promptText="Кредити"
                                        AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="137.0"/>

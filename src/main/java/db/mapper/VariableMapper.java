@@ -12,7 +12,7 @@ public class VariableMapper
         variable.setId(value.getId());
         variable.setVariable(value.getVariable());
         variable.setDescription(value.getDescription());
-        return null;
+        return variable;
     }
 
     @Override
@@ -21,6 +21,6 @@ public class VariableMapper
         variable.setId(value.getId());
         variable.setVariable(value.getVariable());
         variable.setDescription(value.getDescription());
-        return null;
+        return variable;
     }
 }

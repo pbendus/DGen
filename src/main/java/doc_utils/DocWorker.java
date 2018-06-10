@@ -489,7 +489,6 @@ public class DocWorker {
         }
 
         LOGGER.info(String.format("Paragraph{%s} has been changed, value(%s)", paragraph, value));
-        //Todo split value("/") and add new line with second value
     }
 
     public void openFile(String file) throws IOException {

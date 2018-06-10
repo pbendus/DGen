@@ -14,7 +14,6 @@
             <items>
                 <MenuItem fx:id="miChooseDB" mnemonicParsing="false" text="Вибрати БД"/>
                 <MenuItem fx:id="miChooseTemplate" mnemonicParsing="false" text="Вибрати шаблон"/>
-                <MenuItem fx:id="miChooseVariablePattern" mnemonicParsing="false" text="Вибрати шаблон змінних"/>
                 <SeparatorMenuItem mnemonicParsing="false"/>
                 <MenuItem fx:id="miExit" mnemonicParsing="false" text="Вихід">
                     <accelerator>
