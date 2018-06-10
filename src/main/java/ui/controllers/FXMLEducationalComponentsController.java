@@ -3,6 +3,7 @@ package ui.controllers;
 import db.mapper.EducationalComponentMapper;
 import db.mapper.EducationalComponentTemplateMapMapper;
 import db.services.EducationalComponentService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
@@ -57,9 +59,31 @@ public class FXMLEducationalComponentsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            templateWithEducationalComponents = educationalComponentTemplateMapMapper
-                    .mapAll(educationalComponentService.getComponentTemplateWithDiplomas());
+        Task<Void> service = new Task<Void>() {
+            @Override
+            protected Void call() {
+                try {
+                    templateWithEducationalComponents = educationalComponentTemplateMapMapper
+                            .mapAll(educationalComponentService.getComponentTemplateWithDiplomas());
+
+                } catch (SQLException e) {
+                    LOGGER.error(e.getMessage());
+                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                            "Не вдалося завантажити дані", e);
+                }
+                return null;
+            }
+        };
+
+        Dialogs.create()
+                .owner(stage)
+                .title("Progress Dialog")
+                .masthead("Завантаження результатів")
+                .showWorkerProgress(service);
+        Thread thread = new Thread(service);
+        thread.start();
+
+        service.setOnSucceeded(event -> {
             for (TemplateWithEducationalComponents template :
                     templateWithEducationalComponents) {
                 TableView<EducationalComponentWithData> tableView =
@@ -85,12 +109,12 @@ public class FXMLEducationalComponentsController implements Initializable {
                 tableView.getColumns().add(tcResult);
                 tableView.setItems(template.getEducationalComponents());
                 tcResult.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-                tcResult.setOnEditCommit(event -> {
-                    event.getRowValue().getEducationalComponent().setNationalScore(event.getNewValue());
-                    event.getRowValue().setNationalScore(event.getNewValue());
+                tcResult.setOnEditCommit(event1 -> {
+                    event1.getRowValue().getEducationalComponent().setNationalScore(event1.getNewValue());
+                    event1.getRowValue().setNationalScore(event1.getNewValue());
                     try {
                         educationalComponentService.update(
-                                educationalComponentMapper.reverseMap(event.getRowValue().getEducationalComponent()));
+                                educationalComponentMapper.reverseMap(event1.getRowValue().getEducationalComponent()));
                     } catch (SQLException e) {
                         LOGGER.error(e.getMessage());
                         AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
@@ -99,11 +123,9 @@ public class FXMLEducationalComponentsController implements Initializable {
                 });
                 tabPane.getTabs().add(new Tab(template.getEducationalComponentTemplate().getCourseTitleSplit(), content));
             }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                    "Не вдалося завантажити дані", e);
-        }
+        });
+
+
     }
 
     private void closeWindow() {

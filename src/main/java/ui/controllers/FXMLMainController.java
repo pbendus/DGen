@@ -9,6 +9,7 @@ import doc_utils.DocWorker;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
+import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ui.Main;
@@ -256,28 +258,52 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     }
 
     private void generateDocuments() {
-        long size = studentObservableList.stream().filter(student -> student.getSelect().isSelected()).count();
+        final long size = studentObservableList.stream().filter(student -> student.getSelect().isSelected()).count();
         if (containsSelectedStudents() && AlertBox.showConfirmationDialog("Підвердіть операцію",
                 "Ви справді бажаєте згенерувати додатки для вибраного(-их) студента(-ів)?")) {
-            for (Student student :
-                    studentObservableList) {
-                if (student.getSelect().isSelected()) {
-                    try {
-                        final String fileName = docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
-
-                        if (size == 1) {
-                            docWorker.openFile(fileName);
+            Task<Void> service = new Task<Void>() {
+                @Override
+                protected Void call() {
+                    int i = 0;
+                    for (Student student : studentObservableList) {
+                        if (student.getSelect().isSelected()) {
+                            try {
+                                final String fileName = docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+                                if (size == 1) {
+                                    docWorker.openFile(fileName);
+                                }
+                                updateProgress(++i, size);
+                            } catch (IOException | XmlException | SQLException | NullPointerException e) {
+                                LOGGER.error(e.getMessage());
+                                updateProgress(size, size);
+                                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                                        "Не вдалося згенерувати інформацію для вибараного студента(-ів)", e);
+                            }
                         }
-                    } catch (IOException | XmlException | SQLException | NullPointerException e) {
-                        LOGGER.error(e.getMessage());
-                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                                "Не вдалося згенерувати інформацію для вибараного студента(-ів)", e);
                     }
+                    return null;
                 }
-            }
+            };
 
-            AlertBox.showInformationDialog("Операцію виконано успішно",
-                    "Було згенеровано додатки до ДБР " + size + " студентів");
+            Dialogs.create()
+                    .owner(primaryStage)
+                    .title("Progress Dialog")
+                    .masthead("Генерація додатків")
+                    .showWorkerProgress(service);
+
+            btnGenerate.setDisable(true);
+            Thread thread = new Thread(service);
+            thread.start();
+
+            service.setOnSucceeded(event -> {
+
+                if (btnGenerate.isDisabled()) {
+                    AlertBox.showInformationDialog("Операцію виконано успішно",
+                            "Було згенеровано додатки до ДБР " + size + " студентів");
+                }
+                btnGenerate.setDisable(false);
+            });
+
         }
     }
 
@@ -382,7 +408,6 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlStudentController.setStudentId(0);
             openStudentModalWindow();
         });
-        btnGenerate.setOnAction(event -> generateDocuments());
         menuItemProtocols.setOnAction(
                 event -> openSettingsModalWindow(FXMLSettingsController.Tab.PROTOCOLS));
         menuItemGroups.setOnAction(
