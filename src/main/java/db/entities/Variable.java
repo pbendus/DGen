@@ -3,7 +3,7 @@ package db.entities;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "variable")
+@DatabaseTable(tableName = "variables")
 public class Variable {
 
     @DatabaseField(generatedId = true, useGetSet = true)

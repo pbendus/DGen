@@ -64,8 +64,6 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     @FXML
     public MenuItem miChooseTemplate;
     @FXML
-    public MenuItem miChooseVariablePattern;
-    @FXML
     public MenuItem miExit;
     @FXML
     public MenuItem miEducationalComponents;
@@ -179,7 +177,6 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     private void setOnMenuItemAction() {
         miChooseDB.setOnAction(event -> chooseDB());
         miChooseTemplate.setOnAction(event -> chooseTemplate());
-        miChooseVariablePattern.setOnAction(event -> chooseVariablePattern());
         miEducationalComponents.setOnAction(event -> openEducationalComponentsWindow());
         miClearTables.setOnAction(event -> {
             if (AlertBox.showConfirmationDialog("Підтвердіть операцію",
