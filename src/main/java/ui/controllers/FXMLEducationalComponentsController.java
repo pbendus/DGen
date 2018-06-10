@@ -1,7 +1,7 @@
 package ui.controllers;
 
-import db.mapper.EducationalComponentMapper;
-import db.mapper.EducationalComponentTemplateMapMapper;
+import db.mappers.EducationalComponentMapper;
+import db.mappers.EducationalComponentTemplateMapMapper;
 import db.services.EducationalComponentService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

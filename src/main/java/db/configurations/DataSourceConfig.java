@@ -1,4 +1,4 @@
-package db.configuration;
+package db.configurations;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;

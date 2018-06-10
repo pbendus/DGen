@@ -1,7 +1,7 @@
 package ui.controllers;
 
 import db.entities.ClassificationSystemConst;
-import db.mapper.*;
+import db.mappers.*;
 import db.services.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
