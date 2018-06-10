@@ -177,4 +177,11 @@ public class DataSourceConfig {
             throws SQLException {
         return DaoManager.createDao(connectionSource, Group.class);
     }
+
+    @Bean
+    public Dao<Variable, Integer> getVariableDao(
+            ConnectionSource connectionSource)
+            throws SQLException {
+        return DaoManager.createDao(connectionSource, Variable.class);
+    }
 }
