@@ -1,4 +1,4 @@
-package db.mapper;
+package db.mappers;
 
 import db.entities.Diploma;
 import db.entities.EducationalComponent;

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@ComponentScan("ui")
+@ComponentScan("ui.controllers")
 @PropertySource("classpath:ui.properties")
 public class AppConfig {
 }
