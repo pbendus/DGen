@@ -1,4 +1,4 @@
-package db.mapper;
+package db.mappers;
 
 import java.util.ArrayList;
 import java.util.List;
