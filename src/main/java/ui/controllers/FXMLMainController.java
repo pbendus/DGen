@@ -37,8 +37,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//import org.controlsfx.dialog.Dialogs;
-
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable, FXMLStudentController.StudentCallback {
 
