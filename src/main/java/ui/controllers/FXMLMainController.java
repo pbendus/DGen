@@ -299,7 +299,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
 
                 if (btnGenerate.isDisabled()) {
                     AlertBox.showInformationDialog("Операцію виконано успішно",
-                            "Було згенеровано додатки до ДБР " + size + " студентів");
+                            "Було згенеровано додатки до дипломних робіт " + size + " студентів");
                 }
                 btnGenerate.setDisable(false);
             });
