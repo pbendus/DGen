@@ -869,8 +869,8 @@ public class FXMLSettingsController implements Initializable {
         stage.setTitle("Налаштування");
 
         //setting up min width & height parameters for window
-        stage.setMinWidth(600);
-        stage.setMinHeight(450);
+        stage.setMinWidth(900);
+        stage.setMinHeight(600);
 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();

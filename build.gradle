@@ -58,4 +58,7 @@ dependencies {
   // Mock objects library for java
   // https://mvnrepository.com/artifact/org.mockito/mockito-all
   testCompile group: 'org.mockito', name: 'mockito-all', version: mockitoVersion
+
+  // https://mvnrepository.com/artifact/org.controlsfx/controlsfx
+  compile group: 'org.controlsfx', name: 'controlsfx', version: '8.0.1'
 }

@@ -37,6 +37,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
+//import org.controlsfx.dialog.Dialogs;
+
 @Controller("fxmlMainController")
 public class FXMLMainController implements Initializable, FXMLStudentController.StudentCallback {
 
@@ -474,8 +476,9 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlSettingsController.display();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+            e.printStackTrace();
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                    "Не вдалося відкрити модальне вікно студента", e);
+                    "Не вдалося відкрити вікно налаштувань", e);
         }
     }
 
