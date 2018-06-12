@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import ui.models.StudentWithAVG;
 
 import java.awt.*;
 import java.io.File;
@@ -36,6 +37,7 @@ public class DocWorker {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String DIRECTORY_PATH = "documents/";
     private static final String DOCX = ".docx";
+    private static final String STUDENT_RATING = "student_rating";
 
     @Value("${doc.pattern}")
     private String key;
@@ -56,7 +58,7 @@ public class DocWorker {
         this.appProperties = appProperties;
     }
 
-    public boolean isVariable(String string) {
+    private boolean isVariable(String string) {
         if (string == null || string.length() < 4) {
             return false;
         }
@@ -68,14 +70,14 @@ public class DocWorker {
         return matcher.find();
     }
 
-    public Map<DocVariableConst, DocVariable> findAllVariables() {
+    private Map<DocVariableConst, DocVariable> findAllVariables() {
         final Map<DocVariableConst, DocVariable> docVariables = new HashMap<>();
 
         for (XWPFParagraph paragraph : document.getParagraphs()) {
             final List<XWPFRun> runs = paragraph.getRuns();
             if (runs != null) {
                 final String text = paragraph.getText();
-                if (text != null && isVariable(text)) {
+                if (isVariable(text)) {
                     for (DocVariableConst docVariableConst :
                             DocVariableConst.values()) {
                         final String variable = text.replaceAll(key, "");
@@ -98,7 +100,7 @@ public class DocWorker {
         return docVariables;
     }
 
-    public String saveDocument(String fileName, int studentId) throws IOException, SQLException {
+    private String saveDocument(String fileName, int studentId) throws IOException, SQLException {
         final String groupName = studentService.getGroupByStudentId(studentId).getName() + "/";
         final String directoryName = DIRECTORY_PATH.concat(groupName);
         final File directory = new File(directoryName);
@@ -108,6 +110,19 @@ public class DocWorker {
         final String path = directoryName + fileName.trim() + DOCX;
         document.write(new FileOutputStream(path));
         LOGGER.info(String.format("Document %s has been created", fileName));
+
+        return path;
+    }
+
+    private String saveDocumentRating(int id) throws IOException {
+        final String directoryName = DIRECTORY_PATH;
+        final File directory = new File(directoryName);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        final String path = directoryName + STUDENT_RATING + (id == 2 ? "(z)" : "") + DOCX;
+        document.write(new FileOutputStream(path));
+        LOGGER.info(String.format("Document %s has been created", path));
 
         return path;
     }
@@ -363,7 +378,7 @@ public class DocWorker {
         for (XWPFTableCell cell : row.getTableCells()) {
             for (XWPFParagraph paragraph : cell.getParagraphs()) {
                 final String text = paragraph.getText();
-                if (text != null && isVariable(text)) {
+                if (isVariable(text)) {
                     for (DocVariableConst docVariableConst :
                             DocVariableConst.values()) {
                         final String variable = text.replaceAll(key, "");
@@ -383,6 +398,83 @@ public class DocWorker {
         FileInputStream fis = new FileInputStream(new File(appProperties.getInputFilePath()));
 
         return new XWPFDocument(fis);
+    }
+
+    private XWPFDocument getStudentRatingDocument() throws IOException {
+        FileInputStream fis = new FileInputStream(new File(appProperties.getStudentRatingInputPath()));
+
+        return new XWPFDocument(fis);
+    }
+
+    public String generateRatingDocument(List<StudentWithAVG> studentWithAVGS) throws IOException,
+            XmlException, SQLException {
+        document = getStudentRatingDocument();
+
+        final Map<DocVariableConst, DocVariable> variables = findAllVariables();
+
+        addStudentRatingRows(studentWithAVGS, variables);
+
+        return saveDocumentRating(studentWithAVGS.get(0).getDiploma().getStudent().getModeOfStudy().getId());
+    }
+
+    private void addStudentRatingRows(List<StudentWithAVG> components,
+                                      Map<DocVariableConst, DocVariable> variables)
+            throws IOException, XmlException, SQLException {
+        for (int i = 0; i < components.size(); i++) {
+            if (components.indexOf(components.get(i)) != components.size() - 1) {
+                final XWPFTableRow row =
+                        variables.get(DocVariableConst.STUDENT_RATING_ID).getCell().getTableRow();
+                final XWPFTable table = row.getTable();
+
+                final CTRow ctrow = CTRow.Factory.parse(row.getCtRow().newInputStream());
+
+                final XWPFTableRow newRow = new XWPFTableRow(ctrow, table);
+                final Map<DocVariableConst, DocVariable> docVariables = findAllVariables(newRow);
+                for (DocVariable docVariable :
+                        docVariables.values()) {
+                    changeStudentRatingData(docVariable, components.get(i), i + 1);
+                }
+                table.addRow(newRow, table.getRows().indexOf(row));
+            } else {
+                for (DocVariable docVariable :
+                        variables.values()) {
+                    changeStudentRatingData(docVariable, components.get(i), i + 1);
+                }
+            }
+        }
+    }
+
+    private void changeStudentRatingData(DocVariable docVariable, StudentWithAVG studentWithAVG, int i) throws SQLException {
+        switch (docVariable.getDocVariableConst()) {
+            case STUDENT_RATING_ID:
+                changeParagraph(docVariable.getParagraph(), false, String.valueOf(i));
+                break;
+            case STUDENT_RATING_NAME:
+                boolean isDiplomaWithHonor = educationalComponentService.isDiplomaWithHonor(studentWithAVG.getDiploma().getId());
+                changeParagraph(docVariable.getParagraph(), isDiplomaWithHonor,
+                        studentWithAVG.getDiploma().getStudent().fullNameProperty().get());
+                break;
+            case STUDENT_RATING_AVG:
+                changeParagraph(docVariable.getParagraph(), true,
+                        String.valueOf(studentWithAVG.getAvg()));
+                break;
+            case STUDENT_RATING_FIVE:
+                changeParagraph(docVariable.getParagraph(), false,
+                        String.valueOf(studentWithAVG.getNumberOfFive()));
+                break;
+            case STUDENT_RATING_FOUR:
+                changeParagraph(docVariable.getParagraph(), false,
+                        String.valueOf(studentWithAVG.getNumberOfFour()));
+                break;
+            case STUDENT_RATING_THREE:
+                changeParagraph(docVariable.getParagraph(), false,
+                        String.valueOf(studentWithAVG.getNumberOfThree()));
+                break;
+            case STUDENT_RATING_TOTAL:
+                changeParagraph(docVariable.getParagraph(), false,
+                        String.valueOf(studentWithAVG.getNumberOfEducationalComponent()));
+                break;
+        }
     }
 
     private void changeParagraph(DocVariable docVariable, Diploma diploma) throws SQLException {
@@ -491,6 +583,13 @@ public class DocWorker {
             paragraph.getRuns().get(0).setText(value, 0);
         }
 
+        LOGGER.info(String.format("Paragraph{%s} has been changed, value(%s)", paragraph, value));
+    }
+
+    private void changeParagraph(XWPFParagraph paragraph, boolean bold, String value) {
+        paragraph.getRuns().forEach(xwpfRun -> xwpfRun.setText("", 0));
+        paragraph.getRuns().get(0).setText(value, 0);
+        paragraph.getRuns().get(0).setBold(bold);
         LOGGER.info(String.format("Paragraph{%s} has been changed, value(%s)", paragraph, value));
     }
 

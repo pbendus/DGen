@@ -6,8 +6,10 @@ import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import db.entities.*;
 import doc_utils.AppProperties;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.Resource;
@@ -29,7 +31,6 @@ public class DataSourceConfig {
     }
 
     @Bean(destroyMethod = "close")
-    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public ConnectionSource getConnectionSource() throws SQLException, IOException {
         ConnectionSource connectionSource =
                 new JdbcPooledConnectionSource(appProperties.getDataBaseUrl());

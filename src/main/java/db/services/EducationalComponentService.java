@@ -60,6 +60,56 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
         return educationalComponents;
     }
 
+    public List<EducationalComponent> getAllNotZeroByDiplomaId(int diplomaId) throws SQLException {
+        return getDao().queryBuilder()
+                .where()
+                .gt("national_score", 0)
+                .and()
+                .eq("diploma_id", diplomaId)
+                .query();
+    }
+
+    public long getNumberOfFives(int diplomaId) throws SQLException {
+        return (long) getDao().queryBuilder()
+                .where()
+                .ge("national_score", 90)
+                .and()
+                .eq("diploma_id", diplomaId)
+                .query().size();
+    }
+
+    public long getNumberOfFours(int diplomaId) throws SQLException {
+        return (long) getDao().queryBuilder()
+                .where()
+                .ge("national_score", 75)
+                .and()
+                .le("national_score", 89)
+                .and()
+                .eq("diploma_id", diplomaId)
+                .query().size();
+    }
+
+    public long getNumberOfThree(int diplomaId) throws SQLException {
+        return (long) getDao().queryBuilder()
+                .where()
+                .ge("national_score", 60)
+                .and()
+                .le("national_score", 74)
+                .and()
+                .eq("diploma_id", diplomaId)
+                .query().size();
+    }
+
+    public double getAVG(int diplomaId) throws SQLException {
+        double size = getAllNotZeroByDiplomaId(diplomaId).size();
+        if (size == 0) {
+            return 0;
+        }
+
+        return (getNumberOfFives(diplomaId) * 5 + getNumberOfFours(diplomaId) * 4 +
+                getNumberOfThree(diplomaId) * 3) / size;
+    }
+
     public List<EducationalComponent> getAllCoursesByDiplomaId(int diplomaId) throws
             SQLException {
         final List<EducationalComponent> educationalComponents = new ArrayList<>();
@@ -169,5 +219,9 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
             aList.getDiploma().getStudent().getGroup().setName(groupService.getById(id).getName());
         }
         return list;
+    }
+
+    public boolean isDiplomaWithHonor(int diplomaId) throws SQLException {
+        return getAVG(diplomaId) >= 4.75 && getNumberOfThree(diplomaId) <= 0;
     }
 }
