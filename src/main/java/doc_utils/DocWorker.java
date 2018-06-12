@@ -12,6 +12,8 @@ import org.apache.xmlbeans.XmlException;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -28,6 +30,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class DocWorker {
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -36,21 +39,21 @@ public class DocWorker {
 
     @Value("${doc.pattern}")
     private String key;
-    @Value("${doc.inputFilePath}")
-    private String inputFilePath;
 
     private XWPFDocument document;
 
     private EducationalComponentService educationalComponentService;
     private DiplomaService diplomaService;
     private StudentService studentService;
+    private AppProperties appProperties;
 
     @Autowired
     public DocWorker(EducationalComponentService educationalComponentService,
-                     DiplomaService diplomaService, StudentService studentService) {
+                     DiplomaService diplomaService, StudentService studentService, AppProperties appProperties) {
         this.educationalComponentService = educationalComponentService;
         this.diplomaService = diplomaService;
         this.studentService = studentService;
+        this.appProperties = appProperties;
     }
 
     public boolean isVariable(String string) {
@@ -377,7 +380,7 @@ public class DocWorker {
     }
 
     private XWPFDocument getInputDocument() throws IOException {
-        FileInputStream fis = new FileInputStream(new File(inputFilePath));
+        FileInputStream fis = new FileInputStream(new File(appProperties.getInputFilePath()));
 
         return new XWPFDocument(fis);
     }

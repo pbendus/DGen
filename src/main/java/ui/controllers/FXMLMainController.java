@@ -1,8 +1,8 @@
 package ui.controllers;
 
 import db.entities.Diploma;
-import db.mapper.GroupMapper;
-import db.mapper.StudentMapper;
+import db.mappers.GroupMapper;
+import db.mappers.StudentMapper;
 import db.services.*;
 import doc_utils.AppProperties;
 import doc_utils.DocWorker;
@@ -20,7 +20,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.xmlbeans.XmlException;
 import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,6 +74,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     public MenuItem menuItemEducationalTemplate;
     @FXML
     public MenuItem miClearTables;
+    @FXML
+    public MenuItem miClearAllTables;
     @FXML
     public MenuItem miVariablesList;
 
@@ -186,7 +187,20 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             if (AlertBox.showConfirmationDialog("Підтвердіть операцію",
                     "Ви дійсно бажаєте очистити всі дані(крім статичних даних)?")) {
                 try {
-                    tableCleanerService.clearAllExeptStaticData();
+                    tableCleanerService.clearAllExceptStaticData();
+                } catch (SQLException e) {
+                    LOGGER.error(e.getMessage());
+                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                            "Не вдалося очистити дані", e);
+                }
+            }
+        });
+        miClearAllTables.setOnAction(event -> {
+            if (AlertBox.showConfirmationDialog("Підтвердіть операцію",
+                    "Ви дійсно бажаєте очистити всі дані?")) {
+                try {
+                    tableCleanerService.clearAllTables();
+                    studentObservableList.clear();
                 } catch (SQLException e) {
                     LOGGER.error(e.getMessage());
                     AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
@@ -204,10 +218,6 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             }
         });
         miExit.setOnAction(event -> System.exit(0));
-    }
-
-    private void chooseVariablePattern() {
-
     }
 
     private void chooseTemplate() {
@@ -275,11 +285,9 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                                     docWorker.openFile(fileName);
                                 }
                                 updateProgress(++i, size);
-                            } catch (IOException | XmlException | SQLException | NullPointerException e) {
+                            } catch (Exception e) {
                                 LOGGER.error(e.getMessage());
                                 updateProgress(size, size);
-                                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                                        "Не вдалося згенерувати інформацію для вибараного студента(-ів)", e);
                             }
                         }
                     }
@@ -298,7 +306,6 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             thread.start();
 
             service.setOnSucceeded(event -> {
-
                 if (btnGenerate.isDisabled()) {
                     AlertBox.showInformationDialog("Операцію виконано успішно",
                             "Було згенеровано додатки до ДБР " + size + " студентів");
@@ -306,6 +313,13 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 btnGenerate.setDisable(false);
             });
 
+            service.setOnFailed(event -> {
+                AlertBox.showErrorDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося згенерувати інформацію для вибараного студента(-ів)");
+                btnGenerate.setDisable(false);
+            });
+
+            service.setOnCancelled(event -> btnGenerate.setDisable(false));
         }
     }
 
