@@ -19,10 +19,10 @@ VALUES
 -----------------------------------------------------------------------------------------------------
 INSERT INTO duration_of_training (mode_of_study_id, duration_of_study_id, name)
 VALUES
-  (1, 1, '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2016 – 31.12.2017');
+  (1, 1, '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2017 – 31.12.2018');
 INSERT INTO duration_of_training (mode_of_study_id, duration_of_study_id, name)
 VALUES
-  (2, 1, '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2016 – 31.12.2017');
+  (2, 1, '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2017 – 31.12.2018');
 ------------------------------------------------------------------------------------------------------
 INSERT INTO access_requirements (name)
 VALUES (
