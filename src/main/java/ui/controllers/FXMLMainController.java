@@ -306,7 +306,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             service.setOnSucceeded(event -> {
                 if (btnGenerate.isDisabled()) {
                     AlertBox.showInformationDialog("Операцію виконано успішно",
-                            "Було згенеровано додатки до ДБР " + size + " студентів");
+                            "Було згенеровано додатки до дипломних робіт " + size + " студентів");
                 }
                 btnGenerate.setDisable(false);
             });
@@ -488,8 +488,9 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             fxmlSettingsController.display();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+            e.printStackTrace();
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                    "Не вдалося відкрити модальне вікно студента", e);
+                    "Не вдалося відкрити вікно налаштувань", e);
         }
     }
 
