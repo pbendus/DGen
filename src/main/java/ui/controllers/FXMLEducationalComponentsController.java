@@ -65,7 +65,6 @@ public class FXMLEducationalComponentsController implements Initializable {
                 try {
                     templateWithEducationalComponents = educationalComponentTemplateMapMapper
                             .mapAll(educationalComponentService.getComponentTemplateWithDiplomas());
-
                 } catch (SQLException e) {
                     LOGGER.error(e.getMessage());
                     AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
@@ -88,7 +87,6 @@ public class FXMLEducationalComponentsController implements Initializable {
                     templateWithEducationalComponents) {
                 TableView<EducationalComponentWithData> tableView =
                         new TableView<>();
-                final AnchorPane content = new AnchorPane(tableView);
                 AnchorPane.setTopAnchor(tableView, 10.0);
                 AnchorPane.setBottomAnchor(tableView, 10.0);
                 AnchorPane.setLeftAnchor(tableView, 10.0);
@@ -107,6 +105,7 @@ public class FXMLEducationalComponentsController implements Initializable {
                 tableView.getColumns().add(tcStudent);
                 tableView.getColumns().add(tcGroup);
                 tableView.getColumns().add(tcResult);
+                final AnchorPane content = new AnchorPane(tableView);
                 tableView.setItems(template.getEducationalComponents());
                 tcResult.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
                 tcResult.setOnEditCommit(event1 -> {
