@@ -3,6 +3,7 @@ package ui.controllers;
 import db.mappers.EducationalComponentMapper;
 import db.mappers.EducationalComponentTemplateMapMapper;
 import db.services.EducationalComponentService;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,6 +66,47 @@ public class FXMLEducationalComponentsController implements Initializable {
                 try {
                     templateWithEducationalComponents = educationalComponentTemplateMapMapper
                             .mapAll(educationalComponentService.getComponentTemplateWithDiplomas());
+                    Platform.runLater(() -> {
+                        for (TemplateWithEducationalComponents template :
+                                templateWithEducationalComponents) {
+                            TableView<EducationalComponentWithData> tableView =
+                                    new TableView<>();
+                            AnchorPane.setTopAnchor(tableView, 10.0);
+                            AnchorPane.setBottomAnchor(tableView, 10.0);
+                            AnchorPane.setLeftAnchor(tableView, 10.0);
+                            AnchorPane.setRightAnchor(tableView, 10.0);
+                            tableView.setEditable(true);
+                            tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+                            TableColumn<EducationalComponentWithData, Integer> tcId = new TableColumn<>(" №");
+                            TableColumn<EducationalComponentWithData, String> tcStudent = new TableColumn<>("Студент");
+                            TableColumn<EducationalComponentWithData, String> tcGroup = new TableColumn<>("Група");
+                            TableColumn<EducationalComponentWithData, Integer> tcResult = new TableColumn<>("Бали");
+                            tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
+                            tcStudent.setCellValueFactory(new PropertyValueFactory<>("student"));
+                            tcGroup.setCellValueFactory(new PropertyValueFactory<>("group"));
+                            tcResult.setCellValueFactory(new PropertyValueFactory<>("nationalScore"));
+                            tableView.getColumns().add(tcId);
+                            tableView.getColumns().add(tcStudent);
+                            tableView.getColumns().add(tcGroup);
+                            tableView.getColumns().add(tcResult);
+                            final AnchorPane content = new AnchorPane(tableView);
+                            tableView.setItems(template.getEducationalComponents());
+                            tcResult.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+                            tcResult.setOnEditCommit(event1 -> {
+                                event1.getRowValue().getEducationalComponent().setNationalScore(event1.getNewValue());
+                                event1.getRowValue().setNationalScore(event1.getNewValue());
+                                try {
+                                    educationalComponentService.update(
+                                            educationalComponentMapper.reverseMap(event1.getRowValue().getEducationalComponent()));
+                                } catch (SQLException e) {
+                                    LOGGER.error(e.getMessage());
+                                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                                            "Не вдалося обновити дані", e);
+                                }
+                            });
+                            tabPane.getTabs().add(new Tab(template.getEducationalComponentTemplate().getCourseTitleSplit(), content));
+                        }
+                    });
                 } catch (SQLException e) {
                     LOGGER.error(e.getMessage());
                     AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
@@ -83,45 +125,7 @@ public class FXMLEducationalComponentsController implements Initializable {
         thread.start();
 
         service.setOnSucceeded(event -> {
-            for (TemplateWithEducationalComponents template :
-                    templateWithEducationalComponents) {
-                TableView<EducationalComponentWithData> tableView =
-                        new TableView<>();
-                AnchorPane.setTopAnchor(tableView, 10.0);
-                AnchorPane.setBottomAnchor(tableView, 10.0);
-                AnchorPane.setLeftAnchor(tableView, 10.0);
-                AnchorPane.setRightAnchor(tableView, 10.0);
-                tableView.setEditable(true);
-                tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-                TableColumn<EducationalComponentWithData, Integer> tcId = new TableColumn<>(" №");
-                TableColumn<EducationalComponentWithData, String> tcStudent = new TableColumn<>("Студент");
-                TableColumn<EducationalComponentWithData, String> tcGroup = new TableColumn<>("Група");
-                TableColumn<EducationalComponentWithData, Integer> tcResult = new TableColumn<>("Бали");
-                tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
-                tcStudent.setCellValueFactory(new PropertyValueFactory<>("student"));
-                tcGroup.setCellValueFactory(new PropertyValueFactory<>("group"));
-                tcResult.setCellValueFactory(new PropertyValueFactory<>("nationalScore"));
-                tableView.getColumns().add(tcId);
-                tableView.getColumns().add(tcStudent);
-                tableView.getColumns().add(tcGroup);
-                tableView.getColumns().add(tcResult);
-                final AnchorPane content = new AnchorPane(tableView);
-                tableView.setItems(template.getEducationalComponents());
-                tcResult.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-                tcResult.setOnEditCommit(event1 -> {
-                    event1.getRowValue().getEducationalComponent().setNationalScore(event1.getNewValue());
-                    event1.getRowValue().setNationalScore(event1.getNewValue());
-                    try {
-                        educationalComponentService.update(
-                                educationalComponentMapper.reverseMap(event1.getRowValue().getEducationalComponent()));
-                    } catch (SQLException e) {
-                        LOGGER.error(e.getMessage());
-                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                                "Не вдалося обновити дані", e);
-                    }
-                });
-                tabPane.getTabs().add(new Tab(template.getEducationalComponentTemplate().getCourseTitleSplit(), content));
-            }
+
         });
 
 
