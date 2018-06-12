@@ -1,4 +1,4 @@
-package db.mapper;
+package db.mappers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

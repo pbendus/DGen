@@ -1,6 +1,6 @@
 package ui;
 
-import db.configuration.DataSourceConfig;
+import db.configurations.DataSourceConfig;
 import doc_utils.DocConfig;
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -1,8 +1,8 @@
 package ui.controllers;
 
 import db.entities.Diploma;
-import db.mapper.GroupMapper;
-import db.mapper.StudentMapper;
+import db.mappers.GroupMapper;
+import db.mappers.StudentMapper;
 import db.services.*;
 import doc_utils.AppProperties;
 import doc_utils.DocWorker;

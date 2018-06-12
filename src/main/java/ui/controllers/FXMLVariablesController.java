@@ -1,6 +1,6 @@
 package ui.controllers;
 
-import db.mapper.VariableMapper;
+import db.mappers.VariableMapper;
 import db.services.VariableService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,6 +1,6 @@
 package ui.controllers;
 
-import db.mapper.*;
+import db.mappers.*;
 import db.services.*;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
