@@ -166,7 +166,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tabDurationOfTraining" text="Строки навчання у кожному ВНЗ ">
+            <Tab fx:id="tabDurationOfTraining" text="Строки навчання у ЗВО">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
                      <children>
@@ -181,7 +181,8 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Label layoutX="9.0" layoutY="10.0" text="Строки навчання у кожному ВНЗ " AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="10.0">
+                         <Label layoutX="9.0" layoutY="10.0" text="Строки навчання у ЗВО" AnchorPane.leftAnchor="9.0"
+                                AnchorPane.topAnchor="10.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
