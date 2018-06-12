@@ -5,13 +5,13 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import db.entities.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import doc_utils.AppProperties;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.sql.SQLException;
 
 @Configuration
@@ -22,10 +22,17 @@ public class DataSourceConfig {
     @Resource
     private Environment environment;
 
+    private AppProperties appProperties;
+
+    public DataSourceConfig(AppProperties appProperties) {
+        this.appProperties = appProperties;
+    }
+
     @Bean(destroyMethod = "close")
-    public ConnectionSource getConnectionSource() throws SQLException {
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public ConnectionSource getConnectionSource() throws SQLException, IOException {
         ConnectionSource connectionSource =
-                new JdbcPooledConnectionSource(environment.getRequiredProperty("db.databaseUrl"));
+                new JdbcPooledConnectionSource(appProperties.getDataBaseUrl());
         ((JdbcPooledConnectionSource) connectionSource).setCheckConnectionsEveryMillis(
                 Long.parseLong(environment.getRequiredProperty("db.checkConnectionsEveryMillis")));
         return connectionSource;

@@ -33,6 +33,18 @@ public class AppProperties {
         LOGGER.info("db.databaseUrl has been changed");
     }
 
+    public String getDataBaseUrl() throws IOException {
+        InputStream input;
+
+        final Properties properties = new Properties();
+
+        input = new FileInputStream("src/main/resources/database.properties");
+
+        properties.load(input);
+
+        return properties.getProperty("db.databaseUrl");
+    }
+
     public void changeInputFile(String newInputFile) throws IOException {
         final Properties propertiesNew = new Properties();
         final Properties propertiesOld = new Properties();
@@ -50,6 +62,18 @@ public class AppProperties {
         propertiesNew.store(output, null);
 
         LOGGER.info("doc.inputFilePath has been changed");
+    }
+
+    public String getInputFilePath() throws IOException {
+        InputStream input;
+
+        final Properties propertiesOld = new Properties();
+
+        input = new FileInputStream("src/main/resources/doc.properties");
+
+        propertiesOld.load(input);
+
+        return propertiesOld.getProperty("doc.inputFilePath");
     }
 
     public void changePattern(String patternNew) throws IOException {

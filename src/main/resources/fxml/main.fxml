@@ -26,6 +26,7 @@
             <items>
                 <MenuItem fx:id="miEducationalComponents" mnemonicParsing="false" text="Результати навчання"/>
                 <MenuItem fx:id="miClearTables" mnemonicParsing="false" text="Очистити всі дані(крім статичних даних)"/>
+                <MenuItem fx:id="miClearAllTables" mnemonicParsing="false" text="Очистити всі дані"/>
             </items>
           </Menu>
             <Menu fx:id="menuSettings" mnemonicParsing="false" text="Налаштування">

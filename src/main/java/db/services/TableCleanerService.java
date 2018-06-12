@@ -26,8 +26,17 @@ public class TableCleanerService {
         }
     }
 
-    public void clearAllExeptStaticData() throws SQLException {
+    public void clearAllExceptStaticData() throws SQLException {
         clearTables(Diploma.class, DiplomaSubject.class, EducationalComponent.class, EducationalComponentTemplate.class,
                 Group.class, PreviousDocument.class, Protocol.class, Student.class);
+    }
+
+    public void clearAllTables() throws SQLException {
+        clearTables(AccessRequirements.class, ArDos.class, ClassificationSystem.class, Diploma.class,
+                DiplomaSubject.class, DurationOfStudy.class, DurationOfTraining.class, EctsCredits.class,
+                EducationalComponent.class, EducationalComponentTemplate.class, EducationalComponentType.class,
+                FieldOfStudy.class, Group.class, MainField.class, ModeOfStudy.class, NationalGrade.class,
+                OfficialDurationOfProgramme.class, PreviousDocument.class, Protocol.class, RatingPoint.class,
+                Student.class, Variable.class);
     }
 }
