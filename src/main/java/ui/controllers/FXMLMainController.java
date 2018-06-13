@@ -76,6 +76,10 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     public MenuItem miClearAllTables;
     @FXML
     public MenuItem miVariablesList;
+    @FXML
+    public MenuItem miAVG;
+    @FXML
+    public MenuItem miAVGPartTime;
 
     @FXML
     public Button btnGenerate;
@@ -120,6 +124,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
     private AppProperties appProperties;
     private FXMLEducationalComponentsController fxmlEducationalComponentController;
     private TableCleanerService tableCleanerService;
+    private FXMLAVGController fxmlAVGController;
 
     @Autowired
     public FXMLMainController(StudentMapper studentMapper, StudentService studentService,
@@ -128,7 +133,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                               EducationalComponentService educationalComponentService,
                               GroupService groupService, GroupMapper groupMapper,
                               FXMLStudentController fxmlStudentController, FXMLVariablesController fxmlVariablesController, DocWorker docWorker,
-                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController, TableCleanerService tableCleanerService) {
+                              FXMLSettingsController fxmlSettingsController, AppProperties appProperties, FXMLEducationalComponentsController fxmlEducationalComponentController, TableCleanerService tableCleanerService, FXMLAVGController fxmlAVGController) {
         this.studentMapper = studentMapper;
         this.studentService = studentService;
         this.diplomaService = diplomaService;
@@ -144,6 +149,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         this.appProperties = appProperties;
         this.fxmlEducationalComponentController = fxmlEducationalComponentController;
         this.tableCleanerService = tableCleanerService;
+        this.fxmlAVGController = fxmlAVGController;
     }
 
     @Override
@@ -213,6 +219,26 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 LOGGER.error(e.getMessage());
                 AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                         "Не вдалося відкрити вікно зі список змінних", e);
+            }
+        });
+        miAVG.setOnAction(event -> {
+            try {
+                fxmlAVGController.setModeOfStudyId(1);
+                fxmlAVGController.display();
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося відкрити вікно зі рейтингом студентів", e);
+            }
+        });
+        miAVGPartTime.setOnAction(event -> {
+            try {
+                fxmlAVGController.setModeOfStudyId(2);
+                fxmlAVGController.display();
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося відкрити вікно зі рейтингом студентів", e);
             }
         });
         miExit.setOnAction(event -> System.exit(0));
