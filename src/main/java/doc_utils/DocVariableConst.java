@@ -48,7 +48,15 @@ public enum DocVariableConst {
     ATTESTATION_SCORE("attestation_score"),
     ATTESTATION_RATING_POINT("attestation_rating_point"),
     ATTESTATION_NATIONAL_GRADE("attestation_national_grade"),
-    ECTS_CREDITS("ects_credits");
+    ECTS_CREDITS("ects_credits"),
+
+    STUDENT_RATING_ID("id"),
+    STUDENT_RATING_NAME("name"),
+    STUDENT_RATING_AVG("avg"),
+    STUDENT_RATING_FIVE("five"),
+    STUDENT_RATING_FOUR("four"),
+    STUDENT_RATING_THREE("three"),
+    STUDENT_RATING_TOTAL("total");
 
     private final String value;
 

@@ -67,13 +67,13 @@ public class AppProperties {
     public String getInputFilePath() throws IOException {
         InputStream input;
 
-        final Properties propertiesOld = new Properties();
+        final Properties properties = new Properties();
 
         input = new FileInputStream("src/main/resources/doc.properties");
 
-        propertiesOld.load(input);
+        properties.load(input);
 
-        return propertiesOld.getProperty("doc.inputFilePath");
+        return properties.getProperty("doc.inputFilePath");
     }
 
     public void changePattern(String patternNew) throws IOException {
@@ -94,5 +94,17 @@ public class AppProperties {
         propertiesNew.store(output, null);
 
         LOGGER.info("doc.pattern has been changed");
+    }
+
+    public String getStudentRatingInputPath() throws IOException {
+        InputStream input;
+
+        final Properties properties = new Properties();
+
+        input = new FileInputStream("src/main/resources/doc.properties");
+
+        properties.load(input);
+
+        return properties.getProperty("doc.studentRatingFilePath");
     }
 }
