@@ -265,6 +265,7 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         tblColGroup.setCellValueFactory(new PropertyValueFactory<>("group"));
 
         tblView.setItems(studentObservableList);
+        tblView.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void generateDocuments() {
@@ -295,8 +296,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
 
             Dialogs.create()
                     .owner(primaryStage)
-                    .title("Progress Dialog")
-                    .masthead("Генерація додатків")
+                    .title("Прогрес операції")
+                    .masthead("Додатки до дипломів генеруються")
                     .showWorkerProgress(service);
 
             btnGenerate.setDisable(true);
@@ -342,13 +343,13 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 }
             });
 
-            MenuItem editItem = new MenuItem("Edit");
+            MenuItem editItem = new MenuItem("Редагувати");
             editItem.setOnAction(e -> {
                 fxmlStudentController.setStudentId(row.getItem().getId());
                 openStudentModalWindow();
             });
 
-            MenuItem removeItem = new MenuItem("Delete");
+            MenuItem removeItem = new MenuItem("Видалити");
             removeItem.setOnAction(e -> {
                 if (AlertBox.showConfirmationDialog("Підтвердіть операцію",
                         "Ви дійсно бажаєте видалити вибраного студента?"))

@@ -415,6 +415,7 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<Protocol> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
                     final MenuItem removeItem = new MenuItem("Delete");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             protocolService, tblProtocols));
@@ -427,6 +428,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblProtocols.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addProtocol() {
@@ -458,7 +461,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<MainField> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             mainFieldService, tblMainField));
                     rowMenu.getItems().addAll(removeItem);
@@ -500,7 +504,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<FieldOfStudy> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             fieldOfStudyService, tblFieldOfStudy));
                     rowMenu.getItems().addAll(removeItem);
@@ -512,6 +517,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblFieldOfStudy.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addFieldOfStudy() {
@@ -542,7 +549,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<Group> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             groupService, tblGroups));
                     rowMenu.getItems().addAll(removeItem);
@@ -554,6 +562,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblGroups.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addGroup() {
@@ -598,7 +608,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<OfficialDurationOfProgramme> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             officialDurationOfProgrammeService, tblOfficialDuration));
                     rowMenu.getItems().addAll(removeItem);
@@ -610,6 +621,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblOfficialDuration.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addOfficialDuration() {
@@ -661,7 +674,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<DurationOfTraining> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             durationOfTrainingService, tblDurationOfTraining));
                     rowMenu.getItems().addAll(removeItem);
@@ -673,6 +687,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblDurationOfTraining.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addDurationOfTraining() {
@@ -717,7 +733,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<EctsCredits> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             ectsCreditsService, tblEctsCredits));
                     rowMenu.getItems().addAll(removeItem);
@@ -729,6 +746,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblEctsCredits.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addEctsCredits() {
@@ -760,7 +779,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<AccessRequirements> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             accessRequirementsService, tblAccessRequirements));
                     rowMenu.getItems().addAll(removeItem);
@@ -772,6 +792,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblAccessRequirements.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     private void addAccessRequirements() {
@@ -840,7 +862,8 @@ public class FXMLSettingsController implements Initializable {
                 tableView -> {
                     final TableRow<EducationalComponentTemplate> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
-                    final MenuItem removeItem = new MenuItem("Delete");
+                    rowMenu.setStyle("-fx-pref-width: 200px;");
+                    final MenuItem removeItem = new MenuItem("Видалити");
                     removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
                             educationalComponentTemplateService, tblEducationalTemplate));
                     rowMenu.getItems().addAll(removeItem);
@@ -852,6 +875,8 @@ public class FXMLSettingsController implements Initializable {
                                     .otherwise((ContextMenu) null));
                     return row;
                 });
+
+        tblEducationalTemplate.setPlaceholder(new Label("В таблиці поки що немає даних"));
     }
 
     void display() throws Exception {
