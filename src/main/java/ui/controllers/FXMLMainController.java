@@ -331,6 +331,15 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
 
             service.setOnSucceeded(event -> {
                 if (btnGenerate.isDisabled()) {
+                    if (size > 1) {
+                        try {
+                            docWorker.openFile(DocWorker.DIRECTORY_PATH);
+                        } catch (IOException e) {
+                            LOGGER.error(e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
                     AlertBox.showInformationDialog("Операцію виконано успішно",
                             "Було згенеровано додатки до дипломних робіт " + size + " студентів");
                 }

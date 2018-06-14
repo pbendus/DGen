@@ -55,10 +55,12 @@ public class AppProperties {
         propertiesOld.load(input);
 
         final String pattern = propertiesOld.getProperty("doc.pattern");
+        final String studentRatingFilePath = propertiesOld.getProperty("doc.studentRatingFilePath");
         input.close();
         output = new FileOutputStream("src/main/resources/doc.properties");
         propertiesNew.setProperty("doc.pattern", pattern);
         propertiesNew.setProperty("doc.inputFilePath", newInputFile);
+        propertiesNew.setProperty("doc.studentRatingFilePath", studentRatingFilePath);
         propertiesNew.store(output, null);
 
         LOGGER.info("doc.inputFilePath has been changed");
@@ -86,11 +88,13 @@ public class AppProperties {
 
         propertiesOld.load(input);
         final String inputFilePath = propertiesOld.getProperty("doc.inputFilePath");
+        final String studentRatingFilePath = propertiesOld.getProperty("doc.studentRatingFilePath");
         input.close();
 
         output = new FileOutputStream("src/main/resources/doc.properties");
         propertiesNew.setProperty("doc.pattern", patternNew);
         propertiesNew.setProperty("doc.inputFilePath", inputFilePath);
+        propertiesNew.setProperty("doc.studentRatingFilePath", studentRatingFilePath);
         propertiesNew.store(output, null);
 
         LOGGER.info("doc.pattern has been changed");

@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class DocWorker {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String DIRECTORY_PATH = "documents/";
+    public static final String DIRECTORY_PATH = "documents/";
     private static final String DOCX = ".docx";
     private static final String STUDENT_RATING = "student_rating";
 

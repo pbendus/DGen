@@ -103,6 +103,7 @@ public class FXMLAVGController implements Initializable {
                             if (avg != 0) {
                                 studentWithAVGS.add(studentWithAVG);
                             }
+                            updateProgress(diplomas.indexOf(diploma), diplomas.size());
                         }
                     }
                 } catch (SQLException e) {
@@ -147,6 +148,7 @@ public class FXMLAVGController implements Initializable {
                         docWorker.openFile(docWorker.generateRatingDocument(studentWithAVGS));
                     } catch (IOException | XmlException | SQLException e) {
                         LOGGER.error(e.getMessage());
+                        e.printStackTrace();
                         AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                                 "Не вдалося згенерувати документ", e);
                     }

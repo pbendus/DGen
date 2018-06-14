@@ -104,6 +104,10 @@ public class FXMLEducationalComponentsController implements Initializable {
                                             "Не вдалося обновити дані", e);
                                 }
                             });
+
+                            updateProgress(templateWithEducationalComponents.indexOf(template),
+                                    templateWithEducationalComponents.size());
+
                             tabPane.getTabs().add(new Tab(template.getEducationalComponentTemplate().getCourseTitleSplit(), content));
                         }
                     });
