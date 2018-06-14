@@ -32,6 +32,7 @@ import ui.utils.SpringFXMLLoader;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -189,7 +190,8 @@ public class FXMLAVGController implements Initializable {
         final Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
                 .location(FXMLStudentController.class
-                        .getResource("../../fxml/avg.fxml"))
+                        .getResource("/fxml/avg.fxml"))
+                .charset(StandardCharsets.UTF_8)
                 .load();
 
         final Scene scene = new Scene(root);

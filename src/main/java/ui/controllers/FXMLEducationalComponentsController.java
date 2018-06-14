@@ -31,6 +31,7 @@ import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -143,7 +144,8 @@ public class FXMLEducationalComponentsController implements Initializable {
         Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
                 .location(FXMLEducationalComponentsController.class
-                        .getResource("../../fxml/educationalComponents.fxml"))
+                        .getResource("/fxml/educationalComponents.fxml"))
+                .charset(StandardCharsets.UTF_8)
                 .load();
 
         Scene scene = new Scene(root);

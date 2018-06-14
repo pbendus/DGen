@@ -22,6 +22,7 @@ import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -84,7 +85,8 @@ public class FXMLVariablesController implements Initializable {
         Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
                 .location(FXMLStudentController.class
-                        .getResource("../../fxml/variables.fxml"))
+                        .getResource("/fxml/variables.fxml"))
+                .charset(StandardCharsets.UTF_8)
                 .load();
 
         Scene scene = new Scene(root);

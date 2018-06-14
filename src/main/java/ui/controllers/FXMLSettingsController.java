@@ -27,6 +27,7 @@ import ui.utils.SpringFXMLLoader;
 import ui.utils.Validation;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -858,7 +859,8 @@ public class FXMLSettingsController implements Initializable {
         final Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
                 .location(FXMLStudentController.class
-                        .getResource("../../fxml/settings.fxml"))
+                        .getResource("/fxml/settings.fxml"))
+                .charset(StandardCharsets.UTF_8)
                 .load();
 
         final Scene scene = new Scene(root);

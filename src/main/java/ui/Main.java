@@ -16,6 +16,17 @@ public class Main extends Application {
     private static final Logger LOGGER = LogManager.getLogger();
     private static AnnotationConfigApplicationContext applicationContext;
 
+    public static void main(String[] args) {
+        try {
+            launch(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося запустити головне вікно", e);
+        }
+    }
+
     @Override
     public void init() {
         try {
@@ -24,6 +35,7 @@ public class Main extends Application {
             applicationContext = new AnnotationConfigApplicationContext(AppConfig.class, DataSourceConfig.class,
                     DocConfig.class);
         } catch (Exception e) {
+            e.printStackTrace();
             LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося завантажити необхідні компоненти", e);
@@ -37,14 +49,11 @@ public class Main extends Application {
                     .getBean("fxmlMainController");
             fxmlMainController.display(primaryStage);
         } catch (Exception e) {
+            e.printStackTrace();
             LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
                     "Не вдалося запустити головне вікно", e);
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     public static AnnotationConfigApplicationContext getContext() {
