@@ -61,7 +61,7 @@ public class FXMLEducationalComponentsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Task<Void> service = new Task<Void>() {
+        final Task<Void> service = new Task<Void>() {
             @Override
             protected Void call() {
                 try {
@@ -126,7 +126,7 @@ public class FXMLEducationalComponentsController implements Initializable {
                 .title("Progress Dialog")
                 .masthead("Завантаження результатів")
                 .showWorkerProgress(service);
-        Thread thread = new Thread(service);
+        final Thread thread = new Thread(service);
         thread.start();
 
         service.setOnSucceeded(event -> {

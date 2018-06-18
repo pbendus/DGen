@@ -4,6 +4,7 @@ import db.mappers.DiplomaMapper;
 import db.services.DiplomaService;
 import db.services.EducationalComponentService;
 import doc_utils.DocWorker;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,6 +63,7 @@ public class FXMLAVGController implements Initializable {
     private DocWorker docWorker;
 
     private int modeOfStudyId;
+    private List<StudentWithAVG> studentWithAVGS;
 
     @Autowired
     public FXMLAVGController(DiplomaService diplomaService, DiplomaMapper diplomaMapper,
@@ -75,18 +77,13 @@ public class FXMLAVGController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tblColName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDiploma()
-                .getStudent().fullNameProperty().get()));
-        tblColAVG.setCellValueFactory(new PropertyValueFactory<>("avg"));
-
-        final List<StudentWithAVG> studentWithAVGS = new ArrayList<>();
-
         final Task<Void> service = new Task<Void>() {
             @Override
             protected Void call() {
                 try {
+                    studentWithAVGS = new ArrayList<>();
                     studentWithAVGObservableList.clear();
+
                     final List<Diploma> diplomas = diplomaMapper.map(diplomaService.getAll());
                     for (Diploma diploma :
                             diplomas) {
@@ -113,9 +110,25 @@ public class FXMLAVGController implements Initializable {
                             "Не вдалося завантажити дані", e);
                     btnGenerate.setDisable(false);
                 }
+
+                Platform.runLater(() -> {
+                    tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
+                    tblColName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDiploma()
+                            .getStudent().fullNameProperty().get()));
+                    tblColAVG.setCellValueFactory(new PropertyValueFactory<>("avg"));
+                    Collections.sort(studentWithAVGS);
+                    for (int i = 0; i < studentWithAVGS.size(); i++) {
+                        studentWithAVGS.get(i).setId(i + 1);
+                    }
+                    studentWithAVGObservableList.addAll(studentWithAVGS);
+                    tblResults.setItems(studentWithAVGObservableList);
+                });
+
                 return null;
             }
         };
+
+        btnGenerate.setDisable(true);
 
         Dialogs.create()
                 .owner(stage)
@@ -123,23 +136,10 @@ public class FXMLAVGController implements Initializable {
                 .masthead("Завантаження даних")
                 .showWorkerProgress(service);
 
-        btnGenerate.setDisable(true);
-
         final Thread thread = new Thread(service);
         thread.start();
 
-        service.setOnSucceeded(event -> {
-            if (btnGenerate.isDisabled()) {
-                Collections.sort(studentWithAVGS);
-                for (int i = 0; i < studentWithAVGS.size(); i++) {
-                    studentWithAVGS.get(i).setId(i + 1);
-                }
-                studentWithAVGObservableList.addAll(studentWithAVGS);
-                tblResults.setItems(studentWithAVGObservableList);
-            }
-            btnGenerate.setDisable(false);
-        });
-
+        service.setOnSucceeded(event -> btnGenerate.setDisable(false));
 
         btnGenerate.setOnAction(event -> {
             final Task<Void> generateService = new Task<Void>() {
