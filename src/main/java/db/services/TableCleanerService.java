@@ -22,7 +22,12 @@ public class TableCleanerService {
     public final void clearTables(Class... classes) throws SQLException {
         for (Class clazz :
                 classes) {
-            TableUtils.clearTable(connectionSource, clazz);
+            TableUtils.dropTable(connectionSource, clazz, true);
+        }
+
+        for (Class clazz :
+                classes) {
+            TableUtils.createTable(connectionSource, clazz);
         }
     }
 

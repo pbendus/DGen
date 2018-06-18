@@ -31,6 +31,7 @@ import ui.utils.AlertBox;
 import ui.utils.SpringFXMLLoader;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -60,7 +61,7 @@ public class FXMLEducationalComponentsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Task<Void> service = new Task<Void>() {
+        final Task<Void> service = new Task<Void>() {
             @Override
             protected Void call() {
                 try {
@@ -104,6 +105,10 @@ public class FXMLEducationalComponentsController implements Initializable {
                                             "Не вдалося обновити дані", e);
                                 }
                             });
+
+                            updateProgress(templateWithEducationalComponents.indexOf(template),
+                                    templateWithEducationalComponents.size());
+
                             tabPane.getTabs().add(new Tab(template.getEducationalComponentTemplate().getCourseTitleSplit(), content));
                         }
                     });
@@ -121,7 +126,7 @@ public class FXMLEducationalComponentsController implements Initializable {
                 .title("Progress Dialog")
                 .masthead("Завантаження результатів")
                 .showWorkerProgress(service);
-        Thread thread = new Thread(service);
+        final Thread thread = new Thread(service);
         thread.start();
 
         service.setOnSucceeded(event -> {
@@ -139,7 +144,8 @@ public class FXMLEducationalComponentsController implements Initializable {
         Parent root = SpringFXMLLoader.create()
                 .applicationContext(Main.getContext())
                 .location(FXMLEducationalComponentsController.class
-                        .getResource("../../fxml/educationalComponents.fxml"))
+                        .getResource("/fxml/educationalComponents.fxml"))
+                .charset(StandardCharsets.UTF_8)
                 .load();
 
         Scene scene = new Scene(root);
