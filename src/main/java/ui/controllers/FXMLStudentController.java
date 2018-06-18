@@ -626,7 +626,7 @@ public class FXMLStudentController implements Initializable {
                 .getByModeAndDurationOfStudy(cbModeOfStudy.getSelectionModel().getSelectedItem().getId(),
                         cbDurationOfStudy.getSelectionModel().getSelectedItem().getId())));
         diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectUk.getText().trim());
-        diploma.getDiplomaSubject().setSubjectUK(tfDiplomaSubjectEn.getText().trim());
+        diploma.getDiplomaSubject().setSubjectEN(tfDiplomaSubjectEn.getText().trim());
         diplomaSubjectService.update(diplomaSubjectMapper.reverseMap(diploma.getDiplomaSubject()));
 
         diplomaService.update(diplomaMapper.reverseMap(diploma));
