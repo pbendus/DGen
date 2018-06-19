@@ -36,10 +36,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -102,7 +99,7 @@ public class FXMLAVGController implements Initializable {
                     double avg = educationalComponentService.getAVG(diploma.getId());
 
                     final StudentWithAVG studentWithAVG = new StudentWithAVG(diploma,
-                            Double.parseDouble(new DecimalFormat("#0.000").format(avg)),
+                            Double.parseDouble(DecimalFormat.getInstance(Locale.US).format(Double.valueOf(avg))),
                             educationalComponentService.getNumberOfFives(diplomaId),
                             educationalComponentService.getNumberOfFours(diplomaId),
                             educationalComponentService.getNumberOfThree(diplomaId),
