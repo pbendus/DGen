@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+            minWidth="-Infinity" prefHeight="335.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1"
             fx:controller="ui.controllers.FXMLAVGController">
     <TableView fx:id="tblResults" editable="true" layoutX="8.0" layoutY="31.0" prefHeight="299.0" prefWidth="585.0"
                AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
@@ -28,4 +28,7 @@
     </Label>
     <Button fx:id="btnGenerate" defaultButton="true" layoutX="506.0" layoutY="296.0" mnemonicParsing="false"
             text="Згенерувати" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0"/>
+    <ProgressIndicator fx:id="progressIndicator" layoutX="201.0" layoutY="87.0" prefHeight="176.0" prefWidth="185.0"
+                       AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0"
+                       AnchorPane.topAnchor="80.0"/>
 </AnchorPane>

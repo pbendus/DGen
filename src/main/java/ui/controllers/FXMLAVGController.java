@@ -4,7 +4,6 @@ import db.mappers.DiplomaMapper;
 import db.services.DiplomaService;
 import db.services.EducationalComponentService;
 import doc_utils.DocWorker;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -36,10 +36,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @Controller("fxmlAVGController")
 public class FXMLAVGController implements Initializable {
@@ -55,6 +54,11 @@ public class FXMLAVGController implements Initializable {
     public TableColumn<StudentWithAVG, String> tblColAVG;
     @FXML
     public Button btnGenerate;
+    private final Executor exec = Executors.newCachedThreadPool(runnable -> {
+        Thread t = new Thread(runnable);
+        t.setDaemon(true);
+        return t;
+    });
     private Stage stage;
     private DiplomaService diplomaService;
     private DiplomaMapper diplomaMapper;
@@ -64,6 +68,8 @@ public class FXMLAVGController implements Initializable {
 
     private int modeOfStudyId;
     private List<StudentWithAVG> studentWithAVGS;
+    @FXML
+    public ProgressIndicator progressIndicator;
 
     @Autowired
     public FXMLAVGController(DiplomaService diplomaService, DiplomaMapper diplomaMapper,
@@ -77,69 +83,54 @@ public class FXMLAVGController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        final Task<Void> service = new Task<Void>() {
-            @Override
-            protected Void call() {
-                try {
-                    studentWithAVGS = new ArrayList<>();
-                    studentWithAVGObservableList.clear();
-
-                    final List<Diploma> diplomas = diplomaMapper.map(diplomaService.getAll());
-                    for (Diploma diploma :
-                            diplomas) {
-                        if (diploma.getStudent().getModeOfStudy().getId() == modeOfStudyId) {
-                            int diplomaId = diploma.getId();
-                            double avg = educationalComponentService.getAVG(diploma.getId());
-
-                            final StudentWithAVG studentWithAVG = new StudentWithAVG(diploma,
-                                    Double.parseDouble(new DecimalFormat("#0.000").format(avg)),
-                                    educationalComponentService.getNumberOfFives(diplomaId),
-                                    educationalComponentService.getNumberOfFours(diplomaId),
-                                    educationalComponentService.getNumberOfThree(diplomaId),
-                                    educationalComponentService.getAllNotZeroByDiplomaId(diplomaId).size());
-
-                            if (avg != 0) {
-                                studentWithAVGS.add(studentWithAVG);
-                            }
-                            updateProgress(diplomas.indexOf(diploma), diplomas.size());
-                        }
-                    }
-                } catch (SQLException e) {
-                    LOGGER.error(e.getMessage());
-                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                            "Не вдалося завантажити дані", e);
-                    btnGenerate.setDisable(false);
-                }
-
-                Platform.runLater(() -> {
-                    tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
-                    tblColName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDiploma()
-                            .getStudent().fullNameProperty().get()));
-                    tblColAVG.setCellValueFactory(new PropertyValueFactory<>("avg"));
-                    Collections.sort(studentWithAVGS);
-                    for (int i = 0; i < studentWithAVGS.size(); i++) {
-                        studentWithAVGS.get(i).setId(i + 1);
-                    }
-                    studentWithAVGObservableList.addAll(studentWithAVGS);
-                    tblResults.setItems(studentWithAVGObservableList);
-                });
-
-                return null;
-            }
-        };
 
         btnGenerate.setDisable(true);
+        progressIndicator.setVisible(true);
 
-        Dialogs.create()
-                .owner(stage)
-                .title("Progress Dialog")
-                .masthead("Завантаження даних")
-                .showWorkerProgress(service);
+        try {
+            studentWithAVGS = new ArrayList<>();
+            studentWithAVGObservableList.clear();
 
-        final Thread thread = new Thread(service);
-        thread.start();
+            final List<Diploma> diplomas = diplomaMapper.map(diplomaService.getAll());
+            for (Diploma diploma :
+                    diplomas) {
+                if (diploma.getStudent().getModeOfStudy().getId() == modeOfStudyId) {
+                    int diplomaId = diploma.getId();
+                    double avg = educationalComponentService.getAVG(diploma.getId());
 
-        service.setOnSucceeded(event -> btnGenerate.setDisable(false));
+                    final StudentWithAVG studentWithAVG = new StudentWithAVG(diploma,
+                            Double.parseDouble(DecimalFormat.getInstance(Locale.US).format(Double.valueOf(avg))),
+                            educationalComponentService.getNumberOfFives(diplomaId),
+                            educationalComponentService.getNumberOfFours(diplomaId),
+                            educationalComponentService.getNumberOfThree(diplomaId),
+                            educationalComponentService.getAllNotZeroByDiplomaId(diplomaId).size());
+
+                    if (avg != 0) {
+                        studentWithAVGS.add(studentWithAVG);
+                    }
+                }
+            }
+
+            tblColId.setCellValueFactory(new PropertyValueFactory<>("id"));
+            tblColName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDiploma()
+                    .getStudent().fullNameProperty().get()));
+            tblColAVG.setCellValueFactory(new PropertyValueFactory<>("avg"));
+            Collections.sort(studentWithAVGS);
+            for (int i = 0; i < studentWithAVGS.size(); i++) {
+                studentWithAVGS.get(i).setId(i + 1);
+            }
+            studentWithAVGObservableList.addAll(studentWithAVGS);
+            tblResults.setItems(studentWithAVGObservableList);
+            btnGenerate.setDisable(false);
+            progressIndicator.setVisible(false);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                    "Не вдалося завантажити дані", e);
+            btnGenerate.setDisable(false);
+            progressIndicator.setVisible(false);
+        }
+
 
         btnGenerate.setOnAction(event -> {
             final Task<Void> generateService = new Task<Void>() {
@@ -163,8 +154,7 @@ public class FXMLAVGController implements Initializable {
                     .showWorkerProgress(generateService);
 
             btnGenerate.setDisable(true);
-            final Thread threadGenerate = new Thread(generateService);
-            threadGenerate.start();
+            exec.execute(generateService);
 
             generateService.setOnSucceeded(event1 -> {
                 if (btnGenerate.isDisabled()) {
