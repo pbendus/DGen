@@ -1,6 +1,8 @@
 package doc_utils;
 
+import db.entities.ClassificationSystemConst;
 import db.entities.Diploma;
+import db.entities.DiplomaTitleConst;
 import db.entities.EducationalComponent;
 import db.services.DiplomaService;
 import db.services.EducationalComponentService;
@@ -385,6 +387,7 @@ public class DocWorker {
                         if (docVariableConst.getValue().equals(variable)) {
                             variables.put(docVariableConst,
                                     new DocVariable(text, paragraph, cell, docVariableConst));
+                            LOGGER.info(String.format("Variable {%s} has been found", text));
                         }
                     }
                 }
@@ -564,6 +567,26 @@ public class DocWorker {
             case DATE:
                 changeParagraph(docVariable.getParagraph(),
                         new SimpleDateFormat("dd/MM/yyyy").format(diploma.getDateOfIssue()), false);
+                break;
+
+            case D_TITLE:
+                final String name = diploma.getClassificationSystem().getName().split("/")[0];
+                changeParagraph(docVariable.getParagraph(), name, false);
+                break;
+            case D_TITLE_EN:
+                final String nameEn = diploma.getClassificationSystem().getName().split("/")[1];
+                changeParagraph(docVariable.getParagraph(), nameEn, false);
+                break;
+
+            case D_HONOURS:
+                final String title = diploma.getClassificationSystem().getName().equals(ClassificationSystemConst.DIPLOMA) ?
+                        DiplomaTitleConst.DIPLOMA : DiplomaTitleConst.DIPLOMA_WITH_HONORS;
+                changeParagraph(docVariable.getParagraph(), title, false);
+                break;
+            case D_HONOURS_EN:
+                final String title_en = diploma.getClassificationSystem().getName().equals(ClassificationSystemConst.DIPLOMA) ?
+                        DiplomaTitleConst.DIPLOMA_EN : DiplomaTitleConst.DIPLOMA_WITH_HONORS_EN;
+                changeParagraph(docVariable.getParagraph(), title_en, false);
                 break;
         }
     }

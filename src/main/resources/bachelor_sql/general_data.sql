@@ -120,7 +120,11 @@ insert into "group" (name) values ('ПІз-14-1');
 insert into "group" (name) values ('ПІт-15-2');
 
 insert into variable (variable, description) values
-  ('diploma', 'Диплом'),
+  ('D_HONOURS', 'Диплом з відзнакою'),
+  ('D_HONOURS_EN', 'Диплом з відзнакою(анг)'),
+  ('d_title', 'Диплом'),
+  ('d_title_en', 'Диплом(анг)'),
+  ('diploma', 'Номер диплому'),
   ('reg', 'Реєстраційний №'),
   ('add_reg', 'Реєстраційний № додатка до диплому '),
   ('date_of_issue', 'Дата видачі'),

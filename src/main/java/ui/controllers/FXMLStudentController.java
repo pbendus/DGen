@@ -543,7 +543,7 @@ public class FXMLStudentController implements Initializable {
         final int diplomaId = diplomaService.getAll().size() + 1;
         final String number = tfNumber.getText().trim();
         final String registrationNumber = tfRegistrationNumber.getText().trim();
-        final String additionRegistrationNumber = tfRegistrationNumber.getText().trim();
+        final String additionRegistrationNumber = tfRegistrationNumber.getText().trim() + "-дд";
         final Date dateOfIssue = c.getTime();
         final MainField mainField = cbMainField.getSelectionModel().getSelectedItem();
         final FieldOfStudy fieldOfStudy = cbFieldOfStudy.getSelectionModel().getSelectedItem();
@@ -612,7 +612,7 @@ public class FXMLStudentController implements Initializable {
         cal.set(locDate.getYear(), locDate.getMonthValue() - 1, locDate.getDayOfMonth());
         diploma.setNumber(tfNumber.getText().trim());
         diploma.setRegistrationNumber(tfRegistrationNumber.getText().trim());
-        diploma.setAdditionRegistrationNumber(tfRegistrationNumber.getText().trim());
+        diploma.setAdditionRegistrationNumber(tfRegistrationNumber.getText().trim() + "-дд");
         diploma.setDateOfIssue(cal.getTime());
         diploma.setMainField(cbMainField.getSelectionModel().getSelectedItem());
         diploma.setFieldOfStudy(cbFieldOfStudy.getSelectionModel().getSelectedItem());
