@@ -60,7 +60,7 @@ VALUES
   (53, '57', '95', '1', '1'),
   (53, '58', '90', '1', '1'),
   (53, '59', '90', '1', '1'),
-  (53, '60', 0, '5', 0);
+  (53, '60', '95', '1', '1');
 
 --     ('Близнюк О.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -124,7 +124,7 @@ VALUES
   (54, '57', '60', '5', '3'),
   (54, '58', '75', '3', '2'),
   (54, '59', '80', '3', '2'),
-  (54, '60', 0, '5', 0);
+  (54, '60', '84', '2', '2');
 
 --     ('Боднарук І.О.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -188,7 +188,7 @@ VALUES
   (55, '57', '80', '3', '2'),
   (55, '58', '85', '2', '2'),
   (55, '59', '85', '2', '2'),
-  (55, '60', 0, '5', 0);
+  (55, '60', '84', '2', '2');
 
 --     ('Величко Дарій ',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -252,7 +252,7 @@ VALUES
   (56, '57', 0, '5', 0),
   (56, '58', 0, '5', 0),
   (56, '59', '65', '5', '3'),
-  (56, '60', 0, '5', 0);
+  (56, '60', '86', '2', '2');
 
 --     ('Веліженков Є. І.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -316,7 +316,7 @@ VALUES
   (57, '57', '90', '1', '1'),
   (57, '58', '90', '1', '1'),
   (57, '59', '90', '1', '1'),
-  (57, '60', 0, '5', 0);
+  (57, '60', '90', '1', '1');
 
 --     ('Вінтоняк В.М.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -380,7 +380,7 @@ VALUES
   (58, '57', '78', '3', '2'),
   (58, '58', '90', '1', '1'),
   (58, '59', '90', '1', '1'),
-  (58, '60', 0, '5', '0');
+  (58, '60', '91', '1', '1');
 
 --     ('Гаврилко Ю.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -444,7 +444,7 @@ VALUES
   (59, '57', '100', '1', '1'),
   (59, '58', '90', '1', '1'),
   (59, '59', '90', '1', '1'),
-  (59, '60', 0, '5', 0);
+  (59, '60', '94', '1', '1');
 
 --     ('Гавриляк Д.Р.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -508,7 +508,7 @@ VALUES
   (60, '57', '95', '1', '1'),
   (60, '58', '90', '1', '1'),
   (60, '59', '95', '1', '1'),
-  (60, '60', 0, '5', 0);
+  (60, '60', '95', '1', '1');
 
 --     ('Граділь В.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -572,7 +572,7 @@ VALUES
   (61, '57', '78', '3', '2'),
   (61, '58', '68', '4', '3'),
   (61, '59', '60', '5', '3'),
-  (61, '60', 0, '5', 0);
+  (61, '60', '85', '2', '2');
 
 --     ('Даниляк В.І.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -636,7 +636,7 @@ VALUES
   (63, '57', '60', '5', '3'),
   (63, '58', '75', '3', '2'),
   (63, '59', '75', '3', '2'),
-  (63, '60', 0, '5', 0);
+  (63, '60', '84', '2', '2');
 
 --     ('Дарчин П.Р.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -700,7 +700,7 @@ VALUES
   (64, '57', '90', '1', '1'),
   (64, '58', '85', '2', '2'),
   (64, '59', '80', '3', '2'),
-  (64, '60', 0, '5', 0);
+  (64, '60', '90', 1, 1);
 
 --     ('Демчук А.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -764,7 +764,7 @@ VALUES
   (65, '57', '85', '2', '2'),
   (65, '58', '90', '1', '1'),
   (65, '59', '90', '1', '1'),
-  (65, '60', 0, '5', 0);
+  (65, '60', '92', '1', '1');
 
 --     ('Депутат А.Б.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -786,14 +786,14 @@ VALUES
   (66, '15', '90', '1', '1'),
   (66, '16', '61', '5', '3'),
   (66, '17', '97', '1', '1'),
-  (66, '18', '88', '2', '2'),
+  (66, '18', '90', '2', '2'),
   (66, '19', '81', '3', '2'),
   (66, '20', '86', '2', '2'),
   (66, '21', '82', '2', '2'),
   (66, '22', '91', '1', '1'),
   (66, '23', '94', '1', '1'),
   (66, '24', '90', '1', '1'),
-  (66, '25', '87', '2', '2'),
+  (66, '25', '90', '2', '2'),
   (66, '26', '90', '1', '1'),
   (66, '27', '90', '1', '1'),
   (66, '28', '90', '1', '1'),
@@ -818,7 +818,7 @@ VALUES
   (66, '47', '60', '5', '3'),
   (66, '48', '90', '1', '1'),
   (66, '49', '76', '3', '2'),
-  (66, '50', '63', '5', '3'),
+  (66, '50', '75', '5', '3'),
   (66, '51', '62', '5', '3'),
   (66, '52', '92', '1', '1'),
   (66, '53', '84', '2', '2'),
@@ -892,7 +892,7 @@ VALUES
   (67, '57', '60', '5', '3'),
   (67, '58', '80', '3', '2'),
   (67, '59', '63', '5', '3'),
-  (67, '60', 0, '5', 0);
+  (67, '60', '76', '3', '2');
 
 --     ('Журава І.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -956,7 +956,7 @@ VALUES
   (68, '57', '80', '3', '2'),
   (68, '58', '90', '1', '1'),
   (68, '59', '90', '1', '1'),
-  (68, '60', 0, '5', 0);
+  (68, '60', '85', '2', '2');
 
 --     ('Йосипенко М.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1020,7 +1020,7 @@ VALUES
   (69, '57', '80', '3', '2'),
   (69, '58', '90', '1', '1'),
   (69, '59', '90', '1', '1'),
-  (69, '60', 0, '5', 0);
+  (69, '60', '91', '1', '1');
 
 --     ('Колінко В.І.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1084,7 +1084,7 @@ VALUES
   (70, '57', '60', '5', '3'),
   (70, '58', '80', '3', '2'),
   (70, '59', '80', '3', '2'),
-  (70, '60', 0, '5', 0);
+  (70, '60', '90', '1', '1');
 
 --     ('Космірак Р.Т.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1148,7 +1148,7 @@ VALUES
   (71, '57', '90', '1', '1'),
   (71, '58', '90', '1', '1'),
   (71, '59', '90', '1', '1'),
-  (71, '60', 0, '5', 0);
+  (71, '60', '91', '1', '1');
 
 --     ('Кравців К.І.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1212,7 +1212,7 @@ VALUES
   (72, '57', '90', '1', '1'),
   (72, '58', '90', '1', '1'),
   (72, '59', '90', '1', '1'),
-  (72, '60', 0, '5', 0);
+  (72, '60', '90', '1', '1');
 
 --     ('Медик В.В.  Вигнали',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1340,7 +1340,7 @@ VALUES
   (74, '57', '100', '1', '1'),
   (74, '58', '90', '1', '1'),
   (74, '59', '95', '1', '1'),
-  (74, '60', 0, '5', 0);
+  (74, '60', '93', '1', '1');
 
 --     ('Пазюк В.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1404,7 +1404,7 @@ VALUES
   (75, '57', '90', '1', '1'),
   (75, '58', '90', '1', '1'),
   (75, '59', '90', '1', '1'),
-  (75, '60', 0, '5', 0);
+  (75, '60', '91', '1', '1');
 
 --     ('Рєзнік Д.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1468,7 +1468,7 @@ VALUES
   (76, '57', '90', '1', '1'),
   (76, '58', '80', '3', '2'),
   (76, '59', '90', '1', '1'),
-  (76, '60', 0, '5', 0);
+  (76, '60', '90', '1', '1');
 
 --     ('Рубашний М.М.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1532,7 +1532,7 @@ VALUES
   (78, '57', '60', '5', '3'),
   (78, '58', '90', '1', '1'),
   (78, '59', '90', '1', '1'),
-  (78, '60', 0, '5', 0);
+  (78, '60', '91', '1', '1');
 
 --     ('Халус Д.Д.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1596,7 +1596,7 @@ VALUES
   (79, '57', '60', '5', '3'),
   (79, '58', '65', '5', '3'),
   (79, '59', '60', '5', '3'),
-  (79, '60', 0, '5', 0);
+  (79, '60', '81', '3', '2');
 
 --     ('Швець Б.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1660,7 +1660,7 @@ VALUES
   (82, '57', '90', '1', '1'),
   (82, '58', '90', '1', '1'),
   (82, '59', '90', '1', '1'),
-  (82, '60', 0, '5', 0);
+  (82, '60', '90', '1', '1');
 
 --     ('Шологон О.А.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1724,7 +1724,7 @@ VALUES
   (83, '57', '60', '5', '3'),
   (83, '58', '75', '3', '2'),
   (83, '59', '60', '5', '3'),
-  (83, '60', 0, '5', 0);
+  (83, '60', '81', '3', '2');
 
 --     ('Якимів Н.В.',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -1788,4 +1788,4 @@ VALUES
   (84, '57', '100', '1', '1'),
   (84, '58', '90', '1', '1'),
   (84, '59', '90', '1', '1'),
-  (84, '60', 0, '5', 0);
+  (84, '60', '94', '1', '1');

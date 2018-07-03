@@ -60,7 +60,7 @@ VALUES
   (52, '57', '60', 5, 3),
   (52, '58', '63', 5, 3),
   (52, '59', '61', 5, 3),
-  (52, '60', 0, 5, 0);
+  (52, '60', '63', 5, 3);
 --     ('Давидюк В.С',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
@@ -123,7 +123,7 @@ VALUES
   (62, '57', '60', 5, 3),
   (62, '58', '75', 3, 2),
   (62, '59', '61', 5, 3),
-  (62, '60', 0, 5, 0);
+  (62, '60', '62', 5, 3);
 
 --     ('Хорощак Ю.О',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -187,7 +187,7 @@ VALUES
   (80, '57', '60', 5, 3),
   (80, '58', '65', 5, 3),
   (80, '59', '63', 5, 3),
-  (80, '60', 0, 5, 0);
+  (80, '60', '60', 5, 3);
 
 --     ('Цюцьмаць А.М',0,0,0),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -252,4 +252,4 @@ VALUES
   (81, '57', '60', 5, 3),
   (81, '58', '75', 3, 2),
   (81, '59', '63', 5, 3),
-  (81, '60', 0, 5, 0);
+  (81, '60', '84', '2', '2');
