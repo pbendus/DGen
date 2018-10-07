@@ -56,7 +56,12 @@ public enum DocVariableConst {
     STUDENT_RATING_FIVE("five"),
     STUDENT_RATING_FOUR("four"),
     STUDENT_RATING_THREE("three"),
-    STUDENT_RATING_TOTAL("total");
+    STUDENT_RATING_TOTAL("total"),
+
+    D_HONOURS("d_honours"),
+    D_HONOURS_EN("d_honours_en"),
+    D_TITLE("d_title"),
+    D_TITLE_EN("d_title_en");
 
     private final String value;
 
