@@ -40,7 +40,7 @@ public class AlertBox {
         alert.showAndWait();
     }
 
-    public static void showExceptionDialog(String header, String content, Exception ex) {
+    public static void showExceptionDialog(String header, String content, Throwable ex) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("");
         alert.setHeaderText(header);

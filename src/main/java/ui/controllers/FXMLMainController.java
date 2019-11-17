@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.xmlbeans.XmlException;
 import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -298,33 +299,34 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         final long size = studentObservableList.stream().filter(student -> student.getSelect().isSelected()).count();
         if (containsSelectedStudents() && AlertBox.showConfirmationDialog("Підвердіть операцію",
                 "Ви справді бажаєте згенерувати додатки для вибраного(-их) студента(-ів)?")) {
+
+            Dialogs dialogs = Dialogs.create()
+                    .title("Progress Dialog")
+                    .masthead("Генерація додатків")
+                    .lightweight();
+
             Task<Void> service = new Task<Void>() {
                 @Override
-                protected Void call() {
+                protected Void call() throws XmlException, SQLException, IOException {
+                    updateTitle("Progress Dialog");
+                    updateMessage("Генерація додатків");
+                    updateProgress(0, size);
                     int i = 0;
                     for (Student student : studentObservableList) {
                         if (student.getSelect().isSelected()) {
-                            try {
-                                final String fileName = docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
-                                if (size == 1) {
-                                    docWorker.openFile(fileName);
-                                }
-                                updateProgress(++i, size);
-                            } catch (Exception e) {
-                                LOGGER.error(e.getMessage());
-                                updateProgress(size, size);
+                            final String fileName = docWorker.generateDocument(student.getId(), student.getFamilyNameTr());
+                            if (size == 1) {
+                                docWorker.openFile(fileName);
                             }
+                            updateProgress(++i, size);
+
                         }
                     }
                     return null;
                 }
             };
 
-            Dialogs.create()
-                    .owner(primaryStage)
-                    .title("Progress Dialog")
-                    .masthead("Генерація додатків")
-                    .showWorkerProgress(service);
+            dialogs.showWorkerProgress(service);
 
             btnGenerate.setDisable(true);
             Thread thread = new Thread(service);
@@ -337,7 +339,8 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                             docWorker.openFile(DocWorker.DIRECTORY_PATH);
                         } catch (IOException e) {
                             LOGGER.error(e.getMessage());
-                            e.printStackTrace();
+                            AlertBox.showExceptionDialog("Генерування додатків",
+                                    "Не вдалося відкрити файл", e);
                         }
                     }
 
@@ -348,8 +351,10 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
             });
 
             service.setOnFailed(event -> {
-                AlertBox.showErrorDialog("Роботу програми зупинено перериванням",
-                        "Не вдалося згенерувати інформацію для вибараного студента(-ів)");
+
+                AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                        "Не вдалося згенерувати інформацію для вибараного студента(-ів)",
+                        event.getSource().getException());
                 btnGenerate.setDisable(false);
             });
 
