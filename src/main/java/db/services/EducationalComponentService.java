@@ -224,4 +224,15 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
     public boolean isDiplomaWithHonor(int diplomaId) throws SQLException {
         return getAVG(diplomaId) >= 4.75 && getNumberOfThree(diplomaId) <= 0;
     }
+
+    public int deleteByTemplateId(int id) throws SQLException {
+        getByTemplateAndDiplomaId(id).forEach(educationalComponent -> {
+            try {
+                delete(educationalComponent.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        return super.delete(id);
+    }
 }

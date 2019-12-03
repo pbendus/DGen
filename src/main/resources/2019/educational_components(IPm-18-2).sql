@@ -19,7 +19,7 @@ VALUES
     (3,'16','60','5','3'),
     (3,'17','90','1','1'),
     (3,'18','68','4','3'),
-    (3,'19',1,'5',1);
+    (3,'19',1,'4',4);
     
 --     ('Бойчук Андрій Мирославович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -42,7 +42,7 @@ VALUES
     (5,'16','62','5','3'),
     (5,'17','90','1','1'),
     (5,'18','70','4','3'),
-    (5,'19',1,'5',1);
+    (5,'19',1,'4',4);
     
 --     ('Вовк Віктор Михайлович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -65,7 +65,7 @@ VALUES
     (7,'16','62','5','3'),
     (7,'17','65','5','3'),
     (7,'18','60','5','3'),
-    (7,'19',1,'5',1);
+    (7,'19',1,'4',4);
     
 --     ('Гоголь Андрій Іванович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -88,7 +88,7 @@ VALUES
     (9,'16','63','5','3'),
     (9,'17','60','5','3'),
     (9,'18','65','5','3'),
-    (9,'19',1,'5',1);
+    (9,'19',1,'4',4);
     
 --     ('Гринкевич Микола Ярославович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -111,7 +111,7 @@ VALUES
     (10,'16','63','5','3'),
     (10,'17','70','4','3'),
     (10,'18','68','4','3'),
-    (10,'19',1,'5',1);
+    (10,'19',1,'4',4);
     
 --     ('Микитин Андрій Михайлович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -134,7 +134,7 @@ VALUES
     (24,'16','65','5','3'),
     (24,'17','80','3','2'),
     (24,'18','60','5','3'),
-    (24,'19',1,'5',1);
+    (24,'19',1,'4',4);
     
 --     ('Мимоход Михайло Ігорович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -157,7 +157,7 @@ VALUES
     (25,'16','90','1','1'),
     (25,'17','100','1','1'),
     (25,'18','98','1','1'),
-    (25,'19',1,'5',1);
+    (25,'19',1,'4',4);
     
 --     ('Мучка Олег Сергійович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -180,7 +180,7 @@ VALUES
     (27,'16','63','5','3'),
     (27,'17','60','5','3'),
     (27,'18','63','5','3'),
-    (27,'19',1,'5',1);
+    (27,'19',1,'4',4);
     
 --     ('Острижнюк Андрій Васильович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -203,7 +203,7 @@ VALUES
     (31,'16','62','5','3'),
     (31,'17','60','5','3'),
     (31,'18','70','4','3'),
-    (31,'19',1,'5',1);
+    (31,'19',1,'4',4);
     
 --     ('Сапіжак Іванна Миколаївна',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -226,7 +226,7 @@ VALUES
     (34,'16','100','1','1'),
     (34,'17','100','1','1'),
     (34,'18','100','1','1'),
-    (34,'19',1,'5',1);
+    (34,'19',1,'4',4);
     
 --     ('Слюсар Андрій Едуардович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -249,7 +249,7 @@ VALUES
     (35,'16','65','5','3'),
     (35,'17','60','5','3'),
     (35,'18','60','5','3'),
-    (35,'19',1,'5',1);
+    (35,'19',1,'4',4);
     
 --     ('Стецюк Тарас Ярославович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
@@ -272,4 +272,4 @@ VALUES
     (36,'16','63','5','3'),
     (36,'17','65','5','3'),
     (36,'18','70','4','3'),
-    (36,'19',1,'5',1);
+    (36,'19',1,'4',4);

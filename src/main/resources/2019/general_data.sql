@@ -10,11 +10,7 @@ INSERT INTO mode_of_study (name)
 VALUES ('Заочна / Part-time');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO duration_of_study (value)
-VALUES ('Для школярів(4 роки)');
-INSERT INTO duration_of_study (value)
-VALUES ('Для скороченого терміну(3 роки)');
-INSERT INTO duration_of_study (value)
-VALUES ('Для скороченого терміну(2 роки)');
+VALUES ('Для бакалаврів (1 рік 4 місяці)');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO field_of_study (name)
 VALUES ('12 - Інформаційні технології / 12 - Information technologies');
@@ -26,16 +22,19 @@ VALUES (1,
 INSERT INTO official_duration_of_programme (mode_of_study_id, duration_of_study_id, name)
 VALUES (2,
         1,
-        '1 рік 4 місяці заочною формою навчання (90 кредитів ЕКТС) / 1 year 4 months of full-time study (90 ECTS credits)');
+        '1 рік 4 місяці за заочною формою навчання (90 кредитів ЕКТС) / 1 year 4 months of part-time study (90 ECTS credits)');
+-----------------------------------------------------------------------------------------------------
+INSERT INTO ects_credits (duration_of_study_id, name)
+VALUES (1, '1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO duration_of_training (mode_of_study_id, duration_of_study_id, name)
 VALUES (1,
         1,
-        '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2018 – 31.12.2019');
+        '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full-time study 01.09.2018 – 31.12.2019');
 INSERT INTO duration_of_training (mode_of_study_id, duration_of_study_id, name)
 VALUES (2,
         1,
-        '1 рік і 4 місяці за очною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of full time study 01.09.2018 – 31.12.2019');
+        '1 рік і 4 місяці за заочною формою навчання (90 кредитів ЄКТС) / 1 year and 4 months of part-time study 01.09.2018 – 31.12.2019');
 ------------------------------------------------------------------------------------------------------
 INSERT INTO access_requirements (name)
 VALUES ('Ступінь бакалавра (ОКР - спеціаліста). За результатами вступних випробувань / Bachelor’s (Specialist’s) degrees in relative qualifications. On the results of specialty examinations');
@@ -48,11 +47,7 @@ VALUES ('Диплом з відзнакою/ Diploma with Honors',
         'не менше як 75 відсотків відмінних оцінок з усіх навчальних дисциплін та практичної підготовки, з оцінками "добре" з інших дисциплін та з оцінками "відмінно" за результатами державної атестації / I 75% of ’’excellent” grades for academic courses (disciplines) and internships, 25% of “good” grades in other academic courses (disciplines), only “excellent” grades for State certification.');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO ects_credits (duration_of_study_id, name)
-VALUES (1, '1 кредит ЄКТС – 36 годин / 1 ECTS credits – 36 study hours');
-INSERT INTO ects_credits (duration_of_study_id, name)
-VALUES (2, '1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
-INSERT INTO ects_credits (duration_of_study_id, name)
-VALUES (3, '1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
+VALUES (1, '1 кредит ЄКТС – 30 годин / 1 ECTS credits – 30 study hours');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO rating_point (name, min_national_score, max_national_score)
 VALUES ('A', 90, 100);

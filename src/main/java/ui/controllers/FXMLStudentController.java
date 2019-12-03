@@ -403,33 +403,38 @@ public class FXMLStudentController implements Initializable {
     private void setListenersOnButtons() {
         btnCancel.setOnMouseClicked(e -> closeWindow());
         btnSave.setOnMouseClicked(e -> {
-            if (validateInputs()) {
-                if (studentId == 0) {
-                    try {
-                        addStudent();
-                        AlertBox.showInformationDialog("Операцію виконано успішно",
-                                "Інформацію про студента було успішно додано в БД");
-                    } catch (SQLException e1) {
-                        LOGGER.error(e1.getMessage());
-                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                                "Не вдалося додати студента в БД", e1);
-                    }
-                } else {
-                    try {
-                        editStudent();
-                        AlertBox.showInformationDialog("Операцію виконано успішно editing",
-                                "Інформація про студента була успішно оновлена");
-                    } catch (SQLException e1) {
-                        LOGGER.error(e1.getMessage());
-                        AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
-                                "Не вдалося оновити інформацію про студента", e1);
-                    }
-                }
-                closeWindow();
-            } else {
+            if (!validateInputs()) {
                 AlertBox.showErrorDialog("Помилка валідації",
                         "Введіть усі необхідні дані про студента");
+                return;
             }
+            if (studentId == 0 && diplomaService.contains(tfNumber.getText().trim())) {
+                AlertBox.showErrorDialog("Помилка",
+                        "Номер диплому повинен бути унікальним");
+                return;
+            }
+            if (studentId == 0) {
+                try {
+                    addStudent();
+                    AlertBox.showInformationDialog("Операцію виконано успішно",
+                            "Інформацію про студента було успішно додано в БД");
+                } catch (SQLException e1) {
+                    LOGGER.error(e1.getMessage());
+                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                            "Не вдалося додати студента в БД", e1);
+                }
+            } else {
+                try {
+                    editStudent();
+                    AlertBox.showInformationDialog("Операцію виконано успішно editing",
+                            "Інформація про студента була успішно оновлена");
+                } catch (SQLException e1) {
+                    LOGGER.error(e1.getMessage());
+                    AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",
+                            "Не вдалося оновити інформацію про студента", e1);
+                }
+            }
+            closeWindow();
         });
     }
 
@@ -522,7 +527,7 @@ public class FXMLStudentController implements Initializable {
         final Date dateOfBirth = c.getTime();
         final Protocol protocol = cbProtocol.getSelectionModel().getSelectedItem();
         final PreviousDocument previousDocument = new PreviousDocument(previousDocumentService.getAll().size() + 1,
-                tfPreviousDocument.getText().trim(), tfPreviousDocumentEn.getText().trim());
+                tfPreviousDocument.getText().trim(), tfPreviousDocumentEn.getText() != null ? tfPreviousDocumentEn.getText().trim() : "");
         final ModeOfStudy modeOfStudy = cbModeOfStudy.getSelectionModel().getSelectedItem();
         final DurationOfStudy durationOfStudy = cbDurationOfStudy.getSelectionModel().getSelectedItem();
         final Group group = cbGroup.getSelectionModel().getSelectedItem();
@@ -596,7 +601,7 @@ public class FXMLStudentController implements Initializable {
         student.setDateOfBirth(c.getTime());
         student.setProtocol(cbProtocol.getSelectionModel().getSelectedItem());
         student.getPreviousDocument().setName(tfPreviousDocument.getText().trim());
-        student.getPreviousDocument().setNameEN(tfPreviousDocumentEn.getText().trim());
+        student.getPreviousDocument().setNameEN(tfPreviousDocumentEn.getText() != null ? tfPreviousDocumentEn.getText().trim() : "");
         previousDocumentService.update(previousDocumentMapper.reverseMap(student.getPreviousDocument()));
         student.setModeOfStudyObject(cbModeOfStudy.getSelectionModel().getSelectedItem());
         student.setDurationOfStudy(cbDurationOfStudy.getSelectionModel().getSelectedItem());
@@ -657,7 +662,7 @@ public class FXMLStudentController implements Initializable {
 
     private boolean validateInputs() {
         return Validation.checkData(tfFamilyName, tfFamilyNameTr, tfGivenName, tfGivenNameTr, tfPreviousDocument,
-                tfPreviousDocumentEn, tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber) &&
+                tfDiplomaSubjectUk, tfDiplomaSubjectEn, tfNumber, tfRegistrationNumber) &&
                 Validation.checkData(cbModeOfStudy, cbDurationOfStudy, cbMainField, cbFieldOfStudy, cbProtocol,
                         cbAccessRequirements, cbGroup) &&
                 Validation.checkData(dpDateOfBirth, dpDate);

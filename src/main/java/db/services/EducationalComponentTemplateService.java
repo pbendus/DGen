@@ -9,8 +9,8 @@ import java.sql.SQLException;
 @Service
 public class EducationalComponentTemplateService
         extends BaseServiceImpl<EducationalComponentTemplate> {
-    public EducationalComponentTemplateService(
-            Dao<EducationalComponentTemplate, Integer> dao) {
+
+    public EducationalComponentTemplateService(Dao<EducationalComponentTemplate, Integer> dao) {
         super(dao);
     }
 
