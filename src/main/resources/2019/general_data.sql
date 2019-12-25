@@ -43,7 +43,7 @@ INSERT INTO classification_system (name, criteria)
 VALUES ('Диплом / Diploma',
         'Диплом засвідчує успішне виконання програми підготовки / Diploma certifies a successful academic performance');
 INSERT INTO classification_system (name, criteria)
-VALUES ('Диплом з відзнакою/ Diploma with Honors',
+VALUES ('Диплом з відзнакою / Diploma with Honors',
         'не менше як 75 відсотків відмінних оцінок з усіх навчальних дисциплін та практичної підготовки, з оцінками "добре" з інших дисциплін та з оцінками "відмінно" за результатами державної атестації / I 75% of ’’excellent” grades for academic courses (disciplines) and internships, 25% of “good” grades in other academic courses (disciplines), only “excellent” grades for State certification.');
 -----------------------------------------------------------------------------------------------------
 INSERT INTO ects_credits (duration_of_study_id, name)

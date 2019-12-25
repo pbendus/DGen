@@ -61,7 +61,9 @@ public enum DocVariableConst {
     D_HONOURS("d_honours"),
     D_HONOURS_EN("d_honours_en"),
     D_TITLE("d_title"),
-    D_TITLE_EN("d_title_en");
+    D_TITLE_EN("d_title_en"),
+    DIPLOMA_TITLE("diploma_title"),
+    DIPLOMA_TITLE_EN("diploma_title_en");
 
     private final String value;
 

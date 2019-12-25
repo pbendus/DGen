@@ -1,8 +1,10 @@
 package ui.controllers;
 
+import com.sun.tools.corba.se.idl.toJavaPortable.Helper;
 import db.entities.ClassificationSystemConst;
 import db.mappers.*;
 import db.services.*;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,6 +40,10 @@ import java.util.ResourceBundle;
 @Controller("fxmlStudentController")
 public class FXMLStudentController implements Initializable {
 
+    @FXML
+    private Button btnAddEducationalTemplate;
+    @FXML
+    private ComboBox<EducationalComponentTemplate> cbTypeEducationalTemplate;
     @FXML
     private Accordion accordion;
     @FXML
@@ -96,8 +102,6 @@ public class FXMLStudentController implements Initializable {
     private ComboBox<DurationOfStudy> cbDurationOfStudy;
     @FXML
     private ComboBox<Group> cbGroup;
-    @FXML
-    private CheckBox chkboxClassificationSystem;
     @FXML
     private Button btnSave;
     @FXML
@@ -267,6 +271,7 @@ public class FXMLStudentController implements Initializable {
         cbProtocol.getItems().addAll(protocolObservableList);
         cbAccessRequirements.getItems().addAll(accessRequirementsObservableList);
         cbGroup.getItems().addAll(groupObservableList);
+        cbTypeEducationalTemplate.getItems().addAll(educationalComponentTemplateObservableList);
     }
 
     private void setStudentInformation() {
@@ -313,11 +318,6 @@ public class FXMLStudentController implements Initializable {
         cbProtocol.getSelectionModel().select(student.getProtocol());
         cbAccessRequirements.getSelectionModel().select(diploma.getAccessRequirements());
 
-        // set checkbox
-        if (diploma.getClassificationSystem().getName().equals(ClassificationSystemConst.DIPLOMA_WITH_HONORS)) {
-            chkboxClassificationSystem.setSelected(true);
-        }
-
         tcNumber.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcType.setCellValueFactory(new PropertyValueFactory<>("educationalComponentType"));
         tcName.setCellValueFactory(new PropertyValueFactory<>("courseTitle"));
@@ -335,6 +335,8 @@ public class FXMLStudentController implements Initializable {
         tvGrades.setEditable(true);
         tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+        setDeleteRowFactory();
     }
 
     private void initializeTemplateTableView() {
@@ -365,6 +367,36 @@ public class FXMLStudentController implements Initializable {
         tvGrades.setEditable(true);
         tcCredit.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         tcGrade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+        setDeleteRowFactory();
+    }
+
+    private void setDeleteRowFactory() {
+        tvGrades.setRowFactory(
+                tableView -> {
+                    final TableRow<EducationalComponent> row = new TableRow<>();
+                    final ContextMenu rowMenu = new ContextMenu();
+                    final MenuItem removeItem = new MenuItem("Delete");
+                    removeItem.setOnAction(event -> {
+                        final EducationalComponent item = row.getItem();
+                        try {
+                            if (item.getDiploma() != null) {
+                                educationalComponentService.delete(item.getId());
+                            }
+                            tableView.getItems().remove(item);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    rowMenu.getItems().addAll(removeItem);
+
+                    // only display context menu for non-null items:
+                    row.contextMenuProperty().bind(
+                            Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                    .then(rowMenu)
+                                    .otherwise((ContextMenu) null));
+                    return row;
+                });
     }
 
     private void clearObservableLists() {
@@ -435,6 +467,18 @@ public class FXMLStudentController implements Initializable {
                 }
             }
             closeWindow();
+        });
+
+        btnAddEducationalTemplate.setOnMouseClicked(event -> {
+            if (Validation.checkData(cbTypeEducationalTemplate)) {
+                final EducationalComponentTemplate educationalComponentTemplate = cbTypeEducationalTemplate.getSelectionModel().getSelectedItem();
+                EducationalComponent educationalComponent = new EducationalComponent(educationalComponentTemplate.getId(),
+                        0, educationalComponentTemplate.getCredits(),
+                        educationalComponentTemplate.getCourseTitle(), educationalComponentTemplate
+                        .getEducationalComponentType().getName(), educationalComponentTemplate,
+                        null, null, null);
+                educationalComponentObservableList.add(educationalComponent);
+            }
         });
     }
 
@@ -640,7 +684,13 @@ public class FXMLStudentController implements Initializable {
         // edit educational component
         for (int i = 0; i < educationalComponentObservableList.size(); i++) {
             EducationalComponent educationalComponent = educationalComponentObservableList.get(i);
-            educationalComponentService.update(educationalComponentMapper.reverseMap(educationalComponent));
+            if (educationalComponent.getDiploma() == null) {
+                educationalComponent.setDiploma(diplomaMapper.map(diplomaService
+                        .getByNumber(diploma.getNumber())));
+                educationalComponentService.create(educationalComponentMapper.reverseMap(educationalComponent));
+            } else {
+                educationalComponentService.update(educationalComponentMapper.reverseMap(educationalComponent));
+            }
         }
 
         studentCallback.updateStudent(student);
@@ -648,9 +698,7 @@ public class FXMLStudentController implements Initializable {
 
     private ClassificationSystem getClassificationSystem() {
         try {
-            return chkboxClassificationSystem.isSelected() ? classificationSystemMapper.map(classificationSystemService
-                    .getByName(ClassificationSystemConst.DIPLOMA_WITH_HONORS)) :
-                    classificationSystemMapper.map(classificationSystemService.getByName(ClassificationSystemConst.DIPLOMA));
+            return classificationSystemMapper.map(classificationSystemService.getByName(ClassificationSystemConst.DIPLOMA));
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             AlertBox.showExceptionDialog("Роботу програми зупинено перериванням",

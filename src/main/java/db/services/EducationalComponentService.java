@@ -222,7 +222,8 @@ public class EducationalComponentService extends BaseServiceImpl<EducationalComp
     }
 
     public boolean isDiplomaWithHonor(int diplomaId) throws SQLException {
-        return getAVG(diplomaId) >= 4.75 && getNumberOfThree(diplomaId) <= 0;
+        List<EducationalComponent> attestation = getAllStateAttestationsByDiplomaId(diplomaId);
+        return getAVG(diplomaId) >= 4.75 && getNumberOfThree(diplomaId) <= 0 && !attestation.isEmpty() && attestation.get(0).getNationalScore() > 89;
     }
 
     public int deleteByTemplateId(int id) throws SQLException {

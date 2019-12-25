@@ -300,11 +300,6 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
         if (containsSelectedStudents() && AlertBox.showConfirmationDialog("Підвердіть операцію",
                 "Ви справді бажаєте згенерувати додатки для вибраного(-их) студента(-ів)?")) {
 
-            Dialogs dialogs = Dialogs.create()
-                    .title("Progress Dialog")
-                    .masthead("Генерація додатків")
-                    .lightweight();
-
             Task<Void> service = new Task<Void>() {
                 @Override
                 protected Void call() throws XmlException, SQLException, IOException {
@@ -326,7 +321,11 @@ public class FXMLMainController implements Initializable, FXMLStudentController.
                 }
             };
 
-            dialogs.showWorkerProgress(service);
+            Dialogs.create()
+                    .owner(primaryStage)
+                    .title("Progress Dialog")
+                    .masthead("Генерація додатків")
+                    .showWorkerProgress(service);
 
             btnGenerate.setDisable(true);
             Thread thread = new Thread(service);

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"
-            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="ui.controllers.FXMLStudentController">
+
+<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.FXMLStudentController">
    <children>
       <Accordion fx:id="accordion" prefHeight="335.0" prefWidth="600.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <panes>
@@ -13,45 +21,30 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="182.0" prefWidth="598.0">
                      <children>
-                         <TextField fx:id="tfFamilyName" layoutX="25.0" layoutY="25.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0"/>
-                         <TextField fx:id="tfGivenName" layoutX="25.0" layoutY="109.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0"/>
-                         <TextField fx:id="tfFamilyNameTr" layoutX="403.0" layoutY="55.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="20.0"/>
-                         <TextField fx:id="tfGivenNameTr" layoutX="300.0" layoutY="80.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="80.0"/>
-                         <DatePicker fx:id="dpDateOfBirth" layoutX="25.0" layoutY="162.0" prefHeight="30.0"
-                                     prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0"/>
-                         <TextField fx:id="tfPreviousDocument" layoutX="300.0" layoutY="130.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0"/>
-                         <TextField fx:id="tfPreviousDocumentEn" layoutX="310.0" layoutY="140.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="200.0"/>
-                         <ComboBox fx:id="cbModeOfStudy" layoutX="25.0" layoutY="220.0" prefHeight="30.0"
-                                   prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="260.0"/>
-                         <ComboBox fx:id="cbDurationOfStudy" layoutX="300.0" layoutY="180.0" prefHeight="30.0"
-                                   prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="260.0"/>
-                         <ComboBox fx:id="cbMainField" layoutX="245.0" layoutY="280.0" prefHeight="30.0"
-                                   prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="320.0"/>
-                         <ComboBox fx:id="cbFieldOfStudy" layoutX="210.0" layoutY="341.0" prefHeight="30.0"
-                                   prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="320.0"/>
-                         <ComboBox fx:id="cbGroup" layoutX="220.0" layoutY="351.0" prefHeight="30.0" prefWidth="250.0"
-                                   AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="380.0"/>
-                         <CheckBox fx:id="chkboxClassificationSystem" layoutX="30.0" layoutY="233.0"
-                                   mnemonicParsing="false" prefHeight="30.0" text="Диплом з відзнакою"
-                                   AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="380.0"/>
-                         <Label layoutX="30.0" layoutY="11.0" text="Прізвище"/>
-                         <Label layoutX="300.0" layoutY="11.0" text="Прізвище (транскрипт)"/>
-                         <Label layoutX="300.0" layoutY="71.0" text="Ім'я (транскрипт)"/>
-                         <Label layoutX="30.0" layoutY="71.0" text="Ім'я, по батькові"/>
-                         <Label layoutX="30.0" layoutY="131.0" text="Дата народження"/>
-                         <Label layoutX="30.0" layoutY="191.0" text="Попередній документ про освіту"/>
-                         <Label layoutX="300.0" layoutY="191.0" text="Попередній документ про освіту (англ)"/>
-                         <Label layoutX="30.0" layoutY="251.0" text="Форма навчання"/>
-                         <Label layoutX="300.0" layoutY="251.0" text="Термін навчання"/>
-                         <Label layoutX="300.0" layoutY="311.0" text="Галузь знань"/>
-                         <Label layoutX="30.0" layoutY="311.0" text="Напрям підготовки"/>
-                         <Label layoutX="30.0" layoutY="371.0" text="Група"/>
+                         <TextField fx:id="tfFamilyName" layoutX="25.0" layoutY="25.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                         <TextField fx:id="tfGivenName" layoutX="25.0" layoutY="109.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
+                         <TextField fx:id="tfFamilyNameTr" layoutX="403.0" layoutY="55.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="20.0" />
+                         <TextField fx:id="tfGivenNameTr" layoutX="300.0" layoutY="80.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="80.0" />
+                         <DatePicker fx:id="dpDateOfBirth" layoutX="25.0" layoutY="162.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
+                         <TextField fx:id="tfPreviousDocument" layoutX="300.0" layoutY="130.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
+                         <TextField fx:id="tfPreviousDocumentEn" layoutX="310.0" layoutY="140.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="200.0" />
+                         <ComboBox fx:id="cbModeOfStudy" layoutX="25.0" layoutY="220.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="260.0" />
+                         <ComboBox fx:id="cbDurationOfStudy" layoutX="300.0" layoutY="180.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="260.0" />
+                         <ComboBox fx:id="cbMainField" layoutX="245.0" layoutY="280.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="320.0" />
+                         <ComboBox fx:id="cbFieldOfStudy" layoutX="210.0" layoutY="341.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="320.0" />
+                         <ComboBox fx:id="cbGroup" layoutX="220.0" layoutY="351.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="380.0" />
+                         <Label layoutX="30.0" layoutY="11.0" text="Прізвище" />
+                         <Label layoutX="300.0" layoutY="11.0" text="Прізвище (транскрипт)" />
+                         <Label layoutX="300.0" layoutY="71.0" text="Ім'я (транскрипт)" />
+                         <Label layoutX="30.0" layoutY="71.0" text="Ім'я, по батькові" />
+                         <Label layoutX="30.0" layoutY="131.0" text="Дата народження" />
+                         <Label layoutX="30.0" layoutY="191.0" text="Попередній документ про освіту" />
+                         <Label layoutX="300.0" layoutY="191.0" text="Попередній документ про освіту (англ)" />
+                         <Label layoutX="30.0" layoutY="251.0" text="Форма навчання" />
+                         <Label layoutX="300.0" layoutY="251.0" text="Термін навчання" />
+                         <Label layoutX="300.0" layoutY="311.0" text="Галузь знань" />
+                         <Label layoutX="30.0" layoutY="311.0" text="Напрям підготовки" />
+                         <Label layoutX="30.0" layoutY="371.0" text="Група" />
                      </children>
                   </AnchorPane>
             </content>
@@ -63,35 +56,24 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="598.0">
                      <children>
-                         <TextField fx:id="tfDiplomaSubjectUk" layoutX="14.0" layoutY="14.0" prefHeight="30.0"
-                                    prefWidth="790.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0"/>
-                         <TextField fx:id="tfDiplomaSubjectEn" layoutX="14.0" layoutY="51.0" prefHeight="30.0"
-                                    prefWidth="790.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0"/>
-                         <TextField fx:id="tfNumber" layoutX="30.0" layoutY="129.0" prefHeight="30.0" prefWidth="250.0"
-                                    AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0"/>
-                         <TextField fx:id="tfRegistrationNumber" layoutX="334.0" layoutY="130.0" prefHeight="30.0"
-                                    prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="140.0"/>
-                         <ComboBox fx:id="cbProtocol" layoutX="431.0" layoutY="203.0" prefHeight="30.0"
-                                   prefWidth="250.0" promptText="Протокол" AnchorPane.leftAnchor="20.0"
-                                   AnchorPane.topAnchor="200.0"/>
-                         <ComboBox fx:id="cbAccessRequirements" layoutX="300.0" layoutY="180.0" prefHeight="30.0"
-                                   prefWidth="250.0" promptText="Вимоги до вступу" AnchorPane.leftAnchor="290.0"
-                                   AnchorPane.topAnchor="200.0"/>
-                         <DatePicker fx:id="dpDate" layoutX="570.0" layoutY="180.0" prefHeight="30.0" prefWidth="250.0"
-                                     AnchorPane.leftAnchor="560.0" AnchorPane.topAnchor="140.0"/>
-                         <TextArea fx:id="taDurationOfTraining" editable="false" layoutX="30.0" layoutY="273.0"
-                                   prefHeight="60.0" prefWidth="790.0"/>
-                         <TextArea fx:id="taInformationOnCertification" editable="false" layoutX="30.0" layoutY="363.0"
-                                   prefHeight="60.0" prefWidth="790.0"/>
-                         <Label layoutX="30.0" layoutY="10.0" text="Тема дипломної роботи (укр)"/>
-                         <Label layoutX="30.0" layoutY="70.0" text="Тема дипломної роботи (англ)"/>
-                         <Label layoutX="30.0" layoutY="130.0" text="Номер диплому"/>
-                         <Label layoutX="300.0" layoutY="130.0" text="Реєстраційний №"/>
-                         <Label layoutX="570.0" layoutY="130.0" text="Дата видачі"/>
-                         <Label layoutX="300.0" layoutY="190.0" text="Вимоги до вступу"/>
-                         <Label layoutX="30.0" layoutY="190.0" text="Протокол"/>
-                         <Label layoutX="30.0" layoutY="253.0" text="Термін навчання"/>
-                         <Label layoutX="30.0" layoutY="343.0" text="Інформація"/>
+                         <TextField fx:id="tfDiplomaSubjectUk" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="790.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                         <TextField fx:id="tfDiplomaSubjectEn" layoutX="14.0" layoutY="51.0" prefHeight="30.0" prefWidth="790.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
+                         <TextField fx:id="tfNumber" layoutX="30.0" layoutY="129.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
+                         <TextField fx:id="tfRegistrationNumber" layoutX="334.0" layoutY="130.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="140.0" />
+                         <ComboBox fx:id="cbProtocol" layoutX="431.0" layoutY="203.0" prefHeight="30.0" prefWidth="250.0" promptText="Протокол" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
+                         <ComboBox fx:id="cbAccessRequirements" layoutX="300.0" layoutY="180.0" prefHeight="30.0" prefWidth="250.0" promptText="Вимоги до вступу" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="200.0" />
+                         <DatePicker fx:id="dpDate" layoutX="570.0" layoutY="180.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="560.0" AnchorPane.topAnchor="140.0" />
+                         <TextArea fx:id="taDurationOfTraining" editable="false" layoutX="30.0" layoutY="273.0" prefHeight="60.0" prefWidth="790.0" />
+                         <TextArea fx:id="taInformationOnCertification" editable="false" layoutX="30.0" layoutY="363.0" prefHeight="60.0" prefWidth="790.0" />
+                         <Label layoutX="30.0" layoutY="10.0" text="Тема дипломної роботи (укр)" />
+                         <Label layoutX="30.0" layoutY="70.0" text="Тема дипломної роботи (англ)" />
+                         <Label layoutX="30.0" layoutY="130.0" text="Номер диплому" />
+                         <Label layoutX="300.0" layoutY="130.0" text="Реєстраційний №" />
+                         <Label layoutX="570.0" layoutY="130.0" text="Дата видачі" />
+                         <Label layoutX="300.0" layoutY="190.0" text="Вимоги до вступу" />
+                         <Label layoutX="30.0" layoutY="190.0" text="Протокол" />
+                         <Label layoutX="30.0" layoutY="253.0" text="Термін навчання" />
+                         <Label layoutX="30.0" layoutY="343.0" text="Інформація" />
                      </children>
                   </AnchorPane>
             </content>
@@ -103,7 +85,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tvGrades" layoutX="23.6" layoutY="24.6" prefHeight="450.0" prefWidth="869.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                        <TableView fx:id="tvGrades" editable="true" layoutX="23.6" layoutY="24.6" prefHeight="450.0" prefWidth="869.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                           <columns>
                             <TableColumn fx:id="tcNumber" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="№" />
                             <TableColumn fx:id="tcType" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="Тип" />
@@ -115,6 +97,8 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                         <Button fx:id="btnAddEducationalTemplate" defaultButton="true" layoutX="491.0" layoutY="262.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Додати" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
+                         <ComboBox fx:id="cbTypeEducationalTemplate" layoutX="30.0" layoutY="404.0" prefHeight="30.0" promptText="Тип" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="150.0" />
                      </children>
                   </AnchorPane>
             </content>
