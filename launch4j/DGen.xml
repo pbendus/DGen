@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\andri\IdeaProjects\DGen\build\jfx\app\DGen.jar</jar>
+  <outfile>C:\Users\andri\IdeaProjects\DGen\build\jfx\app\DGen.exe</outfile>
+  <errTitle>Please download java for running this application</errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon></icon>
+  <classPath>
+    <mainClass>ui.Main</mainClass>
+    <cp>lib/commons-codec-1.10.jar</cp>
+    <cp>lib/spring-aop-5.0.5.RELEASE.jar</cp>
+    <cp>lib/spring-beans-5.0.5.RELEASE.jar</cp>
+    <cp>lib/spring-expression-5.0.5.RELEASE.jar</cp>
+    <cp>lib/stax-api-1.0.1.jar</cp>
+    <cp>lib/log4j-core-2.11.0.jar</cp>
+    <cp>lib/controlsfx-8.0.1.jar</cp>
+    <cp>lib/poi-3.17.jar</cp>
+    <cp>lib/spring-core-5.0.5.RELEASE.jar</cp>
+    <cp>lib/spring-jcl-5.0.5.RELEASE.jar</cp>
+    <cp>lib/ormlite-jdbc-5.1.jar</cp>
+    <cp>lib/poi-ooxml-schemas-3.17.jar</cp>
+    <cp>lib/spring-context-5.0.5.RELEASE.jar</cp>
+    <cp>lib/xmlbeans-2.6.0.jar</cp>
+    <cp>lib/log4j-api-2.11.0.jar</cp>
+    <cp>lib/sqlite-jdbc-3.21.0.1.jar</cp>
+    <cp>lib/commons-collections4-4.1.jar</cp>
+    <cp>lib/ormlite-core-5.1.jar</cp>
+    <cp>lib/poi-ooxml-3.17.jar</cp>
+    <cp>lib/curvesapi-1.04.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.8</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+</launch4jConfig>
