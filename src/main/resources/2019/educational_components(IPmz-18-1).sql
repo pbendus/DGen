@@ -19,10 +19,10 @@ VALUES
     (1,'16','91','1','1'),
     (1,'17','91','1','1'),
     (1,'18','90','1','1'),
-    (1,'19',NULL,'4',NULL);
+    (1,'19','75','3','2');
     
 
---     ('Діденко Віталій Миколайович',NULL,NULL,NULL),
+--     ('Діденко Віталій Миколайович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (15,'1','80','3','2'),
@@ -43,10 +43,10 @@ VALUES
     (15,'16','75','3','2'),
     (15,'17','75','3','2'),
     (15,'18','75','3','2'),
-    (15,'19',NULL,'4',NULL);
+    (15,'19','80','3','2');
     
 
---     ('Куцанюк Дмитро Володимирович',NULL,NULL,NULL),
+--     ('Куцанюк Дмитро Володимирович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (21,'1','75','3','2'),
@@ -67,10 +67,10 @@ VALUES
     (21,'16','75','3','2'),
     (21,'17','75','3','2'),
     (21,'18','75','3','2'),
-    (21,'19',NULL,'4',NULL);
+    (21,'19','75','3','2');
     
 
---     ('Лундяк Василь Васильович',NULL,NULL,NULL),
+--     ('Лундяк Василь Васильович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (22,'1','78','3','2'),
@@ -91,10 +91,10 @@ VALUES
     (22,'16','61','4','3'),
     (22,'17','80','3','2'),
     (22,'18','75','3','2'),
-    (22,'19',NULL,'4',NULL);
+    (22,'19','75','3','2');
     
 
---     ('Любчик Юлія Сергіївна',NULL,NULL,NULL),
+--     ('Монюк Юлія Сергіївна',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (23,'1','90','1','1'),
@@ -115,10 +115,10 @@ VALUES
     (23,'16','91','1','1'),
     (23,'17','91','1','1'),
     (23,'18','90','1','1'),
-    (23,'19',NULL,'4',NULL);
+    (23,'19','90','1','1');
     
 
---     ('Мицькан Назарій Юрійович',NULL,NULL,NULL),
+--     ('Мицкан Назарій Юрійович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (26,'1','67','4','3'),
@@ -139,10 +139,10 @@ VALUES
     (26,'16','75','3','2'),
     (26,'17','75','3','2'),
     (26,'18','75','3','2'),
-    (26,'19',NULL,'4',NULL);
+    (26,'19','65','4','3');
     
 
---     ('Опацький Роман Петрович',NULL,NULL,NULL),
+--     ('Опацький Роман Петрович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (30,'1','79','3','2'),
@@ -163,10 +163,10 @@ VALUES
     (30,'16','77','3','2'),
     (30,'17','80','3','2'),
     (30,'18','76','3','2'),
-    (30,'19',NULL,'4',NULL);
+    (30,'19','75','3','2');
     
 
---     ('Худик Назар Михайлович',NULL,NULL,NULL),
+--     ('Худик Назар Михайлович',1,1,1),
 INSERT INTO educational_component (diploma_id, educational_component_template_id, national_score, rating_point_id, national_grade_id)
 VALUES
     (37,'1','62','4','3'),
@@ -187,4 +187,4 @@ VALUES
     (37,'16','61','4','3'),
     (37,'17','61','4','3'),
     (37,'18','75','3','2'),
-    (37,'19',NULL,'4',NULL);
+    (37,'19','65','4','3');

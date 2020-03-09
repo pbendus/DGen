@@ -193,10 +193,10 @@ public class Diploma {
         this.additionRegistrationNumber = additionRegistrationNumber;
     }
 
-    public String getInformationOnCertification() {
-        return String.format("Бакалаврська робота - %s (%s) / Bachelor's Thesis - %s (%s)",
-                getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
-                getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
+    public String getInformationOnCertification(String value, String valueEn) {
+        return String.format("%s %s (%s) / %s %s (%s)",
+                value, getDiplomaSubject().getSubjectUK(), student.getProtocol().getNameUK(),
+                valueEn, getDiplomaSubject().getSubjectEN(), student.getProtocol().getNameEN());
     }
 
     public DiplomaSubject getDiplomaSubject() {

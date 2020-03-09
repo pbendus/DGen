@@ -30,4 +30,12 @@ public class DiplomaService extends BaseServiceImpl<Diploma> {
     public Diploma getByNumber(String number) throws SQLException {
         return getDao().queryForEq("number", number).get(0);
     }
+
+    public boolean contains(String number) {
+        try {
+            return getDao().queryForEq("number", number).size() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

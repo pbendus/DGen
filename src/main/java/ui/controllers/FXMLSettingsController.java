@@ -224,6 +224,7 @@ public class FXMLSettingsController implements Initializable {
     private EducationalComponentTemplateMapper educationalComponentTemplateMapper;
 
     private EducationalComponentTypeService educationalComponentTypeService;
+    private EducationalComponentService educationalComponentService;
     private EducationalComponentTypeMapper educationalComponentTypeMapper;
 
     private ObservableList<Protocol> protocols = FXCollections.observableArrayList();
@@ -261,6 +262,7 @@ public class FXMLSettingsController implements Initializable {
                                   EducationalComponentTemplateService educationalComponentTemplateService,
                                   EducationalComponentTemplateMapper educationalComponentTemplateMapper,
                                   EducationalComponentTypeService educationalComponentTypeService,
+                                  EducationalComponentService educationalComponentService,
                                   EducationalComponentTypeMapper educationalComponentTypeMapper) {
         this.protocolService = protocolService;
         this.protocolMapper = protocolMapper;
@@ -285,6 +287,7 @@ public class FXMLSettingsController implements Initializable {
         this.educationalComponentTemplateService = educationalComponentTemplateService;
         this.educationalComponentTemplateMapper = educationalComponentTemplateMapper;
         this.educationalComponentTypeService = educationalComponentTypeService;
+        this.educationalComponentService = educationalComponentService;
         this.educationalComponentTypeMapper = educationalComponentTypeMapper;
     }
 
@@ -842,8 +845,16 @@ public class FXMLSettingsController implements Initializable {
                     final TableRow<EducationalComponentTemplate> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     final MenuItem removeItem = new MenuItem("Delete");
-                    removeItem.setOnAction(event -> Helper.removeItem(row.getItem().getId(), row.getItem(),
-                            educationalComponentTemplateService, tblEducationalTemplate));
+                    removeItem.setOnAction(event -> {
+                        int id = row.getItem().getId();
+                        Helper.removeItem(id, row.getItem(),
+                                educationalComponentTemplateService, tblEducationalTemplate);
+                        try {
+                            educationalComponentService.deleteByTemplateId(id);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    });
                     rowMenu.getItems().addAll(removeItem);
 
                     // only display context menu for non-null items:
